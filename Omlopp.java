@@ -256,8 +256,8 @@ public class Omlopp extends Application {
         path.getElements().addAll(
                 new MoveTo(centerX - radiusX, centerY - radiusY),
                 arcTo,
-                new ClosePath()); // close 1 px gap.
-        path.setStroke(Color.GRAY);
+                new ClosePath());
+        path.setStroke(Color.grayRgb(40));
         //path.getStrokeDashArray().setAll(5d, 5d);
         return path;
     }
