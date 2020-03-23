@@ -15,8 +15,6 @@ import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.swing.*;
-
 public class Omlopp extends Application {
     private PathTransition pathTransitionMe;
     private PathTransition pathTransitionVe;
@@ -30,25 +28,25 @@ public class Omlopp extends Application {
     private void init(Stage primaryStage) {
         Group root = new Group();
         Scene scene = new Scene(root, 900, 600);
-        //Image universePic = new Image("https://i.pinimg.com/originals/ac/5d/da/ac5dda2fda9686850d36c0dc2fa6effc.jpg");
-        //BackgroundImage universe = new BackgroundImage(universePic, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        //scene.setFill(universe);
-        scene.setFill(Color.BLACK);
+        Image universePic = new Image("https://wallpapercave.com/wp/wp3493593.jpg");      
+        scene.setFill(new ImagePattern(universePic));
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setTitle("Omloppsbanor");
         primaryStage.getIcons().add(new Image("https://cdn.iconscout.com/icon/free/png-256/solar-system-1552739-1314457.png"));
 
         //This is the sun
-        Image sunPic = new Image("http://icons.iconarchive.com/icons/zairaam/bumpy-planets/96/01-sun-icon.png");
+        Image sunPic = new Image("https://www.pngkey.com/png/full/71-713579_psd-detail-glowing-sun-sun-glow-png-circle.png");
         ImageView sun = new ImageView();
         sun.setImage(sunPic);
         sun.setPreserveRatio(true);
         sun.setSmooth(false);
         sun.setCache(true);
         root.getChildren().add(sun);
-        sun.setX(405);
-        sun.setY(270);
+        sun.setFitHeight(100);
+        sun.setFitWidth(100);
+        sun.setX(400);
+        sun.setY(265);
 
         Image mercuryPic = new Image("http://icons.iconarchive.com/icons/zairaam/bumpy-planets/24/02-mercury-icon.png");
         ImageView mercury = new ImageView();
