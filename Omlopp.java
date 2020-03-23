@@ -39,6 +39,7 @@ public class Omlopp extends Application {
         primaryStage.setTitle("Omloppsbanor");
         primaryStage.getIcons().add(new Image("https://cdn.iconscout.com/icon/free/png-256/solar-system-1552739-1314457.png"));
 
+        //This is the sun
         Image sunPic = new Image("http://icons.iconarchive.com/icons/zairaam/bumpy-planets/96/01-sun-icon.png");
         ImageView sun = new ImageView();
         sun.setImage(sunPic);
