@@ -43,9 +43,9 @@ public class Omlopp extends Application {
         sun.setSmooth(false);
         sun.setCache(true);
         root.getChildren().add(sun);
-        sun.setFitHeight(100);
-        sun.setFitWidth(100);
-        sun.setX(400);
+        sun.setFitHeight(110);
+        sun.setFitWidth(110);
+        sun.setX(393);
         sun.setY(265);
 
         Image mercuryPic = new Image("http://icons.iconarchive.com/icons/zairaam/bumpy-planets/24/02-mercury-icon.png");
