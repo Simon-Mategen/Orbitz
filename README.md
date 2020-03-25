@@ -7,4 +7,4 @@ Denna funktion kommer att påverkas av våra målgrupper.
 Då vi valt att rikta oss mot de med intresse för astronomi både unga och gamla så kommer deras kunskap att variera. 
 Det är därför viktigt att tänka på att inte använda för ämnesspecifika eller avancerade termer. 
 
-En ändring av Manna
+En ändring av Lanna
