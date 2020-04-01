@@ -4,10 +4,38 @@ import org.json.simple.JSONObject;
 
 public class Planet
 {
-    JSONObject jsonInformationObject = new JSONObject();
+    private long semimajorAxis;
+    private long perihelion;
+    private long aphelion;
+    private JSONObject planetInfo;
+
 
     public Planet(JSONObject object)
     {
         this.jsonInformationObject = object;
     }
+
+    public long getSemiMajorAxis()
+    {
+        semimajorAxis= (long)planetInfo.get("semimajorAxis");
+        return semimajorAxis;
+    }
+
+    public long getPerihelion()
+    {
+        perihelion = (long)planetInfo.get("perihelion");
+        return perihelion;
+    }
+
+    public long getAphelion()
+    {
+        aphelion = (long)planetInfo.get("aphelion");
+        return aphelion;
+    }
+
+    public String getName()
+    {
+        return planetInfo.get("englishName").toString();
+    }
+
 }
