@@ -15,22 +15,22 @@ public class Sun
         this.sunInfo = object;
     }
 
-    public int getxCord()
+    public int getXCord()
     {
         return xCord;
     }
 
-    public void setxCord(int xCord)
+    public void setXCord(int xCord)
     {
         this.xCord = xCord;
     }
 
-    public int getyCord()
+    public int getYCord()
     {
         return yCord;
     }
 
-    public void setyCord(int yCord)
+    public void setYCord(int yCord)
     {
         this.yCord = yCord;
     }

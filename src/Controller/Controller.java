@@ -23,8 +23,8 @@ public class Controller
         orbitCalculator = new OrbitCalculator();
 
         this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
-        sun.setyCord(0);
-        sun.setxCord(0);
+        sun.setYCord(0);
+        sun.setXCord(0);
 
         readAllPlanetsOrbits();
     }

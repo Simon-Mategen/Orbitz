@@ -20,8 +20,8 @@ public class OrbitCalculator
 
         long orbitOffsetFromSun = planet.getAphelion() - planet.getSemiMajorAxis();
 
-        long orbitXCord = sun.getxCord() + orbitOffsetFromSun;
-        int orbitYCord = sun.getyCord();
+        long orbitXCord = sun.getXCord() + orbitOffsetFromSun;
+        int orbitYCord = sun.getYCord();
 
         return new Orbit(orbitWidth, orbitHeight, orbitXCord, orbitYCord, planet);
     }
