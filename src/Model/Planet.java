@@ -1,21 +1,13 @@
 package Model;
 
-import javafx.scene.paint.Paint;
 import org.json.simple.JSONObject;
 
-import java.util.LinkedList;
-
-public class Planet extends Celestialbody
+public class Planet
 {
     JSONObject jsonInformationObject = new JSONObject();
 
-    LinkedList<Orbit> moonOrbits;
-
-    public Planet(double x, double y, double radius, Paint fill)
+    public Planet(JSONObject object)
     {
-        super(x, y, radius, fill);
-        //this.jsonInformationObject = object;
+        this.jsonInformationObject = object;
     }
-
-
 }
