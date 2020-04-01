@@ -6,7 +6,6 @@ public class Orbit
     private long height;
     private long xCord;
     private long yCord;
-
     private Planet planet;
 
     public Orbit(long inWidth, long inHeight, long inXCord, long inYCord, Planet planet)
@@ -29,12 +28,12 @@ public class Orbit
         return height;
     }
 
-    public long getxCord()
+    public long getXCord()
     {
         return xCord;
     }
 
-    public long getyCord()
+    public long getYCord()
     {
         return yCord;
     }
@@ -47,7 +46,7 @@ public class Orbit
     @Override
     public String toString()
     {
-        return planet.getName() + "\n" + "Height " + getHeight() + "\t" + "Width " + getWidth() + "\t" + "X: " + getxCord() + "\t" + "Y: " + getyCord() + "\n" + "A: " + planet.getAphelion()
-                + "\t" + "P: " + planet.getPerihelion();
+        return planet.getName() + "\n" + "Height: " + getHeight() + "\t" + "Width: " + getWidth() + "\t" + "X: " + getXCord() + "\t" + "Y: " + getYCord() + "\n"
+                + "A: " + planet.getAphelion() + "\t" + "P: " + planet.getPerihelion() + "\n";
     }
 }
