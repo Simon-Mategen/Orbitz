@@ -5,6 +5,9 @@ import org.json.simple.JSONObject;
 
 public class Planet
 {
+    private long semimajorAxis;
+    private long perihelion;
+    private long aphelion;
     private JSONObject planetInfo;
 
     public Planet(JSONObject object)
@@ -14,22 +17,20 @@ public class Planet
 
     public long getSemiMajorAxis()
     {
-        long i = (long)planetInfo.get("semimajorAxis");
-        return i;
+        semimajorAxis= (long)planetInfo.get("semimajorAxis");
+        return semimajorAxis;
     }
 
     public long getPerihelion()
     {
-        long i = (long)planetInfo.get("perihelion");
-
-        return i;
+        perihelion = (long)planetInfo.get("perihelion");
+        return perihelion;
     }
 
     public long getAphelion()
     {
-        long i = (long)planetInfo.get("aphelion");
-
-        return i;
+        aphelion = (long)planetInfo.get("aphelion");
+        return aphelion;
     }
 
     public String getName()
