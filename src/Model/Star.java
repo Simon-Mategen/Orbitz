@@ -2,11 +2,11 @@ package Model;
 
 import org.json.simple.JSONObject;
 
-public class Moon extends Celestialbody
+public class Star
 {
     JSONObject jsonInformationObject = new JSONObject();
 
-    public Moon(JSONObject object)
+    public Star(JSONObject object)
     {
         this.jsonInformationObject = object;
     }

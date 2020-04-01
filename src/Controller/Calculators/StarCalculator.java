@@ -1,5 +1,5 @@
 package Controller.Calculators;
 
-public class OrbitCalculator
+public class StarCalculator
 {
 }
