@@ -5,19 +5,36 @@ import Model.Orbit;
 import Model.Planet;
 import Model.Sun;
 
+/**
+ *
+ * @author Simon and Marcus
+ */
+
 public class OrbitCalculator
 {
+    private static final long SCALE_VALUE = 10000000;
+
     public Orbit calculatePlanetOrbit(Sun sun, Planet planet)
     {
-        int orbitWidth = (planet.getSemiMajorAxis())*2;
-        int orbitHeight = (int)((Math.sqrt(((double)planet.getAphelion()*(double)planet.getPerihelion()))))*2;
+        long orbitWidth = (planet.getSemiMajorAxis())*2;
+        long orbitHeight = (long)((Math.sqrt(((double)planet.getAphelion()*(double)planet.getPerihelion()))))*2;
 
-        int orbitOffsetFromSun = planet.getAphelion() - planet.getSemiMajorAxis();
+        long orbitOffsetFromSun = planet.getAphelion() - planet.getSemiMajorAxis();
 
-        int orbitXCord = sun.getxCord() + orbitOffsetFromSun;
+        long orbitXCord = sun.getxCord() + orbitOffsetFromSun;
         int orbitYCord = sun.getyCord();
 
-        return new Orbit(orbitWidth, orbitHeight, orbitXCord, orbitYCord);
+        return new Orbit(orbitWidth, orbitHeight, orbitXCord, orbitYCord, planet);
+    }
+
+    public Orbit scaleOrbit(Orbit orbit)
+    {
+        Orbit scaledOrbit = new Orbit(
+                orbit.getWidth()/SCALE_VALUE, orbit.getHeight()/SCALE_VALUE,
+                orbit.getxCord()/SCALE_VALUE, orbit.getyCord()/SCALE_VALUE,
+                orbit.getPlanet());
+
+        return scaledOrbit;
     }
 
 }

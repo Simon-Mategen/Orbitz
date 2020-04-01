@@ -7,32 +7,34 @@ public class Planet
 {
     private JSONObject planetInfo;
 
-
-
     public Planet(JSONObject object)
     {
         this.planetInfo = object;
     }
 
-    public int getSemiMajorAxis()
+    public long getSemiMajorAxis()
     {
-        int i = Integer.parseInt(planetInfo.get("semimajorAxis").toString());
+        long i = (long)planetInfo.get("semimajorAxis");
+        return i;
+    }
+
+    public long getPerihelion()
+    {
+        long i = (long)planetInfo.get("perihelion");
 
         return i;
     }
 
-    public int getPerihelion()
+    public long getAphelion()
     {
-        int i = Integer.parseInt(planetInfo.get("perihelion").toString());
+        long i = (long)planetInfo.get("aphelion");
 
         return i;
     }
 
-    public int getAphelion()
+    public String getName()
     {
-        int i = Integer.parseInt(planetInfo.get("aphelion").toString());
-
-        return i;
+        return planetInfo.get("englishName").toString();
     }
 
 }
