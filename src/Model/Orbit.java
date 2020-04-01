@@ -1,25 +1,55 @@
 package Model;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
-public class Orbit extends Ellipse
+public class Orbit
 {
-    Celestialbody celestialbody; // planet or moon
+    private long width;
+    private long height;
+    private long xCord;
+    private long yCord;
+    private Planet planet;
 
-    public Orbit()
+    public Orbit(long inWidth, long inHeight, long inXCord, long inYCord, Planet planet)
     {
+        this.width = inWidth;
+        this.height = inHeight;
+        this.xCord = inXCord;
+        this.yCord = inYCord;
 
+        this.planet = planet;
     }
 
-    public Orbit(Celestialbody celestialbody, double centerX, double centerY, double radiusX, double radiusY) {
-        super(centerX, centerY, radiusX, radiusY);
-        this.celestialbody = celestialbody;
-        setStroke(Color.LIGHTGRAY);
-        setFill(Color.TRANSPARENT);
+    public long getWidth()
+    {
+        return width;
     }
 
-    public Celestialbody getCelestialbody() {
-        return celestialbody;
+    public long getHeight()
+    {
+        return height;
+    }
+
+    public long getXCord()
+    {
+        return xCord;
+    }
+
+    public long getYCord()
+    {
+        return yCord;
+    }
+
+    public Planet getPlanet()
+    {
+        return planet;
+    }
+
+    @Override
+    public String toString()
+    {
+        return planet.getName() + "\n" + "Height: " + getHeight() + "\t" + "Width: " + getWidth() + "\t" + "X: " + getXCord() + "\t" + "Y: " + getYCord() + "\n"
+                + "A: " + planet.getAphelion() + "\t" + "P: " + planet.getPerihelion() + "\n";
+
     }
 }

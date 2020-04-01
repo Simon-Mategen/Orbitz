@@ -7,15 +7,37 @@ import java.util.LinkedList;
 
 public class Planet extends Celestialbody
 {
-    JSONObject jsonInformationObject = new JSONObject();
+    private long semimajorAxis;
+    private long perihelion;
+    private long aphelion;
+    private JSONObject planetInfo;
 
     LinkedList<Orbit> moonOrbits;
 
-    public Planet(double x, double y, double radius, Paint fill)
-    {
-        super(x, y, radius, fill);
-        //this.jsonInformationObject = object;
+    public Planet(double x, double y, double radius, Paint fill) {
     }
 
+    public long getSemiMajorAxis()
+    {
+        semimajorAxis= (long)planetInfo.get("semimajorAxis");
+        return semimajorAxis;
+    }
+
+    public long getPerihelion()
+    {
+        perihelion = (long)planetInfo.get("perihelion");
+        return perihelion;
+    }
+
+    public long getAphelion()
+    {
+        aphelion = (long)planetInfo.get("aphelion");
+        return aphelion;
+    }
+
+    public String getName()
+    {
+        return planetInfo.get("englishName").toString();
+    }
 
 }

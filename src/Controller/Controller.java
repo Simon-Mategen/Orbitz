@@ -1,30 +1,28 @@
 package Controller;
 
+import Controller.Calculators.OrbitCalculator;
 import Model.Orbit;
 import Model.Planet;
-import Model.PlanetarySystem;
-import Model.Solarsystem;
-import boundary.OrbitWindow;
-import boundary.PlanetWindow;
-import javafx.application.Application;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.stage.Stage;
+import Model.Sun;
+import Enum.*;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
-public class Controller extends Application
+public class Controller
 {
     private APIReader reader;
-    PlanetWindow planetWindow;
-    OrbitWindow orbitWindow;
-    Solarsystem solarsystem = new Solarsystem();
-    LinkedList<PlanetarySystem> planetarySystems;
+    private OrbitCalculator orbitCalculator;
+
+    private Sun sun;
+
+    private ArrayList<Orbit> orbits = new ArrayList<>();
+
 
     @Override
     public void start(Stage stage) throws Exception
     {
         reader = new APIReader();
+
         orbitWindow = new OrbitWindow();
         orbitWindow.start(stage);
         orbitWindow.changeBackground(); // testing changing during runtime
@@ -52,6 +50,31 @@ public class Controller extends Application
     {
         launch(args);
     }
+
+        orbitCalculator = new OrbitCalculator();
+
+        this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
+        sun.setYCord(0);
+        sun.setXCord(0);
+
+        readAllPlanetsOrbits();
+    }
+
+    private void readAllPlanetsOrbits()
+    {
+        for(Planets p : Planets.values())
+        {
+            orbits.add(orbitCalculator.scaleOrbit(orbitCalculator.calculatePlanetOrbit(sun, new Planet(reader.readBodyFromAPI(p.toString())))));
+        }
+    }
+
+/*    private void printAllOrbits()
+    {
+        for (Orbit o : orbits)
+        {
+            System.out.println(o.toString());
+        }
+    }*/
 
 
 }

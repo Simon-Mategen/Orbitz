@@ -16,7 +16,7 @@ public class APIReader
         try
         {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("https://api.le-systeme-solaire.net/rest/bodies/"))
+                    .uri(new URI("https://api.le-systeme-solaire.net/rest/bodies/" + body))
                     .build();
 
             HttpResponse<String> reply = client.send(request, HttpResponse.BodyHandlers.ofString());
