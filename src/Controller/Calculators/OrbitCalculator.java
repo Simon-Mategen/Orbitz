@@ -1,6 +1,5 @@
 package Controller.Calculators;
 
-import Controller.Main;
 import Model.Orbit;
 import Model.Planet;
 import Model.Sun;
@@ -31,7 +30,7 @@ public class OrbitCalculator
     {
         Orbit scaledOrbit = new Orbit(
                 orbit.getWidth()/SCALE_VALUE, orbit.getHeight()/SCALE_VALUE,
-                orbit.getxCord()/SCALE_VALUE, orbit.getyCord()/SCALE_VALUE,
+                orbit.getXCord()/SCALE_VALUE, orbit.getYCord()/SCALE_VALUE,
                 orbit.getPlanet());
 
         return scaledOrbit;
