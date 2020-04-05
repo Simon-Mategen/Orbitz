@@ -35,4 +35,9 @@ public class Sun
         this.yCord = yCord;
     }
 
+    public String getMass()
+    {
+        return sunInfo.get("mass").toString();
+    }
+
 }

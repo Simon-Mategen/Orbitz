@@ -9,10 +9,17 @@ public class Planet
     private long aphelion;
     private JSONObject planetInfo;
 
+    private Orbit planetOrbit;
+
 
     public Planet(JSONObject object)
     {
-        this.jsonInformationObject = object;
+        this.planetInfo = object;
+    }
+
+    public String getID()
+    {
+        return planetInfo.get("id").toString();
     }
 
     public long getSemiMajorAxis()
@@ -36,6 +43,24 @@ public class Planet
     public String getName()
     {
         return planetInfo.get("englishName").toString();
+    }
+
+    public Orbit getPlanetOrbit()
+    {
+        return planetOrbit;
+    }
+
+    public void setPlanetOrbit(Orbit planetOrbit)
+    {
+        this.planetOrbit = planetOrbit;
+    }
+
+    @Override
+    public String toString()
+    {
+        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\t" + "Width: " + planetOrbit.getWidth() + "\t" + "X: " + planetOrbit.getXCord() + "\t" + "Y: " + planetOrbit.getYCord() + "\n"
+                + "A: " + getAphelion() + "\t" + "P: " + getPerihelion() + "\n";
+
     }
 
 }

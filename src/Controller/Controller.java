@@ -5,13 +5,9 @@ import Model.Orbit;
 import Model.Sun;
 
 import java.util.ArrayList;
-import Controller.Calculators.OrbitCalculator;
-import Model.Orbit;
-import Model.Planet;
-import Model.Sun;
-import Enum.*;
 
-import java.util.ArrayList;
+import Model.Planet;
+import Enum.*;
 
 public class Controller
 {
@@ -20,7 +16,7 @@ public class Controller
 
     private Sun sun;
 
-    private ArrayList<Orbit> orbits = new ArrayList<>();
+    private ArrayList<Planet> planetArrayList = new ArrayList<>();
 
 
     public Controller()
@@ -32,14 +28,25 @@ public class Controller
         sun.setYCord(0);
         sun.setXCord(0);
 
-        readAllPlanetsOrbits();
+        readAllPlanets();
+        addPlanetOrbits();
+
+        System.out.println(sun.getMass());
     }
 
-    private void readAllPlanetsOrbits()
+    private void readAllPlanets()
     {
         for(Planets p : Planets.values())
         {
-            orbits.add(orbitCalculator.scaleOrbit(orbitCalculator.calculatePlanetOrbit(sun, new Planet(reader.readBodyFromAPI(p.toString())))));
+            planetArrayList.add(new Planet(reader.readBodyFromAPI(p.toString())));
+        }
+    }
+
+    private void addPlanetOrbits()
+    {
+        for (Planet p : planetArrayList)
+        {
+            p.setPlanetOrbit(orbitCalculator.calculatePlanetSunOrbit(sun, p));
         }
     }
 
