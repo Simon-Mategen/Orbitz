@@ -23,18 +23,15 @@ public class OrbitCalculator
         long orbitXCord = sun.getXCord() + orbitOffsetFromSun;
         int orbitYCord = sun.getYCord();
 
+        orbitWidth /= SCALE_VALUE;
+        orbitHeight /= SCALE_VALUE;
+        orbitXCord /= SCALE_VALUE;
+        orbitYCord /= SCALE_VALUE;
+
         return new Orbit(orbitWidth, orbitHeight, orbitXCord, orbitYCord);
     }
 
     //Ska läggas till en metod för PlanetMoonOrbit
 
-    public Orbit scaleOrbit(Orbit orbit)
-    {
-        Orbit scaledOrbit = new Orbit(
-                orbit.getWidth()/SCALE_VALUE, orbit.getHeight()/SCALE_VALUE,
-                orbit.getXCord()/SCALE_VALUE, orbit.getYCord()/SCALE_VALUE);
-
-        return scaledOrbit;
-    }
 
 }

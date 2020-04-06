@@ -41,10 +41,9 @@ public class Controller
         readAllPlanets();
         addPlanetOrbits();
 
-        System.out.println(sun.getMass());
+        //System.out.println(sun.getMass());
 
-
-        addPlanettoGUI();
+        //addPlanettoGUI();
     }
 
     private void readAllPlanets()
@@ -63,6 +62,14 @@ public class Controller
         }
     }
 
+/*    private void printAllPlanetsOrbits()
+    {
+        for (Planet p : planetArrayList)
+        {
+            System.out.println(p.toString());
+        }
+    }*/
+
     public Ellipse getEarthOrbit()
     {
         return planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
@@ -75,13 +82,7 @@ public class Controller
         mainframe.getOrbitaryWindow().addOrbit(orbit);
     }
 
-/*    private void printAllOrbits()
-    {
-        for (Orbit o : orbits)
-        {
-            System.out.println(o.toString());
-        }
-    }*/
+
 public static void main(String[] args)
 {
     Controller controller = new Controller();
