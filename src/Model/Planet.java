@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.shape.Sphere;
 import org.json.simple.JSONObject;
 
 public class Planet
@@ -8,6 +9,8 @@ public class Planet
     private long perihelion;
     private long aphelion;
     private JSONObject planetInfo;
+
+    private double diameter;
 
     private Orbit planetOrbit;
 
@@ -53,6 +56,16 @@ public class Planet
     public void setPlanetOrbit(Orbit planetOrbit)
     {
         this.planetOrbit = planetOrbit;
+    }
+
+    public void setDiameter(double diameter)
+    {
+        this.diameter = diameter;
+    }
+
+    public Sphere getSphereFromPlanet()
+    {
+        return new Sphere();
     }
 
     @Override

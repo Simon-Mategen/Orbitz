@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import Model.Planet;
 import Enum.*;
+import javafx.scene.shape.Ellipse;
 
 public class Controller
 {
@@ -48,6 +49,11 @@ public class Controller
         {
             p.setPlanetOrbit(orbitCalculator.calculatePlanetSunOrbit(sun, p));
         }
+    }
+
+    public void addPlanettoGUI()
+    {
+        Ellipse orbit = planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
     }
 
 /*    private void printAllOrbits()

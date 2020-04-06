@@ -1,5 +1,6 @@
 package Model;
 
+import javafx.scene.shape.Sphere;
 import netscape.javascript.JSObject;
 import org.json.simple.JSONObject;
 
@@ -38,6 +39,11 @@ public class Sun
     public String getMass()
     {
         return sunInfo.get("mass").toString();
+    }
+
+    public Sphere getSphereFromSun()
+    {
+        return new Sphere();
     }
 
 }

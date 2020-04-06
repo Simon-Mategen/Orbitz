@@ -15,7 +15,6 @@ public class Orbit
         this.height = inHeight;
         this.xCord = inXCord;
         this.yCord = inYCord;
-
     }
 
     public long getWidth()
@@ -37,5 +36,11 @@ public class Orbit
     {
         return yCord;
     }
+
+    public Ellipse getEllipseFromOrbit()
+    {
+        return new Ellipse((double)getXCord(), (double)getYCord(), (double)getWidth(), (double)getHeight());
+    }
+
 
 }
