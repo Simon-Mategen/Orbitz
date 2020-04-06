@@ -38,15 +38,15 @@ public class Sun
         this.yCord = yCord;
     }
 
-/*    public long getMass()
+    public double getMass()
     {
         JSONObject sunMass = (JSONObject)sunInfo.get("mass");
 
-        JSONObject massValueObject = (JSONObject) sunMass.get("volValue");
-        JSONObject massExponentObject = (JSONObject) sunMass.get("volExponent");
+        double massValue = (double) sunMass.get("massValue");
+        long massExponent = (long) sunMass.get("massExponent");
 
-        long massValue = (long)massValueObject;
-    }*/
+        return massValue * (Math.pow(10, massExponent));
+    }
 
     public Sphere getSphereFromSun()
     {
