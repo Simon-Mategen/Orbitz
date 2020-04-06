@@ -1,10 +1,12 @@
 package View;
 
+import Controller.Controller;
 import Model.Planet;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -25,9 +27,16 @@ public class OrbitaryWindow extends Application {
     private LinkedList<Planet> planetList = new LinkedList<>();
     final private int WIDTH = 1000;
     final private int HEIGHT = 600;
-    private StackPane root;
+    private StackPane root = new StackPane();
+
+    private Controller controller;
+
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
+
+        this.controller = new Controller(this);
+
         // Button btn = new Button();
         // btn.setText("Say 'Hello World'");
         // btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -37,9 +46,9 @@ public class OrbitaryWindow extends Application {
         // System.out.println("Hello World!");
         // }
         // });
-        Sphere star = new Sphere(45);
+        /*Sphere star = new Sphere(45);
         earth = new Sphere(45);
-        moon = new Sphere(25);
+        moon = new Sphere(25);*/
 
         //Ellipse ellipseEarth = new Ellipse();
         // ellipseEarth.setCenterX(star.getTranslateX());
@@ -81,7 +90,6 @@ public class OrbitaryWindow extends Application {
 
          */
 
-
         /*
          * Hide the ellipse shadows
          */
@@ -91,7 +99,7 @@ public class OrbitaryWindow extends Application {
         /* here we create a new pane which we bind to earths location, add moon
          * into it and then add the pane to the root pane
          */
-        root = new StackPane();
+
         /*StackPane moonPane = new StackPane();
         moonPane.translateXProperty().bind(earth.translateXProperty());
         moonPane.translateYProperty().bind(earth.translateYProperty());
@@ -106,7 +114,7 @@ public class OrbitaryWindow extends Application {
 
          */
 
-        Scene scene = new Scene(root, 1920, 1080);
+        Scene scene = new Scene(root, 1700, 700);
         root.setBackground(new Background(
                 Collections.singletonList(new BackgroundFill(
                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
@@ -117,6 +125,7 @@ public class OrbitaryWindow extends Application {
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT))));
+        
 
         primaryStage.setTitle("Planetarium");
         primaryStage.setScene(scene);
@@ -135,11 +144,25 @@ public class OrbitaryWindow extends Application {
         pathTransition.setNode(planet.getSphereFromPlanet());
         root.getChildren().add(planet.getSphereFromPlanet());
         planetList.add(planet);
+
+        pathTransition.play();
     }
 
     public void addOrbit(Ellipse orbit)
     {
-        root.getChildren().add(orbit);
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                root.getChildren().add(orbit);
+            }
+        });
+    }
+
+    public static void main(String[] args)
+    {
+        launch(args);
     }
 
 

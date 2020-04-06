@@ -10,6 +10,7 @@ import Model.Planet;
 import Enum.*;
 import View.OrbitaryWindow;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.scene.shape.Ellipse;
 
 public class Controller
@@ -23,12 +24,13 @@ public class Controller
     private ArrayList<Planet> planetArrayList = new ArrayList<>();
 
 
-    public Controller()
+    public Controller(OrbitaryWindow gui)
     {
+        this.orbitaryWindow = gui;
+
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
-        orbitaryWindow = new OrbitaryWindow();
-        Application.launch(OrbitaryWindow.class);
+
         this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
         sun.setYCord(0);
         sun.setXCord(0);
@@ -37,6 +39,14 @@ public class Controller
         addPlanetOrbits();
 
         System.out.println(sun.getMass());
+
+
+        //addPlanettoGUI();
+    }
+
+    public void setOrbitaryWindow(OrbitaryWindow window)
+    {
+        this.orbitaryWindow = window;
     }
 
     private void readAllPlanets()
@@ -55,9 +65,16 @@ public class Controller
         }
     }
 
+    public Ellipse getEarthOrbit()
+    {
+        return planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
+    }
+
     public void addPlanettoGUI()
     {
         Ellipse orbit = planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
+
+        orbitaryWindow.addOrbit(orbit);
     }
 
 /*    private void printAllOrbits()
