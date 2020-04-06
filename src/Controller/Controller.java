@@ -8,12 +8,15 @@ import java.util.ArrayList;
 
 import Model.Planet;
 import Enum.*;
+import View.OrbitaryWindow;
+import javafx.application.Application;
 import javafx.scene.shape.Ellipse;
 
 public class Controller
 {
     private APIReader reader;
     private OrbitCalculator orbitCalculator;
+    private OrbitaryWindow orbitaryWindow;
 
     private Sun sun;
 
@@ -24,7 +27,8 @@ public class Controller
     {
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
-
+        orbitaryWindow = new OrbitaryWindow();
+        Application.launch(OrbitaryWindow.class);
         this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
         sun.setYCord(0);
         sun.setXCord(0);

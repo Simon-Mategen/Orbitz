@@ -1,5 +1,6 @@
 package View;
 
+import Model.Planet;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
@@ -10,18 +11,21 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.Collections;
+import java.util.LinkedList;
 
 public class OrbitaryWindow extends Application {
     private Sphere earth;
     private Sphere moon;
-
+    private LinkedList<Planet> planetList = new LinkedList<>();
     final private int WIDTH = 1000;
     final private int HEIGHT = 600;
+    private StackPane root;
     @Override
     public void start(Stage primaryStage) {
         // Button btn = new Button();
@@ -37,15 +41,15 @@ public class OrbitaryWindow extends Application {
         earth = new Sphere(45);
         moon = new Sphere(25);
 
-        Ellipse ellipseEarth = new Ellipse();
+        //Ellipse ellipseEarth = new Ellipse();
         // ellipseEarth.setCenterX(star.getTranslateX());
         // ellipseEarth.setCenterY(star.getTranslateY());
         // ellipseEarth.translateXProperty().bind(star.translateXProperty());
         // ellipseEarth.translateYProperty().bind(star.translateYProperty());
-        ellipseEarth.setRadiusX(star.getBoundsInLocal().getWidth() / 2.0 + 1.01671388 * 170);
-        ellipseEarth.setRadiusY(star.getBoundsInLocal().getHeight() / 2.0 + 0.98329134 * 170);
+       // ellipseEarth.setRadiusX(star.getBoundsInLocal().getWidth() / 2.0 + 1.01671388 * 170);
+       // ellipseEarth.setRadiusY(star.getBoundsInLocal().getHeight() / 2.0 + 0.98329134 * 170);
 
-        PathTransition transitionEarth = new PathTransition();
+        /*PathTransition transitionEarth = new PathTransition();
         transitionEarth.setPath(ellipseEarth);
         transitionEarth.setNode(earth);
         transitionEarth.setInterpolator(Interpolator.LINEAR);
@@ -53,18 +57,20 @@ public class OrbitaryWindow extends Application {
         transitionEarth.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         transitionEarth.setCycleCount(Timeline.INDEFINITE);
 
-        transitionEarth.play();
+         */
 
-        Ellipse ellipseMoon = new Ellipse();
+        //transitionEarth.play();
+
+        //Ellipse ellipseMoon = new Ellipse();
         // ellipseMoon.setCenterX(earth.getTranslateX());
         // ellipseMoon.setCenterY(earth.getTranslateY());
         // ellipseMoon.translateXProperty().bind(earth.translateXProperty());
         // ellipseMoon.translateYProperty().bind(earth.translateYProperty());
-        ellipseMoon.setRadiusX(earth.getBoundsInLocal().getWidth() / 2.0 + 1.01671388 * 70);
-        ellipseMoon.setRadiusY(earth.getBoundsInLocal().getHeight() / 2.0 + 0.98329134 * 70);
+       // ellipseMoon.setRadiusX(earth.getBoundsInLocal().getWidth() / 2.0 + 1.01671388 * 70);
+        //ellipseMoon.setRadiusY(earth.getBoundsInLocal().getHeight() / 2.0 + 0.98329134 * 70);
         // ellipse.setStrokeWidth(5);
 
-        PathTransition transitionMoon = new PathTransition();
+        /*PathTransition transitionMoon = new PathTransition();
         transitionMoon.setPath(ellipseMoon);
         transitionMoon.setNode(moon);
         transitionMoon.setInterpolator(Interpolator.LINEAR);
@@ -73,31 +79,34 @@ public class OrbitaryWindow extends Application {
         transitionMoon.setCycleCount(Timeline.INDEFINITE);
         transitionMoon.play();
 
+         */
+
 
         /*
          * Hide the ellipse shadows
          */
-        ellipseMoon.setVisible(false);
-        ellipseEarth.setVisible(false);
+        //ellipseMoon.setVisible(false);
+        //ellipseEarth.setVisible(false);
 
         /* here we create a new pane which we bind to earths location, add moon
          * into it and then add the pane to the root pane
          */
-        StackPane root = new StackPane();
-        StackPane moonPane = new StackPane();
+        root = new StackPane();
+        /*StackPane moonPane = new StackPane();
         moonPane.translateXProperty().bind(earth.translateXProperty());
         moonPane.translateYProperty().bind(earth.translateYProperty());
         moonPane.setMaxSize(100, 100);
         //color for the new pane to see it
-        moonPane.setStyle("-fx-background-color: #EAEAAE;");
 
         root.getChildren().add(star);
         moonPane.getChildren().add(moon);
         root.getChildren().add(moonPane);
-        root.getChildren().add(ellipseEarth);
+        //root.getChildren().add(ellipseEarth);
         root.getChildren().add(earth);
 
-        Scene scene = new Scene(root, 800, 600);
+         */
+
+        Scene scene = new Scene(root, 1920, 1080);
         root.setBackground(new Background(
                 Collections.singletonList(new BackgroundFill(
                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
@@ -114,8 +123,24 @@ public class OrbitaryWindow extends Application {
         primaryStage.show();
     }
 
-
-    public static void main(String[] args) {
-        launch(args);
+    public void addSun(Sphere sun)
+    {
+        root.getChildren().add(sun);
     }
+
+    public void addPlanet(Planet planet)
+    {
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setPath(planet.getPlanetOrbit().getEllipseFromOrbit());
+        pathTransition.setNode(planet.getSphereFromPlanet());
+        root.getChildren().add(planet.getSphereFromPlanet());
+        planetList.add(planet);
+    }
+
+    public void addOrbit(Ellipse orbit)
+    {
+        root.getChildren().add(orbit);
+    }
+
+
 }
