@@ -7,6 +7,7 @@ import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,21 +22,20 @@ import javafx.util.Duration;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class OrbitaryWindow extends Application {
+public class OrbitaryWindow extends JFXPanel {
     private Sphere earth;
     private Sphere moon;
     private LinkedList<Planet> planetList = new LinkedList<>();
     final private int WIDTH = 1000;
     final private int HEIGHT = 600;
     private StackPane root = new StackPane();
+    //Stage primaryStage;
 
-    private Controller controller;
-
-    @Override
-    public void start(Stage primaryStage)
+    public OrbitaryWindow()
     {
+        //primaryStage = stage;
 
-        this.controller = new Controller(this);
+
 
         // Button btn = new Button();
         // btn.setText("Say 'Hello World'");
@@ -114,7 +114,7 @@ public class OrbitaryWindow extends Application {
 
          */
 
-        Scene scene = new Scene(root, 1700, 700);
+        /*Scene scene = new Scene(root, 1700, 700);
         root.setBackground(new Background(
                 Collections.singletonList(new BackgroundFill(
                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
@@ -125,11 +125,20 @@ public class OrbitaryWindow extends Application {
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT))));
-        
+
 
         primaryStage.setTitle("Planetarium");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+         */
+
+
+    }
+
+    private void createScene() {
+        Scene scene = new Scene(root);
+        setScene(scene);
     }
 
     public void addSun(Sphere sun)
@@ -150,20 +159,7 @@ public class OrbitaryWindow extends Application {
 
     public void addOrbit(Ellipse orbit)
     {
-        Platform.runLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                root.getChildren().add(orbit);
-            }
-        });
+        root.getChildren().add(orbit);
     }
-
-    public static void main(String[] args)
-    {
-        launch(args);
-    }
-
 
 }

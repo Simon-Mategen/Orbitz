@@ -8,26 +8,29 @@ import java.util.ArrayList;
 
 import Model.Planet;
 import Enum.*;
+import View.Mainframe;
 import View.OrbitaryWindow;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.scene.shape.Ellipse;
 
+import javax.swing.*;
+
 public class Controller
 {
     private APIReader reader;
     private OrbitCalculator orbitCalculator;
-    private OrbitaryWindow orbitaryWindow;
+    Mainframe mainframe;
 
     private Sun sun;
 
     private ArrayList<Planet> planetArrayList = new ArrayList<>();
 
 
-    public Controller(OrbitaryWindow gui)
+    public Controller()
     {
-        this.orbitaryWindow = gui;
-
+        mainframe = new Mainframe();
+        JOptionPane.showMessageDialog(null, mainframe);
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
 
@@ -41,12 +44,7 @@ public class Controller
         System.out.println(sun.getMass());
 
 
-        //addPlanettoGUI();
-    }
-
-    public void setOrbitaryWindow(OrbitaryWindow window)
-    {
-        this.orbitaryWindow = window;
+        addPlanettoGUI();
     }
 
     private void readAllPlanets()
@@ -74,7 +72,7 @@ public class Controller
     {
         Ellipse orbit = planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
 
-        orbitaryWindow.addOrbit(orbit);
+        mainframe.getOrbitaryWindow().addOrbit(orbit);
     }
 
 /*    private void printAllOrbits()
@@ -84,4 +82,10 @@ public class Controller
             System.out.println(o.toString());
         }
     }*/
+public static void main(String[] args)
+{
+    Controller controller = new Controller();
 }
+}
+
+
