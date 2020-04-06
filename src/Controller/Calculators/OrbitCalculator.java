@@ -4,14 +4,9 @@ import Model.Orbit;
 import Model.Planet;
 import Model.Sun;
 
-/**
- *
- * @author Simon and Marcus
- */
 
 public class OrbitCalculator
 {
-    private static final long SCALE_VALUE = 10000000;
 
     public Orbit calculatePlanetSunOrbit(Sun sun, Planet planet)
     {
@@ -23,13 +18,21 @@ public class OrbitCalculator
         long orbitXCord = sun.getXCord() + orbitOffsetFromSun;
         int orbitYCord = sun.getYCord();
 
-        orbitWidth /= SCALE_VALUE;
-        orbitHeight /= SCALE_VALUE;
-        orbitXCord /= SCALE_VALUE;
-        orbitYCord /= SCALE_VALUE;
-
         return new Orbit(orbitWidth, orbitHeight, orbitXCord, orbitYCord);
     }
+
+/*    public long calculatePlanetOrbitCircumference(Planet planet)
+    {
+        if (planet.getPlanetOrbit().getWidth() == planet.getPlanetOrbit().getHeight()) //If orbit is a circle
+        {
+            return (long)Math.abs(2*(Math.PI*(planet.getPlanetOrbit().getRealWidth()/2)));
+        }
+
+        long a = planet.getPlanetOrbit().getRealHeight()/2;
+        long b = planet.getPlanetOrbit().getRealWidth()/2;
+
+        return (long)Math.abs(Math.PI*((3*(a-b))-(Math.sqrt(((3*a)+b)*(a+(3*b))))));
+    }*/
 
     //Ska läggas till en metod för PlanetMoonOrbit
 

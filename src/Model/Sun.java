@@ -4,6 +4,8 @@ import javafx.scene.shape.Sphere;
 import netscape.javascript.JSObject;
 import org.json.simple.JSONObject;
 
+import java.io.ObjectInputStream;
+
 public class Sun
 {
     private JSONObject sunInfo;
@@ -36,14 +38,24 @@ public class Sun
         this.yCord = yCord;
     }
 
-    public String getMass()
+/*    public long getMass()
     {
-        return sunInfo.get("mass").toString();
-    }
+        JSONObject sunMass = (JSONObject)sunInfo.get("mass");
+
+        JSONObject massValueObject = (JSONObject) sunMass.get("volValue");
+        JSONObject massExponentObject = (JSONObject) sunMass.get("volExponent");
+
+        long massValue = (long)massValueObject;
+    }*/
 
     public Sphere getSphereFromSun()
     {
         return new Sphere();
     }
 
+    @Override
+    public String toString()
+    {
+        return sunInfo.get("mass").toString();
+    }
 }

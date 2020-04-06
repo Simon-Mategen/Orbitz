@@ -43,6 +43,7 @@ public class Planet
         return aphelion;
     }
 
+
     public String getName()
     {
         return planetInfo.get("englishName").toString();
@@ -69,10 +70,10 @@ public class Planet
     }
 
     @Override
-    public String toString()
+    public String toString() //Prints information about planets orbit
     {
         return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\t" + "Width: " + planetOrbit.getWidth() + "\t" + "X: " + planetOrbit.getXCord() + "\t" + "Y: " + planetOrbit.getYCord() + "\n"
-                + "A: " + getAphelion() + "\t" + "P: " + getPerihelion() + "\n";
+                + "A: " + getAphelion() + "\t" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "     " + planetOrbit.getRealCircumference();
 
     }
 

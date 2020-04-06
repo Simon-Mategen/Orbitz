@@ -31,6 +31,7 @@ public class Controller
     {
         mainframe = new Mainframe();
         JOptionPane.showMessageDialog(null, mainframe);
+
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
 
@@ -38,10 +39,12 @@ public class Controller
         sun.setYCord(0);
         sun.setXCord(0);
 
+        System.out.println(sun.getMass());
+
         readAllPlanets();
         addPlanetOrbits();
 
-        //System.out.println(sun.getMass());
+        //printAllPlanetsOrbits();
 
         //addPlanettoGUI();
     }
@@ -58,17 +61,18 @@ public class Controller
     {
         for (Planet p : planetArrayList)
         {
-            p.setPlanetOrbit(orbitCalculator.calculatePlanetSunOrbit(sun, p));
+            p.setPlanetOrbit(orbitCalculator.calculatePlanetSunOrbit(sun, p));//Create orbit
+            //p.getPlanetOrbit().setCircumference(orbitCalculator.calculatePlanetOrbitCircumference(p));//Add orbit circumference
         }
     }
 
-/*    private void printAllPlanetsOrbits()
+    private void printAllPlanetsOrbits()
     {
         for (Planet p : planetArrayList)
         {
             System.out.println(p.toString());
         }
-    }*/
+    }
 
     public Ellipse getEarthOrbit()
     {
