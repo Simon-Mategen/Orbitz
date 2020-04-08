@@ -22,12 +22,11 @@ import java.util.LinkedList;
 
 public class Mainframe extends JFrame
 {
-    private OrbitaryWindow orbitaryWindow = new OrbitaryWindow();
-
     private Sphere earth;
     private Sphere moon;
     private LinkedList<Planet> planetList = new LinkedList<>();
     private LinkedList<Orbit> orbitList = new LinkedList<>();
+    private JFXPanel orbitPanel;
 
     private Circle circle = new Circle(30);
     private StackPane root;
@@ -37,6 +36,9 @@ public class Mainframe extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+        setSize(1400, 900);
+        orbitPanel = new JFXPanel();
+        add(orbitPanel);
     }
 
 
@@ -65,16 +67,6 @@ public class Mainframe extends JFrame
         
 
         return scene;
-    }
-
-    public void addNodeToPane(Node node)
-    {
-        root.getChildren().add(node);
-    }
-
-    public OrbitaryWindow getOrbitaryWindow()
-    {
-        return orbitaryWindow;
     }
 
     public void addPlanets()
@@ -106,19 +98,7 @@ public class Mainframe extends JFrame
         pathTransition.setNode(planet.getSphereFromPlanet());
         planetList.add(planet);
     }
-
-    public void changeColorCircle(Color color)
-    {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        circle.setFill(color);
-                        initFX(orbitaryWindow);
-                    }
-                });
-    }
-
+    
     public void addOrbit(Ellipse orbit)
     {
         root.getChildren().add(orbit);
@@ -126,7 +106,7 @@ public class Mainframe extends JFrame
 
     public void init()
     {
-        initFX(orbitaryWindow);
+        initFX(orbitPanel);
     }
 
 

@@ -53,10 +53,8 @@ public class Controller
         });
         //JOptionPane.showMessageDialog(null, mainframe);
 
-
         printAllPlanetsOrbits();
 
-        //addPlanettoGUI();
     }
 
     private void readAllPlanets()
@@ -88,13 +86,6 @@ public class Controller
     public Ellipse getEarthOrbit()
     {
         return planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
-    }
-
-    public void addPlanettoGUI()
-    {
-        Ellipse orbit = planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
-
-        mainframe.getOrbitaryWindow().addOrbit(orbit);
     }
 
 
