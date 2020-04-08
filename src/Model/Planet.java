@@ -69,6 +69,16 @@ public class Planet
         return new Sphere();
     }
 
+    public double getMass()
+    {
+        JSONObject planetMass = (JSONObject )planetInfo.get("mass");
+
+        double massValue = (double) planetMass.get("massValue");
+        long massExponent = (long) planetMass.get("massExponent");
+
+        return massValue * (Math.pow(10, massExponent));
+    }
+
     @Override
     public String toString() //Prints information about planets orbit
     {
