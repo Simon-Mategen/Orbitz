@@ -54,7 +54,7 @@ public class Controller
         JOptionPane.showMessageDialog(null, mainframe);
 
 
-        //printAllPlanetsOrbits();
+        printAllPlanetsOrbits();
 
         //addPlanettoGUI();
     }
