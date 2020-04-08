@@ -74,11 +74,21 @@ public class Planet
         return new Sphere(30);
     }
 
+    public double getMass()
+    {
+        JSONObject planetMass = (JSONObject )planetInfo.get("mass");
+
+        double massValue = (double) planetMass.get("massValue");
+        long massExponent = (long) planetMass.get("massExponent");
+
+        return massValue * (Math.pow(10, massExponent));
+    }
+
     @Override
     public String toString() //Prints information about planets orbit
     {
-        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\t" + "Width: " + planetOrbit.getWidth() + "\t" + "X: " + planetOrbit.getXCord() + "\t" + "Y: " + planetOrbit.getYCord() + "\n"
-                + "A: " + getAphelion() + "\t" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "     " + planetOrbit.getRealCircumference();
+        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\n" + "Width: " + planetOrbit.getWidth() + "\n" + "x: " + planetOrbit.getXCord() + "\n" + "x: " + planetOrbit.getYCord() + "\n"
+                + "A: " + getAphelion() + "\n" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "\n" + planetOrbit.getRealCircumference() + "\n" + "Mass: " + getMass();
 
     }
 
