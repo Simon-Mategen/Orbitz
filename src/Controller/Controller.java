@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.Calculators.OrbitCalculator;
+import Controller.Calculators.PlanetCalculator;
 import Model.Orbit;
 import Model.Sun;
 
@@ -23,6 +24,7 @@ public class Controller
 {
     private APIReader reader;
     private OrbitCalculator orbitCalculator;
+    private PlanetCalculator planetCalculator;
     private Mainframe mainframe;
 
     private Sun sun;
@@ -34,6 +36,7 @@ public class Controller
     {
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
+        planetCalculator = new PlanetCalculator();
 
         this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
         sun.setYCord(0);
@@ -56,7 +59,11 @@ public class Controller
 
         printAllPlanetsOrbits();
 
-        //addPlanettoGUI();
+        for (Planet p : planetArrayList)
+        {
+            System.out.println(planetCalculator.calculatePlanetSunOrbitTime(sun, p));
+        }
+
     }
 
     private void readAllPlanets()
@@ -88,13 +95,6 @@ public class Controller
     public Ellipse getEarthOrbit()
     {
         return planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
-    }
-
-    public void addPlanettoGUI()
-    {
-        Ellipse orbit = planetArrayList.get(3).getPlanetOrbit().getEllipseFromOrbit();
-
-        mainframe.getOrbitaryWindow().addOrbit(orbit);
     }
 
 
