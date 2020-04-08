@@ -56,14 +56,8 @@ public class Controller
         });
         //JOptionPane.showMessageDialog(null, mainframe);
 
-
         printAllPlanetsOrbits();
-
-        for (Planet p : planetArrayList)
-        {
-            System.out.println(planetCalculator.calculatePlanetSunOrbitTime(sun, p));
-        }
-
+        
     }
 
     private void readAllPlanets()
