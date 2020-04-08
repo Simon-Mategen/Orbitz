@@ -25,20 +25,18 @@ public class Mainframe extends JFrame
 
     private LinkedList<Planet> planetList = new LinkedList<>();
     private LinkedList<Orbit> orbitList = new LinkedList<>();
-    private JFXPanel orbitPanel;
+    private  JFXPanel orbitPanel;
     private final int WIDTH = 1200;
     private final int HEIGHT = 700;
     private StackPane root;
 
     public Mainframe()
     {
-
-        final JFXPanel fxPanel = new JFXPanel();
-        add(fxPanel);
+        orbitPanel = new JFXPanel();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                initFX(fxPanel);
+                initFX(orbitPanel);
             }
         });
         setSize(WIDTH,HEIGHT);
@@ -47,7 +45,6 @@ public class Mainframe extends JFrame
         setVisible(true);
 
         setSize(1400, 900);
-        orbitPanel = new JFXPanel();
         add(orbitPanel);
 
 
@@ -74,6 +71,7 @@ public class Mainframe extends JFrame
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT))));
+
 
         addPlanets();
         addOrbits();
@@ -113,9 +111,6 @@ public class Mainframe extends JFrame
 
     public void addPlanet(Planet planet)
     {
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setPath(planet.getPlanetOrbit().getEllipseFromOrbit());
-        pathTransition.setNode(planet.getSphereFromPlanet());
         planetList.add(planet);
     }
     

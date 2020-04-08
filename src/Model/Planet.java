@@ -1,5 +1,7 @@
 package Model;
 
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.scene.shape.Sphere;
 import javafx.util.Duration;
@@ -71,7 +73,7 @@ public class Planet
 
     public Sphere getSphereFromPlanet()
     {
-        return new Sphere(30);
+        return sphere;
     }
 
     public double getMass()
@@ -101,6 +103,9 @@ public class Planet
     {
         pathTransition.setNode(sphere);
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
+        pathTransition.setDuration(Duration.seconds(2)); // temp
+        pathTransition.setCycleCount(Animation.INDEFINITE);
+        pathTransition.setInterpolator(Interpolator.LINEAR);
 
     }
 
