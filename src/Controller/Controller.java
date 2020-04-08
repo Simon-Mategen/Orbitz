@@ -51,7 +51,7 @@ public class Controller
                 mainframe.init();
             }
         });
-        JOptionPane.showMessageDialog(null, mainframe);
+        //JOptionPane.showMessageDialog(null, mainframe);
 
 
         printAllPlanetsOrbits();
