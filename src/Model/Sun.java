@@ -42,8 +42,8 @@ public class Sun
     {
         JSONObject sunMass = (JSONObject)sunInfo.get("mass");
 
-        double massValue = (double) sunMass.get("massValue");
-        long massExponent = (long) sunMass.get("massExponent");
+        double massValue = ((double) sunMass.get("massValue"))-0.5;
+        long massExponent = 2* (((long) sunMass.get("massExponent"))-1);
 
         return massValue * (Math.pow(10, massExponent));
     }
