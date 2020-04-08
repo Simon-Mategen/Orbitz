@@ -14,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Sphere;
-import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.Collections;
@@ -58,7 +57,7 @@ public class Mainframe extends JPanel
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT))));
-        addPlanets();
+        placePlanets();
         addOrbits();
         
 
@@ -75,11 +74,13 @@ public class Mainframe extends JPanel
         return orbitaryWindow;
     }
 
-    public void addPlanets()
+    public void placePlanets()
     {
         for (int i = 0; i < planetList.size()  ; i++)
         {
             root.getChildren().add(planetList.get(i).getSphereFromPlanet());
+            planetList.get(i).getPathTransition();
+
         }
     }
 
@@ -91,17 +92,8 @@ public class Mainframe extends JPanel
         }
     }
 
-
-    public void addSun(Sphere sun)
-    {
-        root.getChildren().add(sun);
-    }
-
     public void addPlanet(Planet planet)
     {
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setPath(planet.getPlanetOrbit().getEllipseFromOrbit());
-        pathTransition.setNode(planet.getSphereFromPlanet());
         planetList.add(planet);
     }
 
