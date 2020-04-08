@@ -81,6 +81,9 @@ public class Mainframe extends JFrame
         for (int i = 0; i < planetList.size()  ; i++)
         {
             root.getChildren().add(planetList.get(i).getSphereFromPlanet());
+            root.getChildren().add(planetList.get(i).getPlanetOrbit().getEllipseFromOrbit());
+           planetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();
+
         }
     }
 

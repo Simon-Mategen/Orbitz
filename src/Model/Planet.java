@@ -3,6 +3,8 @@ package Model;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Sphere;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
@@ -26,6 +28,7 @@ public class Planet
     public Planet(JSONObject object)
     {
         this.planetInfo = object;
+
     }
 
     public String getID()
@@ -108,6 +111,7 @@ public class Planet
         pathTransition.setCycleCount(Animation.INDEFINITE);
         pathTransition.setInterpolator(Interpolator.LINEAR);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+
 
     }
 
