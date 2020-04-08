@@ -82,8 +82,8 @@ public class Planet
     @Override
     public String toString() //Prints information about planets orbit
     {
-        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\t" + "Width: " + planetOrbit.getWidth() + "\t" + "X: " + planetOrbit.getXCord() + "\t" + "Y: " + planetOrbit.getYCord() + "\n"
-                + "A: " + getAphelion() + "\t" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "     " + planetOrbit.getRealCircumference();
+        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\n" + "Width: " + planetOrbit.getWidth() + "\n" + "x: " + planetOrbit.getXCord() + "\n" + "x: " + planetOrbit.getYCord() + "\n"
+                + "A: " + getAphelion() + "\n" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "\n" + planetOrbit.getRealCircumference() + "\n" + "Mass: " + getMass();
 
     }
 

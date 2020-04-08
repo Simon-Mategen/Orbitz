@@ -44,7 +44,7 @@ public class Controller
         readAllPlanets();
         addPlanetOrbits();
 
-        //printAllPlanetsOrbits();
+        printAllPlanetsOrbits();
 
         //addPlanettoGUI();
     }
