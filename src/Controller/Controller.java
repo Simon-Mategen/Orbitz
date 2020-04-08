@@ -40,6 +40,7 @@ public class Controller
         sun.setXCord(0);
         readAllPlanets();
         addPlanetOrbits();
+        setPathtransitions();
 
         System.out.println(sun.getMass());
 
@@ -62,6 +63,14 @@ public class Controller
         for(Planets p : Planets.values())
         {
             planetArrayList.add(new Planet(reader.readBodyFromAPI(p.toString())));
+        }
+    }
+
+    private void setPathtransitions()
+    {
+        for (int i = 0; i < planetArrayList.size() ; i++)
+        {
+            planetArrayList.get(i).setPathTransition();
         }
     }
 

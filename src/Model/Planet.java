@@ -2,6 +2,7 @@ package Model;
 
 import javafx.animation.PathTransition;
 import javafx.scene.shape.Sphere;
+import javafx.util.Duration;
 import org.json.simple.JSONObject;
 
 public class Planet
@@ -13,8 +14,8 @@ public class Planet
 
     private double diameter;
 
-    private Sphere sphere;
-    private PathTransition pathTransition;
+    private Sphere sphere = new Sphere(30); // temp
+    private PathTransition pathTransition = new PathTransition();
 
     private Orbit planetOrbit;
 
@@ -22,7 +23,6 @@ public class Planet
     public Planet(JSONObject object)
     {
         this.planetInfo = object;
-        setPathTransition();
     }
 
     public String getID()
@@ -94,11 +94,18 @@ public class Planet
 
     public void setPathTransition(PathTransition pathTransition) {
         this.pathTransition = pathTransition;
+
     }
 
-    private void setPathTransition()
+    public void setPathTransition()
     {
-        pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
         pathTransition.setNode(sphere);
+        pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
+
+    }
+
+    public PathTransition getPathTransiton()
+    {
+        return pathTransition;
     }
 }
