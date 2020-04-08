@@ -11,6 +11,7 @@ public class Orbit
     private long xCord;
     private long yCord;
     private long circumference;
+    private Ellipse ellipse;
 
     public Orbit(long inWidth, long inHeight, long inXCord, long inYCord)
     {
@@ -18,6 +19,9 @@ public class Orbit
         this.height = inHeight;
         this.xCord = inXCord;
         this.yCord = inYCord;
+        ellipse = new Ellipse((double)getXCord(), (double)getYCord(), (double)getWidth(), (double)getHeight());
+        ellipse.setStroke(Color.GRAY);
+        ellipse.setFill(Color.TRANSPARENT);
     }
 
     public long getWidth()
@@ -67,7 +71,7 @@ public class Orbit
 
     public Ellipse getEllipseFromOrbit()
     {
-        return new Ellipse((double)getXCord(), (double)getYCord(), (double)getWidth(), (double)getHeight());
+        return ellipse;
     }
 
 

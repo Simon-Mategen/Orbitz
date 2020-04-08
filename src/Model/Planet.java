@@ -13,10 +13,11 @@ public class Planet
     private long perihelion;
     private long aphelion;
     private JSONObject planetInfo;
+    private Duration duration;
 
     private double diameter;
 
-    private Sphere sphere = new Sphere(30); // temp
+    private Sphere sphere = new Sphere(10); // temp
     private PathTransition pathTransition = new PathTransition();
 
     private Orbit planetOrbit;
@@ -103,14 +104,23 @@ public class Planet
     {
         pathTransition.setNode(sphere);
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
-        pathTransition.setDuration(Duration.seconds(2)); // temp
+        pathTransition.setDuration(duration);
         pathTransition.setCycleCount(Animation.INDEFINITE);
         pathTransition.setInterpolator(Interpolator.LINEAR);
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
 
     }
 
     public PathTransition getPathTransiton()
     {
         return pathTransition;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
     }
 }

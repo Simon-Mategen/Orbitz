@@ -2,19 +2,15 @@ package View;
 
 import Model.Orbit;
 import Model.Planet;
-import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Sphere;
-import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.util.Collections;
@@ -73,14 +69,14 @@ public class Mainframe extends JFrame
                         BackgroundSize.DEFAULT))));
 
 
-        addPlanets();
-        addOrbits();
+        placePlanets();
+        placeOrbits();
         startOrbits();
 
         return scene;
     }
 
-    public void addPlanets()
+    public void placePlanets()
     {
         for (int i = 0; i < planetList.size()  ; i++)
         {
@@ -96,7 +92,7 @@ public class Mainframe extends JFrame
         }
     }
 
-    public void addOrbits()
+    public void placeOrbits()
     {
         for (int i = 0; i < orbitList.size() ; i++)
         {

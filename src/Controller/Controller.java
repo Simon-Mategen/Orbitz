@@ -17,6 +17,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.util.Duration;
 
 import javax.swing.*;
 
@@ -43,15 +44,14 @@ public class Controller
         sun.setXCord(0);
         readAllPlanets();
         addPlanetOrbits();
+        setPlanetDurations();
         setPathtransitions();
-
         System.out.println(sun.getMass());
-
         mainframe = new Mainframe();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                mainframe.addPlanet(planetArrayList.get(2));
+                addPlanets();
                 mainframe.init();
             }
         });
@@ -74,6 +74,25 @@ public class Controller
         for (int i = 0; i < planetArrayList.size() ; i++)
         {
             planetArrayList.get(i).setPathTransition();
+        }
+    }
+
+    private void setPlanetDurations()
+    {
+        for (Planet planet: planetArrayList)
+        {
+            planet.setDuration(new Duration(planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*1000));
+        }
+    }
+
+
+
+
+    private void addPlanets()
+    {
+        for (int i = 0; i < planetArrayList.size() ; i++)
+        {
+            mainframe.addPlanet(planetArrayList.get(i));
         }
     }
 
