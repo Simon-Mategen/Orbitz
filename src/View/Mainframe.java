@@ -20,9 +20,10 @@ import javax.swing.*;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class Mainframe extends JPanel
+public class Mainframe extends JFrame
 {
     private OrbitaryWindow orbitaryWindow = new OrbitaryWindow();
+
     private Sphere earth;
     private Sphere moon;
     private LinkedList<Planet> planetList = new LinkedList<>();
@@ -33,8 +34,9 @@ public class Mainframe extends JPanel
 
     public Mainframe()
     {
-        circle.setFill(Color.RED);
-        add(orbitaryWindow);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setVisible(true);
     }
 
 
