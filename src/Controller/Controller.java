@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.Calculators.OrbitCalculator;
+import Controller.Calculators.PlanetCalculator;
 import Model.Orbit;
 import Model.Sun;
 
@@ -23,6 +24,7 @@ public class Controller
 {
     private APIReader reader;
     private OrbitCalculator orbitCalculator;
+    private PlanetCalculator planetCalculator;
     private Mainframe mainframe;
 
     private Sun sun;
@@ -34,6 +36,7 @@ public class Controller
     {
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
+        planetCalculator = new PlanetCalculator();
 
         this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
         sun.setYCord(0);
@@ -55,7 +58,7 @@ public class Controller
         //JOptionPane.showMessageDialog(null, mainframe);
 
         printAllPlanetsOrbits();
-
+        
     }
 
     private void readAllPlanets()
