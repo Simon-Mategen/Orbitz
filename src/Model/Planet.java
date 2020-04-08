@@ -14,6 +14,7 @@ public class Planet
     private long semimajorAxis;
     private long perihelion;
     private long aphelion;
+    private double meanRadius;
     private JSONObject planetInfo;
     private Duration duration;
 
@@ -90,11 +91,17 @@ public class Planet
         return massValue * (Math.pow(10, massExponent));
     }
 
+    public double getMeanRadius() {
+        meanRadius = (double) planetInfo.get("meanRadius");
+        return meanRadius;
+    }
+
     @Override
     public String toString() //Prints information about planets orbit
     {
-        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\n" + "Width: " + planetOrbit.getWidth() + "\n" + "x: " + planetOrbit.getXCord() + "\n" + "x: " + planetOrbit.getYCord() + "\n"
-                + "A: " + getAphelion() + "\n" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "\n" + planetOrbit.getRealCircumference() + "\n" + "Mass: " + getMass();
+        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\n" + "Width: " + planetOrbit.getWidth() + "\n" + "x: " + planetOrbit.getXCord() + "\n" + "y: " + planetOrbit.getYCord() + "\n"
+                + "A: " + getAphelion() + "\n" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "\n" + planetOrbit.getRealCircumference() + "\n" + "Mass (kg): " + getMass()
+                + "\n" + "Radius (km): " + getMeanRadius();
 
     }
 
