@@ -24,15 +24,30 @@ public class Mainframe extends JFrame
     private OrbitaryWindow orbitaryWindow = new OrbitaryWindow();
     private LinkedList<Sphere> planetList = new LinkedList<>();
     private LinkedList<Ellipse> orbitList = new LinkedList<>();
+    private final int WIDTH = 1200;
+    private final int HEIGHT = 700;
+
 
     private Circle circle = new Circle(30);
     private StackPane root;
 
     public Mainframe()
     {
+
+        final JFXPanel fxPanel = new JFXPanel();
+        add(fxPanel);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                initFX(fxPanel);
+            }
+        });
+        setSize(WIDTH,HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
+        //pack();
         setVisible(true);
+
+
     }
 
 
@@ -45,7 +60,7 @@ public class Mainframe extends JFrame
     private Scene createScene()
     {
         root = new StackPane();
-        Scene scene = new Scene(root, 1200, 700);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
         root.setBackground(new Background(
                 Collections.singletonList(new BackgroundFill(
                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
