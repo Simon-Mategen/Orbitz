@@ -22,23 +22,35 @@ import java.util.LinkedList;
 
 public class Mainframe extends JFrame
 {
-    private Sphere earth;
-    private Sphere moon;
+
     private LinkedList<Planet> planetList = new LinkedList<>();
     private LinkedList<Orbit> orbitList = new LinkedList<>();
     private JFXPanel orbitPanel;
-
-    private Circle circle = new Circle(30);
+    private final int WIDTH = 1200;
+    private final int HEIGHT = 700;
     private StackPane root;
 
     public Mainframe()
     {
+
+        final JFXPanel fxPanel = new JFXPanel();
+        add(fxPanel);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                initFX(fxPanel);
+            }
+        });
+        setSize(WIDTH,HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
+        //pack();
         setVisible(true);
+
         setSize(1400, 900);
         orbitPanel = new JFXPanel();
         add(orbitPanel);
+
+
     }
 
 
@@ -51,7 +63,7 @@ public class Mainframe extends JFrame
     private Scene createScene()
     {
         root = new StackPane();
-        Scene scene = new Scene(root, 1200, 700);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
         root.setBackground(new Background(
                 Collections.singletonList(new BackgroundFill(
                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
@@ -62,9 +74,9 @@ public class Mainframe extends JFrame
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT))));
+
         addPlanets();
         addOrbits();
-        
 
         return scene;
     }
@@ -84,7 +96,6 @@ public class Mainframe extends JFrame
             root.getChildren().add(orbitList.get(i).getEllipseFromOrbit());
         }
     }
-
 
     public void addSun(Sphere sun)
     {
