@@ -1,5 +1,6 @@
 package View;
 
+import Model.Orbit;
 import Model.Planet;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
@@ -24,8 +25,8 @@ public class Mainframe extends JPanel
     private OrbitaryWindow orbitaryWindow = new OrbitaryWindow();
     private Sphere earth;
     private Sphere moon;
-    private LinkedList<Sphere> planetList = new LinkedList<>();
-    private LinkedList<Ellipse> orbitList = new LinkedList<>();
+    private LinkedList<Planet> planetList = new LinkedList<>();
+    private LinkedList<Orbit> orbitList = new LinkedList<>();
 
     private Circle circle = new Circle(30);
     private StackPane root;
@@ -57,9 +58,9 @@ public class Mainframe extends JPanel
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT))));
-
         addPlanets();
         addOrbits();
+        
 
         return scene;
     }
@@ -78,7 +79,7 @@ public class Mainframe extends JPanel
     {
         for (int i = 0; i < planetList.size()  ; i++)
         {
-            root.getChildren().add(planetList.get(i));
+            root.getChildren().add(planetList.get(i).getSphereFromPlanet());
         }
     }
 
@@ -86,9 +87,10 @@ public class Mainframe extends JPanel
     {
         for (int i = 0; i < orbitList.size() ; i++)
         {
-            root.getChildren().add(orbitList.get(i));
+            root.getChildren().add(orbitList.get(i).getEllipseFromOrbit());
         }
     }
+
 
     public void addSun(Sphere sun)
     {
@@ -100,7 +102,7 @@ public class Mainframe extends JPanel
         PathTransition pathTransition = new PathTransition();
         pathTransition.setPath(planet.getPlanetOrbit().getEllipseFromOrbit());
         pathTransition.setNode(planet.getSphereFromPlanet());
-        planetList.add(planet.getSphereFromPlanet());
+        planetList.add(planet);
     }
 
     public void changeColorCircle(Color color)
