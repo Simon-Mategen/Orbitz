@@ -10,8 +10,11 @@ import Model.Planet;
 import Enum.*;
 import View.Mainframe;
 import View.OrbitaryWindow;
+import com.sun.tools.javac.Main;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
 import javax.swing.*;
@@ -20,7 +23,7 @@ public class Controller
 {
     private APIReader reader;
     private OrbitCalculator orbitCalculator;
-    Mainframe mainframe;
+    private Mainframe mainframe;
 
     private Sun sun;
 
@@ -29,20 +32,27 @@ public class Controller
 
     public Controller()
     {
-        mainframe = new Mainframe();
-        JOptionPane.showMessageDialog(null, mainframe);
-
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
 
         this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
         sun.setYCord(0);
         sun.setXCord(0);
+        readAllPlanets();
+        addPlanetOrbits();
 
         System.out.println(sun.getMass());
 
-        readAllPlanets();
-        addPlanetOrbits();
+        mainframe = new Mainframe();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                mainframe.addPlanet(planetArrayList.get(2));
+                mainframe.init();
+            }
+        });
+        JOptionPane.showMessageDialog(null, mainframe);
+
 
         //printAllPlanetsOrbits();
 
@@ -56,6 +66,7 @@ public class Controller
             planetArrayList.add(new Planet(reader.readBodyFromAPI(p.toString())));
         }
     }
+
 
     private void addPlanetOrbits()
     {

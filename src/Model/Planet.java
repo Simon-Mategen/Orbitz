@@ -66,7 +66,7 @@ public class Planet
 
     public Sphere getSphereFromPlanet()
     {
-        return new Sphere();
+        return new Sphere(30);
     }
 
     @Override

@@ -153,7 +153,6 @@ public class OrbitaryWindow extends JFXPanel {
         pathTransition.setNode(planet.getSphereFromPlanet());
         root.getChildren().add(planet.getSphereFromPlanet());
         planetList.add(planet);
-
         pathTransition.play();
     }
 
