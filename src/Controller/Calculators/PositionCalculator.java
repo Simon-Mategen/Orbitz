@@ -62,7 +62,7 @@ public class PositionCalculator {
         E16 = E15 - (E15-(180/Math.PI) * e * Math.sin(E15)-M)/(1-e*Math.cos(E15));
         System.out.println("E16 = " + E16);
 
-        //Mercurys heliocentric ecliptic rectangular coordinates
+        //Mercurys rectangular coordinates
         //x och y blir fel eftersom E är fel. Nu antar vi att E = 81.1572
         x = a * (Math.cos(81.1572)-e);
         y = a * (Math.sqrt(1-(e*e)))*Math.sin(81.1572);
@@ -71,7 +71,7 @@ public class PositionCalculator {
 
         //Mercury, r = radius vector, v = true anomaly
         //Blir fel även med samma värde på E som på sidan
-        //Enligt sidan ska det bli: r = 0.374862 (nära vår beräkning), v = 93.0727 (helt fel)
+        //Enligt sidan ska det bli: r = 0.374862 (nära vår beräkning), v = 93.0727 (vår beräkning blir helt fel)
         r = Math.sqrt((x*x)+(y*y));
         v = Math.atan2(y, x);
         System.out.println("r = " + r);
