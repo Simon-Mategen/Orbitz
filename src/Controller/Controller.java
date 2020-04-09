@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Calculators.OrbitCalculator;
 import Controller.Calculators.PlanetCalculator;
+import Controller.Calculators.PositionCalculator;
 import Model.Orbit;
 import Model.Sun;
 
@@ -26,6 +27,7 @@ public class Controller
     private APIReader reader;
     private OrbitCalculator orbitCalculator;
     private PlanetCalculator planetCalculator;
+    private PositionCalculator positionCalculator;
     private Mainframe mainframe;
 
     private Sun sun;
@@ -38,6 +40,8 @@ public class Controller
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
         planetCalculator = new PlanetCalculator();
+        positionCalculator = new PositionCalculator();
+
 
         this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
         sun.setYCord(0);
@@ -46,7 +50,7 @@ public class Controller
         addPlanetOrbits();
         setPlanetDurations();
         setPathtransitions();
-        System.out.println(sun.getMass());
+
         mainframe = new Mainframe();
         Platform.runLater(new Runnable() {
             @Override
@@ -57,7 +61,9 @@ public class Controller
         });
         //JOptionPane.showMessageDialog(null, mainframe);
 
-        printAllPlanetsOrbits();
+        //positionCalculator.setValues(1990, 4, 19);
+
+        //printAllPlanetsOrbits();
         
     }
 
