@@ -62,7 +62,7 @@ public class Mainframe extends JFrame
                 Collections.singletonList(new BackgroundFill(
                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
                 Collections.singletonList(new BackgroundImage(
-                        new Image("https://www.wallpaperup.com/uploads/wallpapers/2013/08/21/136960/e86660f10f06aef664c8d552a7ec487a-700.jpg",
+                        new Image("https://www.wallpaperup.com/uploads/wallpapers/2014/04/12/330551/185c99304364bba58fe8bfe3765fcf64.jpg",
                                 WIDTH, HEIGHT, false, true),
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundRepeat.NO_REPEAT,

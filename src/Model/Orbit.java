@@ -6,60 +6,60 @@ public class Orbit
 {
     private static final long SCALE_VALUE = 10000000;
 
-    private long width;
-    private long height;
-    private long xCord;
-    private long yCord;
-    private long circumference;
+    private double width;
+    private double height;
+    private double xCord;
+    private double yCord;
+    private double circumference;
     private Ellipse ellipse;
 
-    public Orbit(long inWidth, long inHeight, long inXCord, long inYCord)
+    public Orbit(double inWidth, double inHeight, double inXCord, double inYCord)
     {
         this.width = inWidth;
         this.height = inHeight;
         this.xCord = inXCord;
         this.yCord = inYCord;
-        ellipse = new Ellipse((double)getXCord(), (double)getYCord(), (double)getWidth(), (double)getHeight());
+        ellipse = new Ellipse(getXCord(), getYCord(), getWidth(), getHeight());
         ellipse.setStroke(Color.GRAY);
         ellipse.setFill(Color.TRANSPARENT);
     }
 
-    public long getWidth()
+    public double getWidth()
     {
         return width/SCALE_VALUE;
     }
 
-    public long getHeight()
+    public double getHeight()
     {
         return height/SCALE_VALUE;
     }
 
-    public long getRealHeight()
+    public double getRealHeight()
     {
         return height;
     }
 
-    public long getRealWidth()
+    public double getRealWidth()
     {
         return width;
     }
 
-    public long getXCord()
+    public double getXCord()
     {
         return xCord/SCALE_VALUE;
     }
 
-    public long getYCord()
+    public double getYCord()
     {
         return yCord/SCALE_VALUE;
     }
 
-    public long getCircumference()
+    public double getCircumference()
     {
         return circumference/SCALE_VALUE;
     }
 
-    public long getRealCircumference()
+    public double getRealCircumference()
     {
         return circumference;
     }

@@ -12,8 +12,8 @@ import org.json.simple.JSONObject;
 public class Planet
 {
     private long semimajorAxis;
-    private long perihelion;
-    private long aphelion;
+    private double perihelion;
+    private double aphelion;
     private double meanRadius;
     private JSONObject planetInfo;
     private Duration duration;
@@ -28,7 +28,10 @@ public class Planet
 
     public Planet(JSONObject object)
     {
+        //flyttade hit aphelion och perihelion, innan låg dom i get-metoderna
         this.planetInfo = object;
+        this.perihelion = (long)planetInfo.get("perihelion");
+        this.aphelion = (long)planetInfo.get("aphelion");
 
     }
 
@@ -40,21 +43,27 @@ public class Planet
     public long getSemiMajorAxis()
     {
         semimajorAxis= (long)planetInfo.get("semimajorAxis");
+
         return semimajorAxis;
     }
 
-    public long getPerihelion()
+    public double getPerihelion()
     {
-        perihelion = (long)planetInfo.get("perihelion");
         return perihelion;
     }
 
-    public long getAphelion()
+    public double getAphelion()
     {
-        aphelion = (long)planetInfo.get("aphelion");
         return aphelion;
     }
 
+    public void setAphelion(double aphelion) {
+        this.aphelion = aphelion;
+    }
+
+    public void setPerihelion(double perihelion) {
+        this.perihelion = perihelion;
+    }
 
     public String getName()
     {
@@ -99,7 +108,7 @@ public class Planet
     @Override
     public String toString() //Prints information about planets orbit
     {
-        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\n" + "Width: " + planetOrbit.getWidth() + "\n" + "x: " + planetOrbit.getXCord() + "\n" + "y: " + planetOrbit.getYCord() + "\n"
+        return getName() + "\n" + "Height: " + planetOrbit.getHeight()*10000000 + "\n" + "Width: " + planetOrbit.getWidth()*10000000 + "\n" + "x: " + planetOrbit.getXCord() + "\n" + "y: " + planetOrbit.getYCord() + "\n"
                 + "A: " + getAphelion() + "\n" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "\n" + planetOrbit.getRealCircumference() + "\n" + "Mass (kg): " + getMass()
                 + "\n" + "Radius (km): " + getMeanRadius();
 
