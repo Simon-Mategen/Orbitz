@@ -5,6 +5,7 @@ import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -82,7 +83,9 @@ public class Mainframe extends JFrame
         {
             root.getChildren().add(planetList.get(i).getSphereFromPlanet());
             root.getChildren().add(planetList.get(i).getPlanetOrbit().getEllipseFromOrbit());
-           planetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();
+            planetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();
+            StackPane.setMargin(planetList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
+                    new Insets(0, 0, 0, planetList.get(i).getPlanetOrbit().getXCord() * 2 ));
 
         }
     }

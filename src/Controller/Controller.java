@@ -63,7 +63,7 @@ public class Controller
 
         //positionCalculator.setValues(1990, 4, 19);
 
-        //printAllPlanetsOrbits();
+        printAllPlanetsOrbits();
         
     }
 
