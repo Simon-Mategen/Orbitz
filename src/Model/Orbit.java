@@ -1,10 +1,11 @@
 package Model;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.PathElement;
 
 public class Orbit
 {
-    private static final long SCALE_VALUE = 10000000;
+    private static final long SCALE_VALUE = 25000000;
 
     private double width;
     private double height;

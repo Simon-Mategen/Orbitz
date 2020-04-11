@@ -4,8 +4,8 @@ import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Sphere;
+import javafx.scene.shape.*;
+import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
 
@@ -17,10 +17,11 @@ public class Planet
     private double meanRadius;
     private JSONObject planetInfo;
     private Duration duration;
+    private double SCALE_RADIUS_VALUE = 2500000;
 
     private double diameter;
 
-    private Sphere sphere = new Sphere(10); // temp
+    private Sphere sphere; // temp
     private PathTransition pathTransition = new PathTransition();
 
     private Orbit planetOrbit;
@@ -29,9 +30,12 @@ public class Planet
     public Planet(JSONObject object)
     {
         //flyttade hit aphelion och perihelion, innan låg dom i get-metoderna
+        //la till specifika värden på getSphereFromPlanet för varje planet
+        //Skalan på planeterna är 10 gånger större jämfört med hur ellipserna är skalade.
         this.planetInfo = object;
         this.perihelion = (long)planetInfo.get("perihelion");
         this.aphelion = (long)planetInfo.get("aphelion");
+        this.sphere = new Sphere((double)planetInfo.get("meanRadius")*1000/SCALE_RADIUS_VALUE);
 
     }
 
@@ -108,7 +112,7 @@ public class Planet
     @Override
     public String toString() //Prints information about planets orbit
     {
-        return getName() + "\n" + "Height: " + planetOrbit.getHeight()*10000000 + "\n" + "Width: " + planetOrbit.getWidth()*10000000 + "\n" + "x: " + planetOrbit.getXCord() + "\n" + "y: " + planetOrbit.getYCord() + "\n"
+        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\n" + "Width: " + planetOrbit.getWidth() + "\n" + "x: " + planetOrbit.getXCord() + "\n" + "y: " + planetOrbit.getYCord() + "\n"
                 + "A: " + getAphelion() + "\n" + "P: " + getPerihelion() + "\n" + "Circumference: " + planetOrbit.getCircumference() + "\n" + planetOrbit.getRealCircumference() + "\n" + "Mass (kg): " + getMass()
                 + "\n" + "Radius (km): " + getMeanRadius();
 
@@ -121,6 +125,7 @@ public class Planet
 
     public void setPathTransition()
     {
+        //sphere.getTransforms().add(new Translate(0, 0)); placering utav en node på en viss koordinat
         pathTransition.setNode(sphere);
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
         pathTransition.setDuration(duration);
