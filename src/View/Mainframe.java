@@ -1,18 +1,17 @@
 package View;
 
 import Controller.Controller;
-import Model.Orbit;
 import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Sphere;
-import javafx.util.Duration;
+import javafx.scene.input.KeyEvent;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -147,6 +146,7 @@ public class Mainframe extends JFrame
     {
         root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
+        scene.setFill(Color.BLACK);
         root.setBackground(new Background(
                 Collections.singletonList(new BackgroundFill(
                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
@@ -158,6 +158,30 @@ public class Mainframe extends JFrame
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT))));
 
+        PerspectiveCamera camera = new PerspectiveCamera(true);
+        camera.setTranslateZ(-1000);
+        camera.setNearClip(0.01);
+        camera.setFarClip(2000.0);
+        camera.setFieldOfView(35);
+        camera.setTranslateX(650);
+        camera.setTranslateY(300);
+        scene.setCamera(camera);
+
+        scene.addEventHandler(ScrollEvent.SCROLL, event ->{
+            double delta = event.getDeltaY();
+            root.translateZProperty().set(root.getTranslateZ() + delta);
+        });
+
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, event ->{
+            switch(event.getCode()){
+                case W:
+                    root.translateZProperty().set(root.getTranslateZ() + 10);
+                    break;
+                case S:
+                    root.translateZProperty().set(root.getTranslateZ() - 10);
+                    break;
+            }
+        });
 
         placePlanets(root);
         startOrbits(root);
