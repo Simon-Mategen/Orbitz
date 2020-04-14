@@ -38,12 +38,30 @@ public class Mainframe extends JFrame
     private JLabel timeLabel;
     private int MAX_SLIDER_VALUE = 100;
 
-    private JPanel componentPanel = new JPanel();
-
     private JButton changeBackgroundBtn = new JButton("Byt bakgrund");
 
     public Mainframe(Controller inController)
     {
+        orbitPanel = new JFXPanel();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                initFX(orbitPanel);
+            }
+        });
+
+        setLayout(new BorderLayout());
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // set frame to size of user's screen
+        setSize(WIDTH, HEIGHT);
+        setVisible(true);
+
+        add(orbitPanel, BorderLayout.WEST);
+        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
+        overheadPanel.setPreferredSize(new Dimension(1400, 60));
+
+        overheadPanel.setBackground(java.awt.Color.WHITE);
         timeLabel = new JLabel("0");
         timeSlider = new JSlider();
         sliderListener = new SliderListener();
@@ -58,34 +76,10 @@ public class Mainframe extends JFrame
         overheadPanel.add(timeLabel);
         overheadPanel.add(timeSlider);
 
-        orbitPanel = new JFXPanel();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                initFX(orbitPanel);
-            }
-        });
-
-        setLayout(new BorderLayout());
-
-        //setSize(WIDTH,HEIGHT);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // set frame to size of user's screen
-        setSize(WIDTH, HEIGHT);
-        setVisible(true);
-
-        add(orbitPanel, BorderLayout.WEST);
-        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
-        overheadPanel.setPreferredSize(new Dimension(1400, 60));
-        //componentPanel.setPreferredSize(new Dimension(200, 200));
-        overheadPanel.setBackground(java.awt.Color.WHITE);
-        //componentPanel.setBackground(java.awt.Color.BLUE);
-        //add(componentPanel, BorderLayout.EAST);
         add(overheadPanel, BorderLayout.NORTH);
         changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
         overheadPanel.add(changeBackgroundBtn);
         overheadPanel.setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE));
-        //componentPanel.add(changeBackgroundBtn);
         changeBackgroundBtn.addActionListener(new ActionListener()
         {
             @Override
