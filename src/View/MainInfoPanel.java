@@ -22,9 +22,9 @@ public class MainInfoPanel extends JPanel
     private ImageGalleryPanel imgPanel;
     private SwenTheAlien swenPanel;
 
-    public MainInfoPanel() throws IOException {
+    public MainInfoPanel() throws IOException
+    {
         imgPanel = new ImageGalleryPanel();
-        //funFactPanel = new FunFactPanel();
         swenPanel = new SwenTheAlien();
         setupPanel();
     }
@@ -44,7 +44,6 @@ public class MainInfoPanel extends JPanel
         setBorder(new CompoundBorder(border, margin));
 
         add(imgPanel,layout.NORTH);
-        //add(funFactPanel,layout.SOUTH);
         add(swenPanel,layout.EAST);
 
     }
