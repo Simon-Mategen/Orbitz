@@ -48,22 +48,13 @@ public class Controller
         sun.setXCord(0);
         readAllPlanets();
         addPlanetOrbits();
-        setPlanetDurations();
+        setPlanetDurations(1000);
         setPathtransitions();
 
-        mainframe = new Mainframe();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                addPlanets();
-                mainframe.init();
-            }
-        });
-        //JOptionPane.showMessageDialog(null, mainframe);
+        mainframe = new Mainframe(this);
+        addPlanets();
 
-        //positionCalculator.setValues(1990, 4, 19);
-
-        printAllPlanetsOrbits();
+        //printAllPlanetsOrbits();
         
     }
 
@@ -75,7 +66,7 @@ public class Controller
         }
     }
 
-    private void setPathtransitions()
+    public void setPathtransitions()
     {
         for (int i = 0; i < planetArrayList.size() ; i++)
         {
@@ -83,16 +74,13 @@ public class Controller
         }
     }
 
-    private void setPlanetDurations()
+    public void setPlanetDurations(double multilpier)
     {
         for (Planet planet: planetArrayList)
         {
-            planet.setDuration(new Duration(planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*1000));
+            planet.setDuration(new Duration(planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*multilpier));
         }
     }
-
-
-
 
     private void addPlanets()
     {

@@ -1,34 +1,50 @@
 package View;
 
+import Controller.Controller;
 import Model.Orbit;
 import Model.Planet;
+import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Sphere;
+import javafx.util.Duration;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.LinkedList;
 
 public class Mainframe extends JFrame
 {
+    private Controller controller;
 
     private LinkedList<Planet> planetList = new LinkedList<>();
     private LinkedList<Orbit> orbitList = new LinkedList<>();
-    private  JFXPanel orbitPanel;
+    private JFXPanel orbitPanel;
     private final int WIDTH = 1200;
     private final int HEIGHT = 700;
     private StackPane root;
 
-    public Mainframe()
+    private JPanel componentPanel = new JPanel();
+
+    private JButton changeBackgroundBtn = new JButton("Byt bakgrund");
+
+    public Mainframe(Controller inController)
     {
+        this.controller = inController;
+
         orbitPanel = new JFXPanel();
         Platform.runLater(new Runnable() {
             @Override
@@ -36,17 +52,46 @@ public class Mainframe extends JFrame
                 initFX(orbitPanel);
             }
         });
-        setSize(WIDTH,HEIGHT);
+
+        setLayout(new BorderLayout());
+
+        //setSize(WIDTH,HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //pack();
+        setSize(1400, 900);
         setVisible(true);
 
-        setSize(1400, 900);
-        add(orbitPanel);
+        add(orbitPanel, BorderLayout.WEST);
 
+        componentPanel.setBackground(java.awt.Color.BLUE);
+        add(componentPanel, BorderLayout.EAST);
 
+        changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
+        componentPanel.add(changeBackgroundBtn);
+        changeBackgroundBtn.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent)
+            {
+                Platform.runLater(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        root.setBackground(new Background(
+                                Collections.singletonList(new BackgroundFill(
+                                        Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
+                                Collections.singletonList(new BackgroundImage(
+                                        new Image("https://i0.wp.com/metro.co.uk/wp-content/uploads/2018/10/sei_36554009-212f.jpg?quality=90&strip=all&zoom=1&resize=644%2C483&ssl=1",
+                                                WIDTH, HEIGHT, false, true),
+                                        BackgroundRepeat.NO_REPEAT,
+                                        BackgroundRepeat.NO_REPEAT,
+                                        BackgroundPosition.CENTER,
+                                        BackgroundSize.DEFAULT))));
+                    }
+                });
+            }
+        });
     }
-
 
     private void initFX(JFXPanel fxPanel) {
         // This method is invoked on JavaFX thread

@@ -118,10 +118,6 @@ public class Planet
 
     }
 
-    public void setPathTransition(PathTransition pathTransition) {
-        this.pathTransition = pathTransition;
-
-    }
 
     public void setPathTransition()
     {
@@ -132,7 +128,6 @@ public class Planet
         pathTransition.setCycleCount(Animation.INDEFINITE);
         pathTransition.setInterpolator(Interpolator.LINEAR);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-
 
     }
 
@@ -145,7 +140,13 @@ public class Planet
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(Duration duration)
+    {
         this.duration = duration;
+    }
+
+    public void changeDuration(Duration d)
+    {
+        pathTransition.durationProperty().set(d);
     }
 }
