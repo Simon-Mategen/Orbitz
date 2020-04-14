@@ -19,8 +19,6 @@ public class Planet
     private Duration duration;
     private double SCALE_RADIUS_VALUE = 2500000;
 
-    private double diameter;
-
     private Sphere sphere; // temp
     private PathTransition pathTransition;
 
@@ -84,10 +82,6 @@ public class Planet
         this.planetOrbit = planetOrbit;
     }
 
-    public void setDiameter(double diameter)
-    {
-        this.diameter = diameter;
-    }
 
     public Sphere getSphereFromPlanet()
     {

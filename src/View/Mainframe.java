@@ -20,6 +20,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -41,6 +42,7 @@ public class Mainframe extends JFrame
     private int MAX_SLIDER_VALUE = 100;
 
     private JButton changeBackgroundBtn = new JButton("Byt bakgrund");
+    private JButton speedBtn = new JButton("SPEED");
 
     public Mainframe(Controller inController)
     {
@@ -87,6 +89,10 @@ public class Mainframe extends JFrame
         add(overheadPanel, BorderLayout.NORTH);
         changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
         overheadPanel.add(changeBackgroundBtn);
+
+        speedBtn.setPreferredSize(new Dimension(200,40));
+        overheadPanel.add(speedBtn);
+
         overheadPanel.setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE));
         changeBackgroundBtn.addActionListener(new ActionListener()
         {
@@ -98,7 +104,7 @@ public class Mainframe extends JFrame
                     @Override
                     public void run()
                     {
-/*                        root.setBackground(new Background(
+                        root.setBackground(new Background(
                                 Collections.singletonList(new BackgroundFill(
                                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
                                 Collections.singletonList(new BackgroundImage(
@@ -107,29 +113,46 @@ public class Mainframe extends JFrame
                                         BackgroundRepeat.NO_REPEAT,
                                         BackgroundRepeat.NO_REPEAT,
                                         BackgroundPosition.CENTER,
-                                        BackgroundSize.DEFAULT))));*/
+                                        BackgroundSize.DEFAULT))));
+                    }
+                });
+            }
+        });
 
-
-                        for (int i = 0; i < guiPlanetList.size(); i++)
+        speedBtn.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent)
+            {
+                Platform.runLater(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        for (Planet p : guiPlanetList)
                         {
-                            guiPlanetList.get(i).getPathTransiton().stop();
+                            p.getPathTransiton().stop();
 
-                            try
-                            {
-                                Thread.sleep(1000);
-                            }
-                            catch (Exception e)
-                            {
-
-                            }
-
-                            /*guiPlanetList.get(i).setDuration(new Duration(1000000));
-                            guiPlanetList.get(i).createPathTransition();*/
-
-                            guiPlanetList.get(i).getPathTransiton().play();
-
+                            p.setDuration(new Duration(1000000));
+                            p.createPathTransition();
                         }
 
+                        root = new StackPane();
+                        orbitPanel.setScene(new Scene(root, WIDTH, HEIGHT));
+                        root.setBackground(new Background(
+                                Collections.singletonList(new BackgroundFill(
+                                        Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
+                                Collections.singletonList(new BackgroundImage(
+                                        new Image("https://ichef.bbci.co.uk/news/410/cpsprodpb/D6B0/production/_95806945_gettyimages-590147780.jpg",
+                                                WIDTH, HEIGHT, false, true),
+                                        BackgroundRepeat.NO_REPEAT,
+                                        BackgroundRepeat.NO_REPEAT,
+                                        BackgroundPosition.CENTER,
+                                        BackgroundSize.DEFAULT))));
+
+
+                        placePlanets(root);
+                        //startOrbits(root);
                     }
                 });
             }
