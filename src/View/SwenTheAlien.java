@@ -51,6 +51,7 @@ public class SwenTheAlien extends JPanel
         lblSwen = new JLabel();
         funFactArea = new JTextArea(100,100);
         funFactArea.setLineWrap(true);
+        funFactArea.setEditable(false);
 
         Font font = new Font("Segoe Script", Font.PLAIN, 18);
         funFactArea.setFont(font);
@@ -68,6 +69,8 @@ public class SwenTheAlien extends JPanel
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                System.out.println("test");
+
             }
         });
 
