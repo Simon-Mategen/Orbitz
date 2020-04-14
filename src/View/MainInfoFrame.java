@@ -26,7 +26,8 @@ public class MainInfoFrame extends JFrame {
     //TODO JavaFX panel för omloppsbanesystem för planet + månar i miniatyr typ
     //TODO lägg till panelen nånstans - förslagsvis på en MainPanel som sen läggs på denna frame?
 
-    public static void main (String [] args) throws IOException {
+    public static void main (String [] args) throws IOException
+    {
         MainInfoFrame iw = new MainInfoFrame();
 
     }
