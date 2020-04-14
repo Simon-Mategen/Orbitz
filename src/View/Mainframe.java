@@ -12,6 +12,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
