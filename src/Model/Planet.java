@@ -22,7 +22,7 @@ public class Planet
     private double diameter;
 
     private Sphere sphere; // temp
-    private PathTransition pathTransition = new PathTransition();
+    private PathTransition pathTransition;
 
     private Orbit planetOrbit;
 
@@ -119,9 +119,10 @@ public class Planet
     }
 
 
-    public void setPathTransition()
+    public void createPathTransition()
     {
         //sphere.getTransforms().add(new Translate(0, 0)); placering utav en node på en viss koordinat
+        pathTransition = new PathTransition();
         pathTransition.setNode(sphere);
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
         pathTransition.setDuration(duration);

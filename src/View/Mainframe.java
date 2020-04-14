@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Sphere;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -19,6 +20,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -26,8 +28,8 @@ public class Mainframe extends JFrame
 {
     private Controller controller;
 
-    private LinkedList<Planet> planetList = new LinkedList<>();
-    private LinkedList<Orbit> orbitList = new LinkedList<>();
+    private ArrayList<Planet> guiPlanetList;
+
     private JFXPanel orbitPanel;
     private JPanel overheadPanel;
     private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -42,6 +44,10 @@ public class Mainframe extends JFrame
 
     public Mainframe(Controller inController)
     {
+        controller = inController;
+
+        guiPlanetList = controller.getPlanetArrayList();
+
         orbitPanel = new JFXPanel();
         Platform.runLater(new Runnable() {
             @Override
@@ -51,16 +57,16 @@ public class Mainframe extends JFrame
         });
 
         setLayout(new BorderLayout());
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // set frame to size of user's screen
         setSize(WIDTH, HEIGHT);
         setVisible(true);
 
-        add(orbitPanel, BorderLayout.WEST);
         orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
-        overheadPanel.setPreferredSize(new Dimension(1400, 60));
+        add(orbitPanel, BorderLayout.WEST);
 
+        overheadPanel = new JPanel();
+        overheadPanel.setPreferredSize(new Dimension(1400, 60));
         overheadPanel.setBackground(java.awt.Color.WHITE);
         timeLabel = new JLabel("0");
         timeSlider = new JSlider();
@@ -72,9 +78,11 @@ public class Mainframe extends JFrame
         timeSlider.addChangeListener(sliderListener);
         sliderListener = new SliderListener();
         this.controller = inController;
-        overheadPanel = new JPanel();
+
         overheadPanel.add(timeLabel);
         overheadPanel.add(timeSlider);
+
+
 
         add(overheadPanel, BorderLayout.NORTH);
         changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
@@ -90,7 +98,7 @@ public class Mainframe extends JFrame
                     @Override
                     public void run()
                     {
-                        root.setBackground(new Background(
+/*                        root.setBackground(new Background(
                                 Collections.singletonList(new BackgroundFill(
                                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
                                 Collections.singletonList(new BackgroundImage(
@@ -99,12 +107,33 @@ public class Mainframe extends JFrame
                                         BackgroundRepeat.NO_REPEAT,
                                         BackgroundRepeat.NO_REPEAT,
                                         BackgroundPosition.CENTER,
-                                        BackgroundSize.DEFAULT))));
+                                        BackgroundSize.DEFAULT))));*/
+
+
+                        for (int i = 0; i < guiPlanetList.size(); i++)
+                        {
+                            guiPlanetList.get(i).getPathTransiton().stop();
+
+                            try
+                            {
+                                Thread.sleep(1000);
+                            }
+                            catch (Exception e)
+                            {
+
+                            }
+
+                            /*guiPlanetList.get(i).setDuration(new Duration(1000000));
+                            guiPlanetList.get(i).createPathTransition();*/
+
+                            guiPlanetList.get(i).getPathTransiton().play();
+
+                        }
+
                     }
                 });
             }
         });
-
 
     }
 
@@ -130,61 +159,38 @@ public class Mainframe extends JFrame
                         BackgroundSize.DEFAULT))));
 
 
-        placePlanets();
-        placeOrbits();
-        startOrbits();
+        placePlanets(root);
+        startOrbits(root);
 
         return scene;
     }
 
-    public void placePlanets()
+    public void placePlanets(Pane root)
     {
-        for (int i = 0; i < planetList.size()  ; i++)
+        for (int i = 0; i < guiPlanetList.size()  ; i++)
         {
-            root.getChildren().add(planetList.get(i).getSphereFromPlanet());
-            root.getChildren().add(planetList.get(i).getPlanetOrbit().getEllipseFromOrbit());
-            planetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();
-            StackPane.setMargin(planetList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
-                    new Insets(0, 0, 0, planetList.get(i).getPlanetOrbit().getXCord() * 2 ));
+            root.getChildren().add(guiPlanetList.get(i).getSphereFromPlanet()); //Adds planets
+            root.getChildren().add(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
+            guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
+            StackPane.setMargin(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
+                    new Insets(0, 0, 0, guiPlanetList.get(i).getPlanetOrbit().getXCord() * 2 ));
 
         }
     }
 
-    public void startOrbits()
+    public void startOrbits(Pane root)
     {
-        for (int i = 0; i < planetList.size() ; i++)
+        for (int i = 0; i < guiPlanetList.size() ; i++)
         {
-            planetList.get(i).getPathTransiton().play(); // starts orbits
+            guiPlanetList.get(i).getPathTransiton().play(); // starts orbits
         }
     }
 
-    public void placeOrbits()
+    public void clearRoot()
     {
-        for (int i = 0; i < orbitList.size() ; i++)
-        {
-            root.getChildren().add(orbitList.get(i).getEllipseFromOrbit());
-        }
+        root.getChildren().clear();
     }
 
-    public void addSun(Sphere sun)
-    {
-        root.getChildren().add(sun);
-    }
-
-    public void addPlanet(Planet planet)
-    {
-        planetList.add(planet);
-    }
-    
-    public void addOrbit(Ellipse orbit)
-    {
-        root.getChildren().add(orbit);
-    }
-
-    public void init()
-    {
-        initFX(orbitPanel);
-    }
 
     private class SliderListener implements ChangeListener
     {
