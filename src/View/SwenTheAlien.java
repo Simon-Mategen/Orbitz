@@ -2,6 +2,7 @@ package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Funfact panel/area for Swen The Alien.
@@ -27,6 +30,14 @@ public class SwenTheAlien extends JPanel
     private JLabel lblSwen;
     private  BorderLayout layout;
     private JTextArea funFactArea;
+    private Random randomFacts = new Random();
+    private String random;
+
+    private final Font font = new Font("SansSerif", Font.PLAIN, 23);
+    private final Color color = Color.yellow;
+
+    private String[] funFactsTest = new String[] { "...that Jupiter can not become a star?", "...that Jupiter has 67 moons?",
+            "...that Jupiter has rings?"};
 
     public SwenTheAlien() throws IOException
     {
@@ -47,38 +58,49 @@ public class SwenTheAlien extends JPanel
         panel.setBackground(Color.black);
         setBackground(Color.black);
 
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(null, " DID YOU KNOW...",
+                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color);
 
-        lblSwen = new JLabel();
+        setBorder(titledBorder);
+
         funFactArea = new JTextArea(100,100);
         funFactArea.setLineWrap(true);
         funFactArea.setEditable(false);
 
-        Font font = new Font("Segoe Script", Font.PLAIN, 18);
+        Font font = new Font("SansSerif", Font.PLAIN, 23);
         funFactArea.setFont(font);
         funFactArea.setBackground(Color.black);
         funFactArea.setForeground(Color.yellow);
 
-        funFactArea.setText("Did you know that the big red spot on Jupiter is actually a storm?");
 
+        //reads image from images, sets the image as an ImageIcon, which is set as a Jlabel.
+        lblSwen = new JLabel();
         BufferedImage img1 = ImageIO.read(new File("images/swen3.jpg"));
         ImageIcon icon1 = new ImageIcon(img1);
         lblSwen.setIcon(icon1);
 
-        //TODO set random funfact to textArea when user clicks Swen.
+        //when user clicks on Swen image, he sets random fun facts as String to the textAre funFactArea
         lblSwen.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                System.out.println("test");
 
-            }
+            public void mouseClicked(MouseEvent e) {
+
+                super.mouseClicked(e);
+
+                    int INDEXn = randomFacts.nextInt(funFactsTest.length);
+                    for (int i2 = 0; i2 < INDEXn; i2++) {
+                        random = (String) (funFactsTest[INDEXn]);
+                    }
+                        funFactArea.setText(random);
+                }
+
         });
+
 
         panel.add(funFactArea);
         panel.add(lblSwen);
 
         add(panel,layout.SOUTH);
-
 
 
     }
