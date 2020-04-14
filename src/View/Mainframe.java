@@ -3,23 +3,19 @@ package View;
 import Controller.Controller;
 import Model.Orbit;
 import Model.Planet;
-import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Sphere;
-import javafx.util.Duration;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,9 +29,14 @@ public class Mainframe extends JFrame
     private LinkedList<Planet> planetList = new LinkedList<>();
     private LinkedList<Orbit> orbitList = new LinkedList<>();
     private JFXPanel orbitPanel;
-    private final int WIDTH = 1200;
-    private final int HEIGHT = 700;
+    private JPanel overheadPanel;
+    private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
+    private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     private StackPane root;
+    private JSlider timeSlider;
+    private SliderListener sliderListener;
+    private JLabel timeLabel;
+    private int MAX_SLIDER_VALUE = 100;
 
     private JPanel componentPanel = new JPanel();
 
@@ -43,7 +44,19 @@ public class Mainframe extends JFrame
 
     public Mainframe(Controller inController)
     {
+        timeLabel = new JLabel("0");
+        timeSlider = new JSlider();
+        sliderListener = new SliderListener();
+        timeSlider.setValue(0);
+        timeSlider.setMaximum(MAX_SLIDER_VALUE);
+        timeLabel.setPreferredSize(new Dimension(50, 50));
+        timeSlider.setPreferredSize(new Dimension(400, 50));
+        timeSlider.addChangeListener(sliderListener);
+        sliderListener = new SliderListener();
         this.controller = inController;
+        overheadPanel = new JPanel();
+        overheadPanel.add(timeLabel);
+        overheadPanel.add(timeSlider);
 
         orbitPanel = new JFXPanel();
         Platform.runLater(new Runnable() {
@@ -57,16 +70,22 @@ public class Mainframe extends JFrame
 
         //setSize(WIDTH,HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1400, 900);
+        // set frame to size of user's screen
+        setSize(WIDTH, HEIGHT);
         setVisible(true);
 
         add(orbitPanel, BorderLayout.WEST);
-
-        componentPanel.setBackground(java.awt.Color.BLUE);
-        add(componentPanel, BorderLayout.EAST);
-
+        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
+        overheadPanel.setPreferredSize(new Dimension(1400, 60));
+        //componentPanel.setPreferredSize(new Dimension(200, 200));
+        overheadPanel.setBackground(java.awt.Color.WHITE);
+        //componentPanel.setBackground(java.awt.Color.BLUE);
+        //add(componentPanel, BorderLayout.EAST);
+        add(overheadPanel, BorderLayout.NORTH);
         changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
-        componentPanel.add(changeBackgroundBtn);
+        overheadPanel.add(changeBackgroundBtn);
+        overheadPanel.setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE));
+        //componentPanel.add(changeBackgroundBtn);
         changeBackgroundBtn.addActionListener(new ActionListener()
         {
             @Override
@@ -91,6 +110,8 @@ public class Mainframe extends JFrame
                 });
             }
         });
+
+
     }
 
     private void initFX(JFXPanel fxPanel) {
@@ -170,6 +191,17 @@ public class Mainframe extends JFrame
     {
         initFX(orbitPanel);
     }
+
+    private class SliderListener implements ChangeListener
+    {
+
+        @Override
+        public void stateChanged(ChangeEvent changeEvent)
+        {
+            timeLabel.setText(Integer.toString(timeSlider.getValue()));
+        }
+    }
+
 
 }
 
