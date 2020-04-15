@@ -129,7 +129,7 @@ public class MainFrame extends JFrame
      */
     private void initFX(JFXPanel fxPanel) {
         // This method is invoked on JavaFX thread
-        Scene scene = createScene("https://www.wallpaperup.com/uploads/wallpapers/2014/04/12/330551/185c99304364bba58fe8bfe3765fcf64.jpg"); // default background
+        Scene scene = createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg"); // default background
         fxPanel.setScene(scene);
     }
 

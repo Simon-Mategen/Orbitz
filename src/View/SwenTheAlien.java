@@ -74,7 +74,7 @@ public class SwenTheAlien extends JPanel
         //reads image from images, sets the image as an ImageIcon, which is set as a Jlabel.
         try
         {
-            img1 = ImageIO.read (new File ("images/Swen.png"));
+            img1 = ImageIO.read (new File ("src/Images/Swen.png"));
         } catch (IOException e)
         {
             e.printStackTrace ();
