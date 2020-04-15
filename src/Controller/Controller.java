@@ -22,12 +22,10 @@ public class Controller
 
     private Sun sun;
 
-    private ArrayList<Planet> planetArrayList = new ArrayList<>();
+    private ArrayList<Planet> planetArrayList;
 
     public Controller()
     {
-
-
         reader = new APIReader();
         orbitCalculator = new OrbitCalculator();
         planetCalculator = new PlanetCalculator();
@@ -38,13 +36,9 @@ public class Controller
         sun.setYCord(0);
         sun.setXCord(0);
 
-        readAllPlanets();
-        addPlanetOrbits();
-        setPlanetDurations();
-        setPathtransitions();
+        planetArrayList = createPlanetArray(1); //No duration modifier should be added here.
 
         mainframe = new MainFrame(this);
-        //printAllPlanetsOrbits();
         
     }
 
@@ -53,45 +47,39 @@ public class Controller
         return planetArrayList;
     }
 
-    private void readAllPlanets()
+    /**
+     * Creates an ArrayList with planets and their orbits generated.
+     * @return An ArrayList filled with newly generated planet objects
+     */
+    public ArrayList<Planet> createPlanetArray(double durationModifier)
     {
+        ArrayList<Planet> newPlanets = new ArrayList<>();
+
+        //Reads the planets from the API
         for(Planets p : Planets.values())
         {
-            planetArrayList.add(new Planet(reader.readBodyFromAPI(p.toString())));
+            newPlanets.add(new Planet(reader.readBodyFromAPI(p.toString())));
         }
-    }
 
-    public void setPathtransitions()
-    {
-        for (int i = 0; i < planetArrayList.size() ; i++)
-        {
-            planetArrayList.get(i).createPathTransition();
-        }
-    }
-
-    public void setPlanetDurations()
-    {
-        for (Planet planet: planetArrayList)
-        {
-            planet.setDuration(new Duration(planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*1000));
-        }
-    }
-
-
-    private void addPlanetOrbits()
-    {
-        for (Planet p : planetArrayList)
+        //Add orbits to the planets
+        for (Planet p : newPlanets)
         {
             p.setPlanetOrbit(orbitCalculator.getPlanetSunOrbit(sun, p));//Create orbit
         }
-    }
 
-    private void printAllPlanetsOrbits()
-    {
-        for (Planet p : planetArrayList)
+        //Sets planet duration
+        for (Planet planet: newPlanets)
         {
-            System.out.println(p.toString());
+            planet.setDuration(new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*1000)*durationModifier)); //*1000 is to make it into seconds instead of milliseconds
         }
+
+        //Set the PathTransition
+        for (int i = 0; i < newPlanets.size() ; i++)
+        {
+            newPlanets.get(i).createPathTransition();
+        }
+
+        return newPlanets;
     }
 
 

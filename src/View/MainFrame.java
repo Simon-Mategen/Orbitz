@@ -19,6 +19,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -56,6 +57,8 @@ public class MainFrame extends JFrame
     private ChangeSpeedListener changeSpeedListener;
     private InfoButtonListener infoButtonListener;
 
+    private Controller controller;
+
     /**
      * Constructs the GUI components and starts the Java-FX window.
      *
@@ -64,8 +67,11 @@ public class MainFrame extends JFrame
      * @author Simon Måtegen
      * @version 1.0
      */
-    public MainFrame(Controller inController) {
-        guiPlanetList = inController.getPlanetArrayList(); // copy the planet list from controller
+    public MainFrame(Controller inController)
+    {
+        this.controller = inController;
+
+        guiPlanetList = controller.getPlanetArrayList(); // copy the planet list from controller
         orbitPanel = new JFXPanel();
         overheadPanel = new JPanel();
         sliderListener = new SliderListener();
@@ -74,7 +80,8 @@ public class MainFrame extends JFrame
         changeSpeedListener = new ChangeSpeedListener();
         changeBackgroundListener = new ChangeBackgroundListener();
         infoButtonListener = new InfoButtonListener();
-        Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable()
+        {
             @Override
             public void run() {
                 initFX(orbitPanel); // starts on the Java FX thread
@@ -85,7 +92,7 @@ public class MainFrame extends JFrame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setVisible(true);
-        //
+
         orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
 
 
@@ -117,7 +124,7 @@ public class MainFrame extends JFrame
         add(overheadPanel, BorderLayout.NORTH);
 
         speedBtn.addActionListener(changeSpeedListener);
-        //JOptionPane.showMessageDialog(this,  mainInfoPanel);
+
     }
 
     /**
@@ -127,9 +134,10 @@ public class MainFrame extends JFrame
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    private void initFX(JFXPanel fxPanel) {
+    private void initFX(JFXPanel fxPanel)
+    {
         // This method is invoked on JavaFX thread
-        Scene scene = createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg"); // default background
+        Scene scene = createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg", guiPlanetList); // default background
         fxPanel.setScene(scene);
     }
 
@@ -141,15 +149,16 @@ public class MainFrame extends JFrame
      * @author Manna Manojlovic
      * @version 1.0
      */
-    private Scene createScene(String backgroundURL) {
+    private Scene createScene(String backgroundURL, ArrayList<Planet> planetArrayList)
+    {
         root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(createBackground(backgroundURL));
 
         setupCamera(scene);
-        placePlanets(root);
-        startOrbits();
+        placePlanets(root, planetArrayList);
+        startOrbits(planetArrayList);
 
         return scene;
     }
@@ -179,13 +188,15 @@ public class MainFrame extends JFrame
      * @author Simon Måtegen
      * @version 1.0
      */
-    public void placePlanets(Pane root) {
-        for (int i = 0; i < guiPlanetList.size(); i++) {
-            root.getChildren().add(guiPlanetList.get(i).getSphereFromPlanet()); //Adds planets
-            root.getChildren().add(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
-            guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
-            StackPane.setMargin(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
-                    new javafx.geometry.Insets(0, 0, 0, guiPlanetList.get(i).getPlanetOrbit().getXCord() * 2));
+    public void placePlanets(Pane root, ArrayList<Planet> planetArrayList)
+    {
+        for (int i = 0; i < planetArrayList.size(); i++)
+        {
+            root.getChildren().add(planetArrayList.get(i).getSphereFromPlanet()); //Adds planets
+            root.getChildren().add(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
+            planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
+            StackPane.setMargin(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
+                    new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord() * 2));
         }
     }
 
@@ -225,9 +236,10 @@ public class MainFrame extends JFrame
  * @author Albin Ahlbeck
  * @version 1.0
  */
-public void startOrbits() {
-    for (int i = 0; i < guiPlanetList.size(); i++) {
-        guiPlanetList.get(i).getPathTransiton().play(); // starts orbits
+public void startOrbits(ArrayList<Planet> planetArrayList)
+{
+    for (int i = 0; i < planetArrayList.size(); i++) {
+        planetArrayList.get(i).getPathTransiton().play(); // starts orbits
     }
 }
 
@@ -275,39 +287,27 @@ public void startOrbits() {
     }
 
     /**
-     * Listens to the changeSpeedBtn and changes the speed on click and changes the background
+     * Listens to the changeSpeedBtn and changes the speed on click.
      *
      * @author Albin Ahlbeck
      * @author Simon Måtegen
      * @version 1.0
      */
-    private class ChangeSpeedListener implements ActionListener {
+    private class ChangeSpeedListener implements ActionListener
+    {
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            Platform.runLater(new Runnable() {
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            Platform.runLater(new Runnable()
+            {
                 @Override
-                public void run() {
-                    for (Planet p : guiPlanetList) {
-                        p.getPathTransiton().stop();
+                public void run()
+                {
+                    ArrayList<Planet> newPlanets = controller.createPlanetArray(10);
 
-                        p.setDuration(new Duration(1000000));
-                        p.createPathTransition();
-                    }
+                    orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg", newPlanets));
 
-                    root = new StackPane();
-                    orbitPanel.setScene(new Scene(root, WIDTH, HEIGHT));
-                    root.setBackground(new Background(
-                            Collections.singletonList(new BackgroundFill(
-                                    javafx.scene.paint.Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
-                            Collections.singletonList(new BackgroundImage(
-                                    new Image("https://ichef.bbci.co.uk/news/410/cpsprodpb/D6B0/production/_95806945_gettyimages-590147780.jpg",
-                                            WIDTH, HEIGHT, false, true),
-                                    BackgroundRepeat.NO_REPEAT,
-                                    BackgroundRepeat.NO_REPEAT,
-                                    BackgroundPosition.CENTER,
-                                    BackgroundSize.DEFAULT))));
-                    placePlanets(root);
-                    startOrbits();
+                    //startOrbits(newPlanets);
                 }
             });
 
