@@ -42,6 +42,7 @@ public class MainFrame extends JFrame
 
     private JFXPanel orbitPanel;
     private JPanel overheadPanel;
+    private MainInfoFrame mainInfoFrame;
 
     private StackPane root;
     private JSlider timeSlider;
@@ -68,9 +69,9 @@ public class MainFrame extends JFrame
         sliderListener = new SliderListener();
         timeLabel = new JLabel("0");
         timeSlider = new JSlider();
+        mainInfoFrame = new MainInfoFrame();
         changeSpeedListener = new ChangeSpeedListener();
         changeBackgroundListener = new ChangeBackgroundListener();
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -111,6 +112,10 @@ public class MainFrame extends JFrame
         add(overheadPanel, BorderLayout.NORTH);
 
         speedBtn.addActionListener(changeSpeedListener);
+        //JOptionPane.showMessageDialog(this,  mainInfoPanel);
+        JOptionPane.showInternalMessageDialog(null, mainInfoFrame,
+                "Planetary Window", JOptionPane.PLAIN_MESSAGE);
+
     }
 
     /**
