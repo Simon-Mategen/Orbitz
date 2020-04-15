@@ -123,8 +123,7 @@ public class MainFrame extends JFrame {
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    private void initFX(JFXPanel fxPanel)
-    {
+    private void initFX(JFXPanel fxPanel) {
         // This method is invoked on JavaFX thread
         Scene scene = createScene();
         fxPanel.setScene(scene);
@@ -138,8 +137,7 @@ public class MainFrame extends JFrame {
      * @author Manna Manojlovic
      * @version 1.0
      */
-    private Scene createScene()
-    {
+    private Scene createScene() {
         root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(Color.BLACK);
@@ -171,8 +169,7 @@ public class MainFrame extends JFrame {
 
         scene.addEventHandler(KeyEvent.KEY_PRESSED, event ->
         {
-            switch (event.getCode())
-            {
+            switch (event.getCode()) {
                 case W:
                     root.translateZProperty().set(root.getTranslateZ() + 10);
                     break;
@@ -198,10 +195,8 @@ public class MainFrame extends JFrame {
      * @author Simon Måtegen
      * @version 1.0
      */
-    public void placePlanets(Pane root)
-    {
-        for (int i = 0; i < guiPlanetList.size(); i++)
-        {
+    public void placePlanets(Pane root) {
+        for (int i = 0; i < guiPlanetList.size(); i++) {
             root.getChildren().add(guiPlanetList.get(i).getSphereFromPlanet()); //Adds planets
             root.getChildren().add(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
             guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
@@ -216,10 +211,8 @@ public class MainFrame extends JFrame {
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    public void startOrbits()
-    {
-        for (int i = 0; i < guiPlanetList.size(); i++)
-        {
+    public void startOrbits() {
+        for (int i = 0; i < guiPlanetList.size(); i++) {
             guiPlanetList.get(i).getPathTransiton().play(); // starts orbits
         }
     }
@@ -230,8 +223,7 @@ public class MainFrame extends JFrame {
      * @author Simon Måtegen
      * @version 1.0
      */
-    public void clearRoot()
-    {
+    public void clearRoot() {
         root.getChildren().clear();
     }
 
@@ -256,15 +248,11 @@ public class MainFrame extends JFrame {
      * @author Simon Måtegen
      * @version 1.0
      */
-    private class ChangeBackgroundListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent actionEvent)
-        {
-            Platform.runLater(new Runnable()
-            {
+    private class ChangeBackgroundListener implements ActionListener {
+        public void actionPerformed(ActionEvent actionEvent) {
+            Platform.runLater(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     root.setBackground(new Background(
                             Collections.singletonList(new BackgroundFill(
                                     Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
@@ -287,18 +275,13 @@ public class MainFrame extends JFrame {
      * @author Simon Måtegen
      * @version 1.0
      */
-    private class ChangeSpeedListener implements ActionListener
-    {
+    private class ChangeSpeedListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent)
-        {
-            Platform.runLater(new Runnable()
-            {
+        public void actionPerformed(ActionEvent actionEvent) {
+            Platform.runLater(new Runnable() {
                 @Override
-                public void run()
-                {
-                    for (Planet p : guiPlanetList)
-                    {
+                public void run() {
+                    for (Planet p : guiPlanetList) {
                         p.getPathTransiton().stop();
 
                         p.setDuration(new Duration(1000000));
