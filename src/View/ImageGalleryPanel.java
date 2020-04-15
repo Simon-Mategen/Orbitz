@@ -44,10 +44,10 @@ public class ImageGalleryPanel extends JPanel
 
         try
         {
-            img1 = ImageIO.read (new File("images/image1.jpg"));
-            img2 = ImageIO.read (new File ("images/image2.jpg"));
-            img3 = ImageIO.read (new File ("images/image3.jpg"));
-            img4 = ImageIO.read (new File ("images/image4.jpg"));
+            img1 = ImageIO.read (new File("src/Images/image1.jpg"));
+            img2 = ImageIO.read (new File ("src/Images/image2.jpg"));
+            img3 = ImageIO.read (new File ("src/Images/image3.jpg"));
+            img4 = ImageIO.read (new File ("src/Images/image4.jpg"));
         }
         catch (IOException e)
         {
