@@ -82,7 +82,7 @@ public class Controller
     {
         for (Planet p : planetArrayList)
         {
-            p.setPlanetOrbit(orbitCalculator.calculatePlanetSunOrbit(sun, p));//Create orbit
+            p.setPlanetOrbit(orbitCalculator.getPlanetSunOrbit(sun, p));//Create orbit
         }
     }
 

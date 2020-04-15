@@ -9,7 +9,7 @@ import java.io.IOException;
 
 /**
  * @Author: Manna Manojlovic
- *
+ * @version: 1.0
  * Panel for the gallery of images.
  * 4 images of the planet and/or its' moon/moons.
  * 1 enlarged image shows up when user clicks one of the small images.
@@ -18,7 +18,6 @@ import java.io.IOException;
 
 public class ImageGalleryPanel extends JPanel
 {
-
     private JPanel panel;
     private JLabel lblimage1, lblimage2, lblimage3, lblimage4;
 
@@ -26,7 +25,6 @@ public class ImageGalleryPanel extends JPanel
     {
         createPanel();
     }
-
 
     public void createPanel()
     {
