@@ -10,7 +10,7 @@ import java.io.IOException;
  * @Author: Manna Manojlovic
  *
 * upper left corner: JavaFX-panel with lunar orbits around planets, in miniature
-* bottom left corner: textare with general facts about the planet
+* bottom left corner: textarea with general facts about the planet
 *
 * upper right corner: image gallery with 4 images in miniature. Underneath is one big picture which changes after a small is clicked
 * bottom right corner: SWEN THE ALIEN AND HIS FUN FACTS!!!
