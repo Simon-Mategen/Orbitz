@@ -1,15 +1,24 @@
 package Controller;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
+import java.net.http.HttpRequest;
+import java.net.URI;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
+/**
+ * Class that reads information from the API
+ */
 public class APIReader
 {
+    /**
+     * Method that converts the API information of a specific planet to a JSONObject and returns that
+     * the JSONObject.
+     * @param body the name of the planet which information is getting converted, in french.
+     * @return a JSONObject for a specific planet
+     */
     public JSONObject readBodyFromAPI(String body)
     {
         HttpClient client = HttpClient.newHttpClient();
