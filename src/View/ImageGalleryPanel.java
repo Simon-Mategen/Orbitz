@@ -1,6 +1,18 @@
 package View;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+
+import javafx.event.EventHandler;
 import javax.imageio.ImageIO;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
@@ -23,11 +35,13 @@ import java.net.URL;
  *
  */
 
-public class ImageGalleryPanel extends JPanel implements ActionListener
+public class ImageGalleryPanel extends JPanel //implements ActionListener
 {
     private JPanel panel;
+    private JPanel panelBtn;
     private JLabel lblimage1, lblimage2, lblimage3, lblimage4;
     private JButton play;
+    private Button btnSound;
 
     public ImageGalleryPanel()
     {
@@ -39,6 +53,9 @@ public class ImageGalleryPanel extends JPanel implements ActionListener
         GridLayout layout = new GridLayout (1,5,4,4);
 
         panel = new JPanel (layout);
+        panelBtn = new JPanel();
+
+        JFXPanel jfx = new JFXPanel();
 
         play = new JButton();
 
@@ -77,7 +94,9 @@ public class ImageGalleryPanel extends JPanel implements ActionListener
         panel.setPreferredSize (new Dimension (600,200));
         panel.setBackground (Color.black);
 
-        setBackground (Color.black);
+        panelBtn.setPreferredSize(new Dimension(70, 70));
+
+        setBackground (Color.BLACK);
 
         play.setPreferredSize(new Dimension(20,20));
 
@@ -86,20 +105,54 @@ public class ImageGalleryPanel extends JPanel implements ActionListener
         panel.add (lblimage2);
         panel.add (lblimage3);
         panel.add (lblimage4);
-        panel.add (play);
+        //panel.add (play);
+
+        panelBtn.add(jfx);
+        panelBtn.setBackground(Color.black);
 
         add (panel, BorderLayout.EAST);
-        play.addActionListener( this);
+        add (panelBtn, BorderLayout.WEST);
+        //play.addActionListener( this);
+
+        Platform.runLater(new Runnable(){
+            public void run(){
+                initFX(jfx);
+            }
+        });
     }
 
-    @Override
-    public void actionPerformed(ActionEvent actionEvent)
+    /**
+     * Creates a sound-button and adds it to a JavaFX panel
+     * When btnSound is clicked, the method playSound() starts playing the sound of the chosen planet
+     *
+     * @param jfxPanel The JavaFX panel to be created
+     * @author Lanna Maslo
+     * @version 1.0
+     */
+    private void initFX(JFXPanel jfxPanel){
+        Image image = new Image("https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/256x256/media-volume-1.png");
+        ImageView soundIcon = new ImageView(image);
+        soundIcon.setFitHeight(40);
+        soundIcon.setFitWidth(40);
+
+        btnSound = new Button("", soundIcon);
+        btnSound.setMinSize(50, 50);
+        btnSound.setOnAction(event -> playSound());
+
+        Group root = new Group();
+        root.getChildren().add(btnSound);
+        Scene scene = new Scene(root);
+        jfxPanel.setBackground(Color.black);
+        jfxPanel.setScene(scene);
+    }
+
+    /*public void actionPerformed(ActionEvent actionEvent)
     {
         if (play == actionEvent.getSource())
         {
             playSound();
         }
-    }
+    }*/
 
     public void playSound()
     {
