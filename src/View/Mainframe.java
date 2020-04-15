@@ -36,7 +36,12 @@ import Model.Planet;
  @version 1.0
  @
  */
+<<<<<<< Updated upstream
 public class MainFrame extends JFrame {
+=======
+public class Mainframe extends JFrame
+{
+>>>>>>> Stashed changes
     private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     private final int MAX_SLIDER_VALUE = 100;
@@ -64,7 +69,7 @@ public class MainFrame extends JFrame {
      * @author Simon Måtegen
      * @version 1.0
      */
-    public MainFrame(Controller inController) {
+    public Mainframe(Controller inController) {
         guiPlanetList = inController.getPlanetArrayList(); // copy the planet list from controller
         orbitPanel = new JFXPanel();
         overheadPanel = new JPanel();

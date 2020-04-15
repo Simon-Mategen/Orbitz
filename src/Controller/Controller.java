@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import Model.Planet;
 import Enum.*;
-import View.MainFrame;
+import View.Mainframe;
 import javafx.util.Duration;
 
 public class Controller
@@ -18,7 +18,7 @@ public class Controller
     private OrbitCalculator orbitCalculator;
     private PlanetCalculator planetCalculator;
     private PositionCalculator positionCalculator;
-    private MainFrame mainframe;
+    private Mainframe mainframe;
 
     private Sun sun;
 
@@ -43,7 +43,7 @@ public class Controller
         setPlanetDurations();
         setPathtransitions();
 
-        mainframe = new MainFrame(this);
+        mainframe = new Mainframe(this);
         //printAllPlanetsOrbits();
         
     }
