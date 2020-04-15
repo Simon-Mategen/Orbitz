@@ -49,10 +49,12 @@ public class MainFrame extends JFrame
     private JLabel timeLabel;
     private JButton changeBackgroundBtn = new JButton("Byt bakgrund");
     private JButton speedBtn = new JButton("SPEED");
+    private JButton infoButton = new JButton("Test info");
 
     private ChangeBackgroundListener changeBackgroundListener;
     private SliderListener sliderListener;
     private ChangeSpeedListener changeSpeedListener;
+    private InfoButtonListener infoButtonListener;
 
     /**
      * Constructs the GUI components and starts the Java-FX window.
@@ -69,9 +71,9 @@ public class MainFrame extends JFrame
         sliderListener = new SliderListener();
         timeLabel = new JLabel("0");
         timeSlider = new JSlider();
-        mainInfoFrame = new MainInfoFrame();
         changeSpeedListener = new ChangeSpeedListener();
         changeBackgroundListener = new ChangeBackgroundListener();
+        infoButtonListener = new InfoButtonListener();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -103,7 +105,10 @@ public class MainFrame extends JFrame
         changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
         overheadPanel.add(changeBackgroundBtn);
         speedBtn.setPreferredSize(new Dimension(200, 40));
+        infoButton.setPreferredSize(new Dimension(200, 40));
+        infoButton.addActionListener(infoButtonListener);
         overheadPanel.add(speedBtn);
+        overheadPanel.add(infoButton);
         overheadPanel.setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE));
 
         changeBackgroundBtn.addActionListener(changeBackgroundListener);
@@ -113,9 +118,6 @@ public class MainFrame extends JFrame
 
         speedBtn.addActionListener(changeSpeedListener);
         //JOptionPane.showMessageDialog(this,  mainInfoPanel);
-        JOptionPane.showInternalMessageDialog(null, mainInfoFrame,
-                "Planetary Window", JOptionPane.PLAIN_MESSAGE);
-
     }
 
     /**
@@ -144,6 +146,7 @@ public class MainFrame extends JFrame
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(createBackground(backgroundURL));
+
         setupCamera(scene);
         placePlanets(root);
         startOrbits();
@@ -217,16 +220,16 @@ public class MainFrame extends JFrame
     }
 
     /**
-     * Starts the the planets movement
-     *
-     * @author Albin Ahlbeck
-     * @version 1.0
-     */
-    public void startOrbits() {
-        for (int i = 0; i < guiPlanetList.size(); i++) {
-            guiPlanetList.get(i).getPathTransiton().play(); // starts orbits
-        }
+ * Starts the the planets movement
+ *
+ * @author Albin Ahlbeck
+ * @version 1.0
+ */
+public void startOrbits() {
+    for (int i = 0; i < guiPlanetList.size(); i++) {
+        guiPlanetList.get(i).getPathTransiton().play(); // starts orbits
     }
+}
 
     /**
      * Listens to change in timeSlider and then changes the text in timeLabel
@@ -308,6 +311,18 @@ public class MainFrame extends JFrame
                 }
             });
 
+        }
+    }
+
+    private class InfoButtonListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            // test
+            mainInfoFrame = new MainInfoFrame(guiPlanetList.get(5));
+            JOptionPane.showInternalMessageDialog(null, mainInfoFrame,
+                    "Planetary Window", JOptionPane.PLAIN_MESSAGE);
         }
     }
 }

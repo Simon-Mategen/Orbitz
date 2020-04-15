@@ -41,6 +41,13 @@ public class Planet
         this.aphelion = (long)planetInfo.get("aphelion");
         this.sphere = new Sphere((double)planetInfo.get("meanRadius")*1000/SCALE_RADIUS_VALUE);
     }
+    /**
+     * Default constructor
+     */
+    public Planet()
+    {
+
+    }
 
     /**
      * A get-method that gets semi-major axis value from API and returning the value.
