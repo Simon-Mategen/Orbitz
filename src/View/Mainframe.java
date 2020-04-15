@@ -125,7 +125,7 @@ public class MainFrame extends JFrame {
      */
     private void initFX(JFXPanel fxPanel) {
         // This method is invoked on JavaFX thread
-        Scene scene = createScene();
+        Scene scene = createScene("https://www.wallpaperup.com/uploads/wallpapers/2014/04/12/330551/185c99304364bba58fe8bfe3765fcf64.jpg"); // default background
         fxPanel.setScene(scene);
     }
 
@@ -137,21 +137,55 @@ public class MainFrame extends JFrame {
      * @author Manna Manojlovic
      * @version 1.0
      */
-    private Scene createScene() {
+    private Scene createScene(String backgroundURL) {
         root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(Color.BLACK);
-        root.setBackground(new Background(
+        root.setBackground(createBackground(backgroundURL));
+        setupCamera(scene);
+        placePlanets(root);
+        startOrbits();
+
+        return scene;
+    }
+
+    public Background createBackground(String backgroundURL)
+    {
+        Background tempBackground = new Background(
                 Collections.singletonList(new BackgroundFill(
                         Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
                 Collections.singletonList(new BackgroundImage(
-                        new Image("https://www.wallpaperup.com/uploads/wallpapers/2014/04/12/330551/185c99304364bba58fe8bfe3765fcf64.jpg",
+                        new Image(backgroundURL,
                                 WIDTH, HEIGHT, false, true),
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundPosition.CENTER,
-                        BackgroundSize.DEFAULT))));
+                        BackgroundSize.DEFAULT)));
+        return tempBackground;
+    }
 
+    /**
+     * Places all the planets and their orbits in the Java-FX scene
+     *
+     * @author Albin Ahlbeck
+     * @author Lanna Maslo
+     * @author Manna Manojlovic
+     * @author Marcus Svensson
+     * @author Simon Måtegen
+     * @version 1.0
+     */
+    public void placePlanets(Pane root) {
+        for (int i = 0; i < guiPlanetList.size(); i++) {
+            root.getChildren().add(guiPlanetList.get(i).getSphereFromPlanet()); //Adds planets
+            root.getChildren().add(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
+            guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
+            StackPane.setMargin(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
+                    new Insets(0, 0, 0, guiPlanetList.get(i).getPlanetOrbit().getXCord() * 2));
+        }
+    }
+
+    public void setupCamera(Scene scene)
+    {
         PerspectiveCamera camera = new PerspectiveCamera(true);
         camera.setTranslateZ(-1000);
         camera.setNearClip(0.01);
@@ -178,31 +212,6 @@ public class MainFrame extends JFrame {
                     break;
             }
         });
-
-        placePlanets(root);
-        startOrbits();
-
-        return scene;
-    }
-
-    /**
-     * Places all the planets and their orbits in the Java-FX scene
-     *
-     * @author Albin Ahlbeck
-     * @author Lanna Maslo
-     * @author Manna Manojlovic
-     * @author Marcus Svensson
-     * @author Simon Måtegen
-     * @version 1.0
-     */
-    public void placePlanets(Pane root) {
-        for (int i = 0; i < guiPlanetList.size(); i++) {
-            root.getChildren().add(guiPlanetList.get(i).getSphereFromPlanet()); //Adds planets
-            root.getChildren().add(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
-            guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
-            StackPane.setMargin(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
-                    new Insets(0, 0, 0, guiPlanetList.get(i).getPlanetOrbit().getXCord() * 2));
-        }
     }
 
     /**
@@ -215,16 +224,6 @@ public class MainFrame extends JFrame {
         for (int i = 0; i < guiPlanetList.size(); i++) {
             guiPlanetList.get(i).getPathTransiton().play(); // starts orbits
         }
-    }
-
-    /**
-     * Clears the Stackpane
-     *
-     * @author Simon Måtegen
-     * @version 1.0
-     */
-    public void clearRoot() {
-        root.getChildren().clear();
     }
 
     /**
