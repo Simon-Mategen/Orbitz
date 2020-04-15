@@ -1,12 +1,15 @@
 package View;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,7 +36,7 @@ public class ImageGalleryPanel extends JPanel implements ActionListener
 
     public void createPanel()
     {
-        GridLayout layout = new GridLayout (1,4,4,4);
+        GridLayout layout = new GridLayout (1,5,4,4);
 
         panel = new JPanel (layout);
 
@@ -77,29 +80,65 @@ public class ImageGalleryPanel extends JPanel implements ActionListener
         setBackground (Color.black);
 
         play.setPreferredSize(new Dimension(20,20));
-        play.addActionListener( this);
+
 
         panel.add (lblimage1);
         panel.add (lblimage2);
         panel.add (lblimage3);
         panel.add (lblimage4);
+        panel.add (play);
 
         add (panel, BorderLayout.EAST);
+        play.addActionListener( this);
     }
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if(play == actionEvent.getSource())
+    public void actionPerformed(ActionEvent actionEvent)
+    {
+        if (play == actionEvent.getSource())
         {
-            URL soundbyte = null;
-            try {
-                soundbyte = new File("Images/Jupiter2001.wav").toURI().toURL();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            java.applet.AudioClip clip = java.applet.Applet.newAudioClip(soundbyte);
-            clip.play();
+            playSound();
+        }
+    }
+
+    public void playSound()
+    {
+        File file = new File("sound/Jupiter2001.wav");
+        AudioInputStream ais = null;
+        Clip clip = null;
+
+        try
+        {
+            clip = AudioSystem.getClip();
+        }
+        catch (LineUnavailableException e)
+        {
+            e.printStackTrace();
+        }
+        
+        try
+        {
+            ais = AudioSystem.getAudioInputStream(file);
+        }
+        catch (UnsupportedAudioFileException | IOException e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            clip.open(ais);
+        }
+        catch (LineUnavailableException | IOException e)
+        {
+            e.printStackTrace();
         }
 
+        //play the sound until user stops it
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+        SwingUtilities.invokeLater(() ->
+        {
+           //leave empty or click to exit, fix later
+        });
     }
 }
