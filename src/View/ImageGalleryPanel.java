@@ -3,9 +3,13 @@ package View;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * @Author: Manna Manojlovic
@@ -16,10 +20,11 @@ import java.io.IOException;
  *
  */
 
-public class ImageGalleryPanel extends JPanel
+public class ImageGalleryPanel extends JPanel implements ActionListener
 {
     private JPanel panel;
     private JLabel lblimage1, lblimage2, lblimage3, lblimage4;
+    private JButton play;
 
     public ImageGalleryPanel()
     {
@@ -31,6 +36,8 @@ public class ImageGalleryPanel extends JPanel
         GridLayout layout = new GridLayout (1,4,4,4);
 
         panel = new JPanel (layout);
+
+        play = new JButton();
 
         lblimage1 = new JLabel();
         lblimage2 = new JLabel();
@@ -69,6 +76,9 @@ public class ImageGalleryPanel extends JPanel
 
         setBackground (Color.black);
 
+        play.setPreferredSize(new Dimension(20,20));
+        play.addActionListener( this);
+
         panel.add (lblimage1);
         panel.add (lblimage2);
         panel.add (lblimage3);
@@ -77,4 +87,19 @@ public class ImageGalleryPanel extends JPanel
         add (panel, BorderLayout.EAST);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if(play == actionEvent.getSource())
+        {
+            URL soundbyte = null;
+            try {
+                soundbyte = new File("Images/Jupiter2001.wav").toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            java.applet.AudioClip clip = java.applet.Applet.newAudioClip(soundbyte);
+            clip.play();
+        }
+
+    }
 }

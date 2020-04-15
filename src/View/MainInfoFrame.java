@@ -10,7 +10,6 @@ import javafx.scene.shape.Sphere;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Collections;
 
 public class MainInfoFrame extends JInternalFrame
 {
@@ -89,6 +88,10 @@ public class MainInfoFrame extends JInternalFrame
         scene.setFill(Color.BLACK);
         placePlanets();
         //startOrbit();
+
+        VBox vbox = new VBox();
+        vbox.setLayoutX(20);
+        vbox.setLayoutY(20);
         return scene;
     }
 
@@ -101,12 +104,5 @@ public class MainInfoFrame extends JInternalFrame
     public void startOrbit() {
             planet.getPathTransiton().play(); // starts orbits
     }
-
-
-
-
-
-    //TODO JavaFX panel för omloppsbanesystem för planet + månar i miniatyr typ
-    //TODO lägg till panelen nånstans - förslagsvis på en MainPanel som sen läggs på denna frame?
 
 }
