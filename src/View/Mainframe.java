@@ -1,30 +1,26 @@
 package View;
 
 import Controller.Controller;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-
+import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import Model.Planet;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * MainFrame is the main window which contains various  graphical components
@@ -36,7 +32,8 @@ import Model.Planet;
  @version 1.0
  @
  */
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame
+{
     private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     private final int MAX_SLIDER_VALUE = 100;
@@ -140,7 +137,7 @@ public class MainFrame extends JFrame {
     private Scene createScene(String backgroundURL) {
         root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
-        scene.setFill(Color.BLACK);
+        scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(createBackground(backgroundURL));
         setupCamera(scene);
         placePlanets(root);
@@ -153,9 +150,9 @@ public class MainFrame extends JFrame {
     {
         Background tempBackground = new Background(
                 Collections.singletonList(new BackgroundFill(
-                        Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
+                        javafx.scene.paint.Color.BLACK, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)),
                 Collections.singletonList(new BackgroundImage(
-                        new Image(backgroundURL,
+                        new javafx.scene.image.Image(backgroundURL,
                                 WIDTH, HEIGHT, false, true),
                         BackgroundRepeat.NO_REPEAT,
                         BackgroundRepeat.NO_REPEAT,
@@ -180,7 +177,7 @@ public class MainFrame extends JFrame {
             root.getChildren().add(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
             guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
             StackPane.setMargin(guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
-                    new Insets(0, 0, 0, guiPlanetList.get(i).getPlanetOrbit().getXCord() * 2));
+                    new javafx.geometry.Insets(0, 0, 0, guiPlanetList.get(i).getPlanetOrbit().getXCord() * 2));
         }
     }
 
@@ -232,7 +229,8 @@ public class MainFrame extends JFrame {
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    private class SliderListener implements ChangeListener {
+    private class SliderListener implements ChangeListener
+    {
 
         @Override
         public void stateChanged(ChangeEvent changeEvent) {
@@ -247,16 +245,17 @@ public class MainFrame extends JFrame {
      * @author Simon Måtegen
      * @version 1.0
      */
-    private class ChangeBackgroundListener implements ActionListener {
+    private class ChangeBackgroundListener implements ActionListener
+    {
         public void actionPerformed(ActionEvent actionEvent) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     root.setBackground(new Background(
                             Collections.singletonList(new BackgroundFill(
-                                    Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
+                                    javafx.scene.paint.Color.BLACK, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)),
                             Collections.singletonList(new BackgroundImage(
-                                    new Image("https://i0.wp.com/metro.co.uk/wp-content/uploads/2018/10/sei_36554009-212f.jpg?quality=90&strip=all&zoom=1&resize=644%2C483&ssl=1",
+                                    new javafx.scene.image.Image("https://i0.wp.com/metro.co.uk/wp-content/uploads/2018/10/sei_36554009-212f.jpg?quality=90&strip=all&zoom=1&resize=644%2C483&ssl=1",
                                             WIDTH, HEIGHT, false, true),
                                     BackgroundRepeat.NO_REPEAT,
                                     BackgroundRepeat.NO_REPEAT,
@@ -291,7 +290,7 @@ public class MainFrame extends JFrame {
                     orbitPanel.setScene(new Scene(root, WIDTH, HEIGHT));
                     root.setBackground(new Background(
                             Collections.singletonList(new BackgroundFill(
-                                    Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
+                                    javafx.scene.paint.Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)),
                             Collections.singletonList(new BackgroundImage(
                                     new Image("https://ichef.bbci.co.uk/news/410/cpsprodpb/D6B0/production/_95806945_gettyimages-590147780.jpg",
                                             WIDTH, HEIGHT, false, true),
@@ -307,11 +306,3 @@ public class MainFrame extends JFrame {
         }
     }
 }
-
-
-
-
-
-
-
-
