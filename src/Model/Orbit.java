@@ -26,7 +26,7 @@ public class Orbit
         this.xCord = inXCord;
         this.yCord = inYCord;
 
-        ellipse = new Ellipse(getXCord(), getYCord(), getWidth(), getHeight());
+        ellipse = new Ellipse(getXCord(), getYCord(), getWidth(), getHeight()); 
         ellipse.setStroke(Color.GRAY);
         ellipse.setFill(Color.TRANSPARENT);
     }
@@ -39,16 +39,6 @@ public class Orbit
     public double getHeight()
     {
         return height/SCALE_VALUE;
-    }
-
-    public double getRealHeight()
-    {
-        return height;
-    }
-
-    public double getRealWidth()
-    {
-        return width;
     }
 
     public double getXCord()
@@ -69,11 +59,6 @@ public class Orbit
     public double getRealCircumference()
     {
         return circumference;
-    }
-
-    public void setCircumference(long circumference)
-    {
-        this.circumference = circumference;
     }
 
     public Ellipse getEllipseFromOrbit()
