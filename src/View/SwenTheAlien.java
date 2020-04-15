@@ -3,15 +3,15 @@ package View;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+
 import java.util.Random;
 
 /**
@@ -21,7 +21,7 @@ import java.util.Random;
 
 //TODO perhaps divide the alien and the textarea into different classes
 // with panels of their own and add them on ONE main with borderLayout? So that we can decide the size on our own
-//TODO add listener on the alien so that textArea can set random funfacts on click event (MouseEvent?)
+
 
 
 public class SwenTheAlien extends JPanel
@@ -30,18 +30,16 @@ public class SwenTheAlien extends JPanel
     private JLabel lblSwen;
     private  BorderLayout layout;
     private JTextArea funFactArea;
-    private Random randomFacts = new Random();
-    private String random;
 
     private final Font font = new Font("SansSerif", Font.PLAIN, 23);
     private final Color color = Color.yellow;
 
+    private Random randomFacts = new Random();
     private String[] funFactsTest = new String[] { "...that Jupiter can not become a star?", "...that Jupiter has 67 moons?",
             "...that Jupiter has rings?"};
 
     public SwenTheAlien() throws IOException
     {
-
         createPanel();
 
     }
@@ -75,7 +73,7 @@ public class SwenTheAlien extends JPanel
 
         //reads image from images, sets the image as an ImageIcon, which is set as a Jlabel.
         lblSwen = new JLabel();
-        BufferedImage img1 = ImageIO.read(new File("images/swen3.jpg"));
+        BufferedImage img1 = ImageIO.read(new File("images/Swen.png"));
         ImageIcon icon1 = new ImageIcon(img1);
         lblSwen.setIcon(icon1);
 
@@ -87,15 +85,15 @@ public class SwenTheAlien extends JPanel
 
                 super.mouseClicked(e);
 
-                    int INDEXn = randomFacts.nextInt(funFactsTest.length);
-                    for (int i2 = 0; i2 < INDEXn; i2++) {
-                        random = (String) (funFactsTest[INDEXn]);
-                    }
-                        funFactArea.setText(random);
+                    int index = randomFacts.nextInt(funFactsTest.length);
+                        for (int i =0; i<index; i++)
+                        {
+                            funFactArea.setText(funFactsTest[index]);
+                        }
+
                 }
 
         });
-
 
         panel.add(funFactArea);
         panel.add(lblSwen);
