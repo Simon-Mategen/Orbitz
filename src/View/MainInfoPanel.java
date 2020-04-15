@@ -44,8 +44,8 @@ public class MainInfoPanel extends JPanel
         setPreferredSize (new Dimension (width, height));
         setBorder (new CompoundBorder (border, margin));
 
-        add (imgPanel,layout.NORTH);
-        add (swenPanel,layout.EAST);
+        add (imgPanel, BorderLayout.NORTH);
+        add (swenPanel, BorderLayout.EAST);
 
     }
 }

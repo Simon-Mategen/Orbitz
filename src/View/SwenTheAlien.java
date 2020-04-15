@@ -101,7 +101,7 @@ public class SwenTheAlien extends JPanel
         panel.add (funFactArea);
         panel.add (lblSwen);
 
-        add (panel, layout.SOUTH);
+        add (panel, BorderLayout.SOUTH);
     }
 }
 

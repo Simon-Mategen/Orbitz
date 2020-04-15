@@ -3,15 +3,13 @@ package Controller;
 import Controller.Calculators.OrbitCalculator;
 import Controller.Calculators.PlanetCalculator;
 import Controller.Calculators.PositionCalculator;
-import Model.Orbit;
 import Model.Sun;
 
 import java.util.ArrayList;
 
 import Model.Planet;
 import Enum.*;
-import View.Mainframe;
-import javafx.scene.shape.Ellipse;
+import View.MainFrame;
 import javafx.util.Duration;
 
 public class Controller
@@ -20,7 +18,7 @@ public class Controller
     private OrbitCalculator orbitCalculator;
     private PlanetCalculator planetCalculator;
     private PositionCalculator positionCalculator;
-    private Mainframe mainframe;
+    private MainFrame mainframe;
 
     private Sun sun;
 
@@ -45,7 +43,7 @@ public class Controller
         setPlanetDurations();
         setPathtransitions();
 
-        mainframe = new Mainframe(this);
+        mainframe = new MainFrame(this);
         //printAllPlanetsOrbits();
         
     }
