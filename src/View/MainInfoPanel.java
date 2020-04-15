@@ -22,29 +22,30 @@ public class MainInfoPanel extends JPanel
     private ImageGalleryPanel imgPanel;
     private SwenTheAlien swenPanel;
 
-    public MainInfoPanel() throws IOException
+    public MainInfoPanel ()
     {
-        imgPanel = new ImageGalleryPanel();
-        swenPanel = new SwenTheAlien();
-        setupPanel();
+        imgPanel = new ImageGalleryPanel ();
+
+        swenPanel = new SwenTheAlien ();
+        setupPanel ();
     }
 
-    public void setupPanel()
+    public void setupPanel ()
     {
         int width = 1000;
         int height = 600;
 
-        Border border = this.getBorder();
-        Border margin = BorderFactory.createEmptyBorder(12, 12, 12, 12);
+        Border border = this.getBorder ();
+        Border margin = BorderFactory.createEmptyBorder (12, 12, 12, 12);
 
-        layout = new BorderLayout();
-        setLayout(layout);
-        setBackground(Color.black);
-        setPreferredSize(new Dimension(width, height));
-        setBorder(new CompoundBorder(border, margin));
+        layout = new BorderLayout ();
+        setLayout (layout);
+        setBackground (Color.black);
+        setPreferredSize (new Dimension (width, height));
+        setBorder (new CompoundBorder (border, margin));
 
-        add(imgPanel,layout.NORTH);
-        add(swenPanel,layout.EAST);
+        add (imgPanel,layout.NORTH);
+        add (swenPanel,layout.EAST);
 
     }
 }
