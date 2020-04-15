@@ -3,19 +3,17 @@ package View;
 import javax.swing.*;
 import java.io.IOException;
 
-public class MainInfoFrame extends JFrame {
-
+public class MainInfoFrame extends JFrame
+{
     private MainInfoPanel panel;
 
-    public MainInfoFrame() throws IOException {
+    public MainInfoFrame() throws IOException
+    {
         frame();
     }
 
-    public void frame() throws IOException {
-
-        // This method is invoked on the EDT thread
-        //final JFXPanel fxPanel = new JFXPanel();
-        //add(fxPanel);
+    public void frame() throws IOException
+    {
         panel = new MainInfoPanel();
         setSize(1000, 600);
         setVisible(true);
