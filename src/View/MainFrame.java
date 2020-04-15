@@ -4,14 +4,11 @@ import Controller.Controller;
 import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.geometry.Insets;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.util.Duration;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -19,7 +16,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -48,8 +44,8 @@ public class MainFrame extends JFrame
     private StackPane root;
     private JSlider timeSlider;
     private JLabel timeLabel;
-    private JButton changeBackgroundBtn = new JButton("Byt bakgrund");
-    private JButton speedBtn = new JButton("SPEED");
+    private JButton changeBackgroundBtn = new JButton("Change Background");
+    private JButton speedBtn = new JButton("SPEED/10");
     private JButton infoButton = new JButton("Test info");
 
     private ChangeBackgroundListener changeBackgroundListener;
@@ -58,6 +54,8 @@ public class MainFrame extends JFrame
     private InfoButtonListener infoButtonListener;
 
     private Controller controller;
+
+    private int durationModifier;
 
     /**
      * Constructs the GUI components and starts the Java-FX window.
@@ -75,8 +73,8 @@ public class MainFrame extends JFrame
         orbitPanel = new JFXPanel();
         overheadPanel = new JPanel();
         sliderListener = new SliderListener();
-        timeLabel = new JLabel("0");
-        timeSlider = new JSlider();
+        timeLabel = new JLabel("1");
+        timeSlider = new JSlider(1, 100);
         changeSpeedListener = new ChangeSpeedListener();
         changeBackgroundListener = new ChangeBackgroundListener();
         infoButtonListener = new InfoButtonListener();
@@ -236,12 +234,14 @@ public class MainFrame extends JFrame
  * @author Albin Ahlbeck
  * @version 1.0
  */
-public void startOrbits(ArrayList<Planet> planetArrayList)
-{
-    for (int i = 0; i < planetArrayList.size(); i++) {
-        planetArrayList.get(i).getPathTransiton().play(); // starts orbits
+    public void startOrbits(ArrayList<Planet> planetArrayList)
+    {
+        for (int i = 0; i < planetArrayList.size(); i++) {
+            planetArrayList.get(i).getPathTransiton().play(); // starts orbits
+        }
     }
-}
+
+
 
     /**
      * Listens to change in timeSlider and then changes the text in timeLabel
@@ -251,10 +251,15 @@ public void startOrbits(ArrayList<Planet> planetArrayList)
      */
     private class SliderListener implements ChangeListener
     {
-
         @Override
-        public void stateChanged(ChangeEvent changeEvent) {
+        public void stateChanged(ChangeEvent changeEvent)
+        {
             timeLabel.setText(Integer.toString(timeSlider.getValue()));
+            durationModifier = timeSlider.getValue();
+
+/*            ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);
+
+            orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg", newPlanets));*/
         }
     }
 
@@ -303,11 +308,12 @@ public void startOrbits(ArrayList<Planet> planetArrayList)
                 @Override
                 public void run()
                 {
-                    ArrayList<Planet> newPlanets = controller.createPlanetArray(10);
+                    durationModifier += 10;
+
+                    ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);//Planets that move 10 times slower for every click on the button
 
                     orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg", newPlanets));
 
-                    //startOrbits(newPlanets);
                 }
             });
 

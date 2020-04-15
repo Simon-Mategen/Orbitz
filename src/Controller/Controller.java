@@ -70,7 +70,7 @@ public class Controller
         //Sets planet duration
         for (Planet planet: newPlanets)
         {
-            planet.setDuration(new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*1000)*durationModifier)); //*1000 is to make it into seconds instead of milliseconds
+            planet.setDuration(new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*10)*durationModifier)); //*1000 is to make it into seconds instead of milliseconds
         }
 
         //Set the PathTransition
