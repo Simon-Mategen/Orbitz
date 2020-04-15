@@ -1,17 +1,22 @@
 package Model;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.PathElement;
+
+/**
+ * A class that sets the orbits' features and values
+ * These include width, height, shape and circumference
+ */
 
 public class Orbit
 {
-    private static final long SCALE_VALUE = 25000000;
+    private static final long SCALE_VALUE = 25000000; //the scale from the orbits' real values
 
     private double width;
     private double height;
     private double xCord;
     private double yCord;
     private double circumference;
+
     private Ellipse ellipse;
 
     public Orbit(double inWidth, double inHeight, double inXCord, double inYCord)
@@ -20,6 +25,7 @@ public class Orbit
         this.height = inHeight;
         this.xCord = inXCord;
         this.yCord = inYCord;
+
         ellipse = new Ellipse(getXCord(), getYCord(), getWidth(), getHeight());
         ellipse.setStroke(Color.GRAY);
         ellipse.setFill(Color.TRANSPARENT);
@@ -74,6 +80,4 @@ public class Orbit
     {
         return ellipse;
     }
-
-
 }

@@ -1,6 +1,8 @@
 package Model;
 
-import org.json.simple.JSONObject;
+/**
+ * A class that sets the features and values of the planets' moons
+ */
 
 public class Moon
 {
