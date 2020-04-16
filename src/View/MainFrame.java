@@ -372,6 +372,11 @@ public class MainFrame extends JFrame
 
                     orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg", newPlanets));
 
+                    for (int i = 0; i < newPlanets.size() ; i++) {
+                        PhongMaterial map = new PhongMaterial();
+                        map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
+                        newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
+                    }
                 }
             });
 
