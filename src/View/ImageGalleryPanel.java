@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.Event;
@@ -39,12 +40,17 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 {
     private JPanel panel;
     private JPanel panelBtn;
-    private JLabel lblimage1, lblimage2, lblimage3, lblimage4;
-    private JButton play;
-    private Button btnSound;
 
-    public ImageGalleryPanel()
+    private JLabel lblimage1, lblimage2, lblimage3, lblimage4;
+
+    private Button btnSound;
+    private Button btnMute;
+
+    private Controller controller;
+
+    public ImageGalleryPanel(Controller controller)
     {
+        this.controller = controller;
         createPanel();
     }
 
@@ -68,8 +74,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         panel = new JPanel (layout);
         panelBtn = new JPanel();
-
-        play = new JButton();
 
         lblimage1 = new JLabel();
         lblimage2 = new JLabel();
@@ -136,68 +140,35 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * @author Lanna Maslo
      * @version 1.0
      */
-    private void initFX(JFXPanel jfxPanel){
-        Image image = new Image("https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/256x256/media-volume-1.png");
-        ImageView soundIcon = new ImageView(image);
+    private void initFX(JFXPanel jfxPanel)
+    {
+        Image soundOn = new Image("https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/256x256/media-volume-1.png");
+        Image mute = new Image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconsdb." +
+                "com%2Fwhite-icons%2Fmute-2-icon.html&psig=AOvVaw1SNJ28YJ6vOT7qaDDEJZnW&ust=1587125240469000&source=" +
+                "images&cd=vfe&ved=0CAIQjRxqFwoTCKjrsLP07OgCFQAAAAAdAAAAABAD");
+
+        ImageView soundIcon = new ImageView(soundOn);
+        ImageView muteIcon = new ImageView(mute);
+
         soundIcon.setFitHeight(40);
         soundIcon.setFitWidth(40);
+        muteIcon.setFitHeight(40);
+        muteIcon.setFitWidth(40);
 
-        btnSound = new Button("", soundIcon);
-        btnSound.setMinSize(50, 50);
-        btnSound.setOnAction(event -> playSound());
+        btnSound = new Button ("", soundIcon);
+//        btnMute = new Button ("", muteIcon);
+        btnSound.setMinSize (50, 50);
+//        btnMute.setMinSize(50,50);
+        btnSound.setOnAction (event -> controller.startSoundThread());    //starts thread and resumes after pause
+//        btnMute.setOnAction(event -> controller.togglePauseSound());                 //pause thread
 
         Group root = new Group();
         root.getChildren().add(btnSound);
+//        root.getChildren().add (btnMute);
         Scene scene = new Scene(root);
         jfxPanel.setBackground(Color.black);
         jfxPanel.setScene(scene);
     }
 
-    /**
-     * @Author: Manna Manojlovic
-     * @version 1.0
-     *
-     * Method for playing a .wav-file. Reads the .wav through AudioInputStream an plays it via Clip.
-     * Clip class also has a built in loop for continuously playing the sound until user stops it manually.
-     */
-    public void playSound()
-    {
-        File file = new File("sound/Jupiter2001.wav");
-        AudioInputStream ais = null;
-        Clip clip = null;
 
-        try
-        {
-            clip = AudioSystem.getClip();
-        }
-        catch (LineUnavailableException e)
-        {
-            e.printStackTrace();
-        }
-        
-        try
-        {
-            ais = AudioSystem.getAudioInputStream(file);
-        }
-        catch (UnsupportedAudioFileException | IOException e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            clip.open(ais);
-        }
-        catch (LineUnavailableException | IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        //play the sound until user stops it
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-
-        SwingUtilities.invokeLater(() ->
-        {
-           //leave empty or click to exit, fix later
-        });
-    }
 }
