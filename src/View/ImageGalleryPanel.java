@@ -3,29 +3,20 @@ package View;
 import Controller.Controller;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
-import javafx.event.EventHandler;
 import javax.imageio.ImageIO;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @Author: Manna Manojlovic
@@ -110,7 +101,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel.setPreferredSize (new Dimension (600,200));
         panel.setBackground (Color.black);
 
-        panelBtn.setPreferredSize(new Dimension(70, 70));
+        panelBtn.setPreferredSize(new Dimension(200, 200));
 
         setBackground (Color.BLACK);
 
@@ -142,30 +133,38 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     private void initFX(JFXPanel jfxPanel)
     {
-        Image soundOn = new Image("https://cdn4.iconfinder.com/data/icons/defaulticon/icons/png/256x256/media-volume-1.png");
-        Image mute = new Image("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconsdb." +
-                "com%2Fwhite-icons%2Fmute-2-icon.html&psig=AOvVaw1SNJ28YJ6vOT7qaDDEJZnW&ust=1587125240469000&source=" +
-                "images&cd=vfe&ved=0CAIQjRxqFwoTCKjrsLP07OgCFQAAAAAdAAAAABAD");
+        Image soundOn = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/29_Sound_alt-128.png");
+        Image mute = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/30_Sound_off-128.png");
 
         ImageView soundIcon = new ImageView(soundOn);
         ImageView muteIcon = new ImageView(mute);
 
-        soundIcon.setFitHeight(40);
-        soundIcon.setFitWidth(40);
-        muteIcon.setFitHeight(40);
-        muteIcon.setFitWidth(40);
+        soundIcon.setFitHeight(20);
+        soundIcon.setFitWidth(20);
+        muteIcon.setFitHeight(20);
+        muteIcon.setFitWidth(20);
 
         btnSound = new Button ("", soundIcon);
-//        btnMute = new Button ("", muteIcon);
+        btnMute = new Button ("", muteIcon);
         btnSound.setMinSize (50, 50);
-//        btnMute.setMinSize(50,50);
+        btnMute.setMinSize(50,50);
         btnSound.setOnAction (event -> controller.startSoundThread());    //starts thread and resumes after pause
-//        btnMute.setOnAction(event -> controller.togglePauseSound());                 //pause thread
+        btnMute.setOnAction(event -> controller.togglePauseSound());                 //pause thread
+
+        javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
 
         Group root = new Group();
+
         root.getChildren().add(btnSound);
-//        root.getChildren().add (btnMute);
+        root.getChildren().add(btnMute);
+
+        btnSound.setLayoutY(30);
+        btnSound.setLayoutX(30);
+        btnMute.setLayoutY(120);
+        btnMute.setLayoutX(30);
+
         Scene scene = new Scene(root);
+        scene.setFill(fxColor);
         jfxPanel.setBackground(Color.black);
         jfxPanel.setScene(scene);
     }

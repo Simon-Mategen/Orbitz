@@ -1,8 +1,16 @@
 package View;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -43,6 +51,28 @@ public class SwenTheAlien extends JPanel
 
     }
 
+    private void initFX(JFXPanel swenFX)
+    {
+        javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
+
+        Image swenImage = new Image("Images/Swen.png");
+        ImageView swen = new ImageView(swenImage);
+        swen.setFitWidth(170);
+        swen.setFitHeight(219);
+        Group swenRoot = new Group();
+        swenRoot.getChildren().add(swen);
+        Scene swenScene = new Scene(swenRoot);
+        swenScene.setFill(fxColor);
+        swenFX.setScene(swenScene);
+
+        swen.setOnMouseClicked(event -> {
+            int index = randomFacts.nextInt (funFactsTest.length);
+            for (int i = 0; i < index; i++) {
+            funFactArea.setText (funFactsTest[index]);
+            }
+        });
+    }
+
     /**
      * @Author: Manna Manojlovic
      * @version: 1.0
@@ -58,61 +88,42 @@ public class SwenTheAlien extends JPanel
     {
 
         GridLayout gridLayout = new GridLayout (0, 2, 4, 4);
-        TitledBorder titledBorder = BorderFactory.createTitledBorder (null, " DID YOU KNOW...",
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(null, " DID YOU KNOW...",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color);
 
         panel = new JPanel (gridLayout);
-        layout = new BorderLayout ();
+        //panel = new JPanel(null);
+        layout = new BorderLayout();
 
-        setLayout (layout);
-        setBackground (Color.black);
-        setBorder (titledBorder);
+        JFXPanel swenFX = new JFXPanel();
 
-        panel.setPreferredSize (new Dimension (400, 200));
+        setLayout(layout);
+        setBackground(Color.black);
+        setBorder(titledBorder);
+
+        panel.setPreferredSize(new Dimension(400, 200));
         panel.setBackground (Color.black);
 
-        funFactArea = new JTextArea (100, 100);
-        funFactArea.setLineWrap (true);
-        funFactArea.setEditable (false);
+        funFactArea = new JTextArea(100, 100);
+        funFactArea.setLineWrap(true);
+        funFactArea.setEditable(false);
+        funFactArea.setAlignmentX(50);
+        funFactArea.setAlignmentY(100);
+        funFactArea.setPreferredSize(new Dimension(220, 100));
+        funFactArea.setFont(font);
+        funFactArea.setBackground(Color.black);
+        funFactArea.setForeground(color);
 
-        funFactArea.setFont (font);
-        funFactArea.setBackground (Color.black);
-        funFactArea.setForeground (color);
+        panel.add(funFactArea);
+        panel.add(swenFX);
 
-        lblSwen = new JLabel ();
-        BufferedImage img1 = null;
+        add(panel, BorderLayout.SOUTH);
 
-        //reads image from images, sets the image as an ImageIcon, which is set as a Jlabel.
-        try
-        {
-            img1 = ImageIO.read (new File ("src/Images/Swen.png"));
-        } catch (IOException e)
-        {
-            e.printStackTrace ();
-        }
-
-        ImageIcon icon1 = new ImageIcon (img1);
-        lblSwen.setIcon (icon1);
-
-        //when user clicks on Swen image, he sets random fun facts as String to the textAre funFactArea
-        lblSwen.addMouseListener (new MouseAdapter ()
-        {
-            @Override
-            public void mouseClicked (MouseEvent e)
-            {
-                super.mouseClicked (e);
-
-                int index = randomFacts.nextInt (funFactsTest.length);
-                for (int i = 0; i < index; i++) {
-                    funFactArea.setText (funFactsTest[index]);
-                }
+        Platform.runLater(new Runnable(){
+            public void run(){
+                initFX(swenFX);
             }
         });
-
-        panel.add (funFactArea);
-        panel.add (lblSwen);
-
-        add (panel, BorderLayout.SOUTH);
     }
 }
 
