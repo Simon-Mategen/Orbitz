@@ -43,6 +43,17 @@ public class SwenTheAlien extends JPanel
 
     }
 
+    /**
+     * @Author: Manna Manojlovic
+     * @version: 1.0
+     *
+     * Panel for Swen The Alien and the fun fact textarea.
+     * Creates a panel and initializes the components: image of Swen and the textArea
+     * The Image is read through BufferedImage, set as an ImageIcon,
+     * which in turn is set as a JLabel, a swing component.
+     * In order to show an ImageIcon it has to be set as a Swing component.
+     *
+     */
     public void createPanel ()
     {
 

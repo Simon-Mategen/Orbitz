@@ -22,6 +22,13 @@ public class MainInfoPanel extends JPanel
     private ImageGalleryPanel imgPanel;
     private SwenTheAlien swenPanel;
 
+    /**
+     * @Author: Manna Manojlovic
+     * version 1.0
+     *
+     * Constructor
+     * Initializes the instances, calls method setupPanel()
+     */
     public MainInfoPanel ()
     {
         imgPanel = new ImageGalleryPanel ();
@@ -30,6 +37,14 @@ public class MainInfoPanel extends JPanel
         setupPanel ();
     }
 
+    /**
+     * @Author: Manna Manojlovic
+     * @version: 1.0
+     *
+     * This method initializes a BorderLayout and places the panels from other classes on it.
+     * this is the main panel for the Information-GUI
+     *
+     */
     public void setupPanel ()
     {
         int width = 1000;

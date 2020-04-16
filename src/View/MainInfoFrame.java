@@ -11,6 +11,14 @@ import javafx.scene.shape.Sphere;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @Author: Manna Manojlovic, Albin Ahlbeck
+ * @version: 1.0
+ *
+ * This is the main frame for the planetary information GUI.
+ * It has the MainInfoPanel main panel placed on it and the FX panel for lunar orbit.
+ *
+ */
 public class MainInfoFrame extends JInternalFrame
 {
     private MainInfoPanel panel;

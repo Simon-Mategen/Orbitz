@@ -48,14 +48,26 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         createPanel();
     }
 
+    /**
+     * @Author: Manna Manojlovic, Lanna Maslo
+     * @version 1.0
+     *
+     * Method for initializing the components and the panel for images
+     * Placing all components on Jpanel.
+     * This method also reads images through BufferedImage and sets the images as
+     * ImageIcons, which are then set as a swing component: JLabel in order to be
+     * shown on the swing panel.
+     *
+     * This method also has a JavaFX-panel and a JavaFX- sound icon,
+     * which plays a planetary sound on click, by calling playSound().
+     */
     public void createPanel()
     {
         GridLayout layout = new GridLayout (1,5,4,4);
+        JFXPanel jfx = new JFXPanel();
 
         panel = new JPanel (layout);
         panelBtn = new JPanel();
-
-        JFXPanel jfx = new JFXPanel();
 
         play = new JButton();
 
@@ -98,21 +110,16 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         setBackground (Color.BLACK);
 
-        play.setPreferredSize(new Dimension(20,20));
-
-
         panel.add (lblimage1);
         panel.add (lblimage2);
         panel.add (lblimage3);
         panel.add (lblimage4);
-        //panel.add (play);
 
         panelBtn.add(jfx);
         panelBtn.setBackground(Color.black);
 
         add (panel, BorderLayout.EAST);
         add (panelBtn, BorderLayout.WEST);
-        //play.addActionListener( this);
 
         Platform.runLater(new Runnable(){
             public void run(){
@@ -146,14 +153,13 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         jfxPanel.setScene(scene);
     }
 
-    /*public void actionPerformed(ActionEvent actionEvent)
-    {
-        if (play == actionEvent.getSource())
-        {
-            playSound();
-        }
-    }*/
-
+    /**
+     * @Author: Manna Manojlovic
+     * @version 1.0
+     *
+     * Method for playing a .wav-file. Reads the .wav through AudioInputStream an plays it via Clip.
+     * Clip class also has a built in loop for continuously playing the sound until user stops it manually.
+     */
     public void playSound()
     {
         File file = new File("sound/Jupiter2001.wav");
