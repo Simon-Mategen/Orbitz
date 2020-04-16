@@ -11,7 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
+import javafx.scene.image.Image;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -161,6 +163,7 @@ public class MainFrame extends JFrame
         root.setBackground(createBackground(backgroundURL));
         setupCamera(scene);
         placePlanets(root, planetArrayList);
+        paintPlanets();
         startOrbits(planetArrayList);
         EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
@@ -206,11 +209,28 @@ public class MainFrame extends JFrame
         {
             if (sphere.getId().equals(guiPlanetList.get(i).getName()))
             {
+
                 System.out.println(guiPlanetList.get(i).getName());
                 return guiPlanetList.get(i);
             }
         }
         return null;
+    }
+
+    /**
+     * Paints the surface of the planets by calling their individual mappings
+     *
+     * @author Lanna Maslo
+
+     * @version 1.0
+     */
+    public void paintPlanets()
+    {
+        for (int i = 0; i < guiPlanetList.size() ; i++) {
+            PhongMaterial map = new PhongMaterial();
+            map.setDiffuseMap(new Image("Images/" + guiPlanetList.get(i).getName() + ".jpg"));
+            guiPlanetList.get(i).getSphereFromPlanet().setMaterial(map);
+        }
     }
 
     /**
