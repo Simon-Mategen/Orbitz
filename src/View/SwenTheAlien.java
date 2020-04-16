@@ -32,7 +32,6 @@ import java.util.Random;
 public class SwenTheAlien extends JPanel
 {
     private JPanel panel;
-    private JLabel lblSwen;
     private BorderLayout layout;
 
     private JTextArea funFactArea;
@@ -92,7 +91,6 @@ public class SwenTheAlien extends JPanel
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color);
 
         panel = new JPanel (gridLayout);
-        //panel = new JPanel(null);
         layout = new BorderLayout();
 
         JFXPanel swenFX = new JFXPanel();
@@ -109,7 +107,7 @@ public class SwenTheAlien extends JPanel
         funFactArea.setEditable(false);
         funFactArea.setAlignmentX(50);
         funFactArea.setAlignmentY(100);
-        funFactArea.setPreferredSize(new Dimension(220, 100));
+        funFactArea.setPreferredSize(new Dimension(250, 100));
         funFactArea.setFont(font);
         funFactArea.setBackground(Color.black);
         funFactArea.setForeground(color);

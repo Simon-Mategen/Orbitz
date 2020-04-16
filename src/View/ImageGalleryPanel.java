@@ -101,7 +101,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel.setPreferredSize (new Dimension (600,200));
         panel.setBackground (Color.black);
 
-        panelBtn.setPreferredSize(new Dimension(200, 200));
+        panelBtn.setPreferredSize(new Dimension(300, 200));
 
         setBackground (Color.BLACK);
 
@@ -146,8 +146,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         btnSound = new Button ("", soundIcon);
         btnMute = new Button ("", muteIcon);
-        btnSound.setMinSize (50, 50);
-        btnMute.setMinSize(50,50);
+        btnSound.setMinSize (40, 40);
+        btnMute.setMinSize(40,40);
         btnSound.setOnAction (event -> controller.startSoundThread());    //starts thread and resumes after pause
         btnMute.setOnAction(event -> controller.togglePauseSound());                 //pause thread
 
@@ -158,10 +158,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
 
-        btnSound.setLayoutY(30);
-        btnSound.setLayoutX(30);
-        btnMute.setLayoutY(120);
-        btnMute.setLayoutX(30);
+        btnSound.setLayoutY(45);
+        btnSound.setLayoutX(255);
+        btnMute.setLayoutY(103);
+        btnMute.setLayoutX(255);
 
         Scene scene = new Scene(root);
         scene.setFill(fxColor);
