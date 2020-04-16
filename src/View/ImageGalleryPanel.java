@@ -48,7 +48,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
     private Controller controller;
 
-    public ImageGalleryPanel(Controller controller)
+    public ImageGalleryPanel()
     {
         this.controller = controller;
         createPanel();

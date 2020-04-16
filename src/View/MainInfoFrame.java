@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -26,11 +27,14 @@ public class MainInfoFrame extends JInternalFrame
     private StackPane root;
     private Planet planet;
 
+    //Controller controller;
+
     /**
     Adds a planet to be displayed when creating a MainInfoFrame
      **/
     public MainInfoFrame (Planet planet)
     {
+       // this.controller = controller;
         this.planet = planet;
         frame(planet);
     }

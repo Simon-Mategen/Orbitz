@@ -1,5 +1,7 @@
 package View;
 
+import Controller.Controller;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -21,6 +23,7 @@ public class MainInfoPanel extends JPanel
     private BorderLayout layout;
     private ImageGalleryPanel imgPanel;
     private SwenTheAlien swenPanel;
+    //Controller controller;
 
     /**
      * @Author: Manna Manojlovic
@@ -31,6 +34,7 @@ public class MainInfoPanel extends JPanel
      */
     public MainInfoPanel ()
     {
+        //this.controller = controller;
         imgPanel = new ImageGalleryPanel ();
 
         swenPanel = new SwenTheAlien ();
