@@ -4,11 +4,14 @@ import Controller.Controller;
 import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Sphere;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -16,6 +19,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -75,9 +80,11 @@ public class MainFrame extends JFrame
         sliderListener = new SliderListener();
         timeLabel = new JLabel("1");
         timeSlider = new JSlider(1, 100);
+
         changeSpeedListener = new ChangeSpeedListener();
         changeBackgroundListener = new ChangeBackgroundListener();
         infoButtonListener = new InfoButtonListener();
+
         Platform.runLater(new Runnable()
         {
             @Override
@@ -92,7 +99,6 @@ public class MainFrame extends JFrame
         setVisible(true);
 
         orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
-
 
         // Sets up the JSlider and components related to it
 
@@ -153,10 +159,21 @@ public class MainFrame extends JFrame
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(createBackground(backgroundURL));
-
         setupCamera(scene);
         placePlanets(root, planetArrayList);
         startOrbits(planetArrayList);
+        EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent mouseEvent)
+            {
+                openInfoWindow(determinePlanet((Sphere)mouseEvent.getSource()));
+            }
+
+    };
+        for (int i = 0; i < planetArrayList.size() ; i++)
+        {
+            planetArrayList.get(i).getSphereFromPlanet().addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED,  eventHandler);
+        }
 
         return scene;
     }
@@ -174,6 +191,26 @@ public class MainFrame extends JFrame
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT)));
         return tempBackground;
+    }
+
+    /**
+     * Finds which planet the the sphere is connected to
+     * @
+     * @author Albin Ahlbeck
+
+     * @version 1.0
+     */
+    public Planet determinePlanet(Sphere sphere)
+    {
+        for (int i = 0; i < guiPlanetList.size() ; i++)
+        {
+            if (sphere.getId().equals(guiPlanetList.get(i).getName()))
+            {
+                System.out.println(guiPlanetList.get(i).getName());
+                return guiPlanetList.get(i);
+            }
+        }
+        return null;
     }
 
     /**
@@ -291,9 +328,10 @@ public class MainFrame extends JFrame
         }
     }
 
+
+
     /**
      * Listens to the changeSpeedBtn and changes the speed on click.
-     *
      * @author Albin Ahlbeck
      * @author Simon Måtegen
      * @version 1.0
@@ -319,6 +357,19 @@ public class MainFrame extends JFrame
 
         }
     }
+    /**
+     * Opens an information window
+     * @param planet The planet to showcase
+     * @author Albin Ahlbeck
+     * @author Simon Måtegen
+     * @version 1.0
+     */
+    public void openInfoWindow(Planet planet)
+    {
+        mainInfoFrame = new MainInfoFrame(planet);
+        JOptionPane.showInternalMessageDialog(null, mainInfoFrame,
+                planet.getName(), JOptionPane.PLAIN_MESSAGE);
+    }
 
     private class InfoButtonListener implements ActionListener
     {
@@ -331,4 +382,6 @@ public class MainFrame extends JFrame
                     "Planetary Window", JOptionPane.PLAIN_MESSAGE);
         }
     }
+
+
 }

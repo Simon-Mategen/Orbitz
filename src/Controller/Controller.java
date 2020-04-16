@@ -5,6 +5,8 @@ import Controller.Calculators.PlanetCalculator;
 import Controller.Calculators.PositionCalculator;
 import Model.Sun;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -194,6 +196,8 @@ public class Controller
 
         });
     }
+
+
     
     public static void main(String[] args)
 {

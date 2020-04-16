@@ -3,9 +3,12 @@ package Model;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
+
+import java.awt.*;
 
 /**
  * Class that represents a planet
@@ -24,6 +27,7 @@ public class Planet
     private Duration duration;
 
     private Sphere sphere;
+    private Rectangle2D clickBox;
 
     private PathTransition pathTransition;
 
@@ -40,6 +44,8 @@ public class Planet
         this.perihelion = (long)planetInfo.get("perihelion");
         this.aphelion = (long)planetInfo.get("aphelion");
         this.sphere = new Sphere((double)planetInfo.get("meanRadius")*1000/SCALE_RADIUS_VALUE);
+        this.clickBox = new Rectangle2D(sphere.getTranslateX(), sphere.getTranslateY(), sphere.getRadius(), sphere.getRadius());
+        this.sphere.setId(getName());  // set ID so sphere's planet can be found
     }
     /**
      * Default constructor
@@ -213,4 +219,12 @@ public class Planet
     {
         this.duration = duration;
     }
+
+    /**
+     * @author Albin Ahlbeck
+     * Checks if there is an intersection on a point
+     * @param point the point to check for intersection
+
+     */
+
 }
