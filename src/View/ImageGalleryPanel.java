@@ -180,38 +180,46 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
             if (planet.getName().equals("Earth"))
             {
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Earth.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
-                imageList.add(imageIcon);
+               addImage("src/Images/earthWhole.jpg");
+               addImage("src/Images/earthMountains.jpg");
+               addImage("src/Images/earthOceanAndSand.jpg");
+                addImage("src/Images/meteorCrater.jpg");
             }
             else if (planet.getName().equals("Jupiter")) {
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Jupiter.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
-                imageList.add(imageIcon);
+                addImage("src/Images/image1.jpg");
+                addImage("src/Images/image2.jpg");
+                addImage("src/Images/image3.jpg");
+                addImage("src/Images/image4.jpg");
             }
             else if (planet.getName().equals("Mars")) {
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Mars.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
-                imageList.add(imageIcon);
+                addImage("src/Images/marsGround.jpg");
+                addImage("src/Images/marsSunset.jpg");
+                addImage("src/Images/marsIce.jpg");
             }
             else if (planet.getName().equals("Mercury")) {
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Mercury.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
-                imageList.add(imageIcon);
+                addImage("src/Images/MercuryBasin.jpg");
+                addImage("src/Images/mercuryCrater.jpg");
             }
             else if (planet.getName().equals("Neptune")) {
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Neptune.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
-                imageList.add(imageIcon);
+                addImage("src/Images/neptuneDramatic.jpg");
+                addImage("src/Images/neptuneWhole.jpg");
             }
             else if (planet.getName().equals("Saturn")) {
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Saturn.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
-                imageList.add(imageIcon);
+                addImage("src/Images/saturnFront.jpg");
+                addImage("src/Images/saturnMoons.jpg");
+                addImage("src/Images/saturnRings.jpg");
+                addImage("src/Images/saturnWhole.jpg");
             }
             else if (planet.getName().equals("Uranus")) {
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Uranus.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
-                imageList.add(imageIcon);
+                addImage("src/Images/uranusWhole.jpg");
+                addImage("src/Images/uranusFront.jpg");
+                addImage("src/Images/uranusSide.jpg");
             }
 
             else if (planet.getName().equals("Venus")) {
-
-                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Venus.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
-                imageList.add(imageIcon);
+                addImage("src/Images/venusWhole.jpg");
+                addImage("src/Images/VenusFloor.jpg");
+                addImage("src/Images/venusCrater.jpg");
             }
             else
             {
@@ -222,8 +230,15 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         {
             System.out.println(e);
         }
-
         lblImage.setIcon(imageList.get(0));
+
+    }
+
+    public void addImage(String filePath)
+    {
+        imageList.add(new ImageIcon(
+                new ImageIcon(filePath).getImage().getScaledInstance(lblImage.getWidth(),
+                        lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT)));
     }
 
     /**
