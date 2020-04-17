@@ -150,7 +150,7 @@ public class MainFrame extends JFrame
     private Scene createScene(String backgroundURL, ArrayList<Planet> planetArrayList)
     {
         root = new StackPane();
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root, WIDTH - 100, HEIGHT - 100);
         scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(createBackground(backgroundURL));
         setupCamera(scene);
@@ -202,8 +202,6 @@ public class MainFrame extends JFrame
         {
             if (sphere.getId().equals(guiPlanetList.get(i).getName()))
             {
-
-                System.out.println(guiPlanetList.get(i).getName());
                 return guiPlanetList.get(i);
             }
         }
@@ -380,14 +378,11 @@ public class MainFrame extends JFrame
      * Opens an information window
      * @param planet The planet to showcase
      * @author Albin Ahlbeck
-     * @author Simon Måtegen
      * @version 1.0
      */
     public void openInfoWindow(Planet planet)
     {
         mainInfoFrame = new MainInfoFrame(planet);
-        JOptionPane.showInternalMessageDialog(null, mainInfoFrame,
-                planet.getName(), JOptionPane.PLAIN_MESSAGE);
     }
 
 }
