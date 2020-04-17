@@ -134,7 +134,8 @@ public class MainFrame extends JFrame
     private void initFX(JFXPanel fxPanel)
     {
         // This method is invoked on JavaFX thread
-        Scene scene = createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg", guiPlanetList); // default background
+        Scene scene = createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
+                guiPlanetList); // default background
         fxPanel.setScene(scene);
     }
 
@@ -156,7 +157,8 @@ public class MainFrame extends JFrame
         placePlanets(root, planetArrayList);
         paintPlanets();
         startOrbits(planetArrayList);
-        EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
+        EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>()
+        {
             @Override
             public void handle(javafx.scene.input.MouseEvent mouseEvent)
             {
@@ -166,7 +168,8 @@ public class MainFrame extends JFrame
     };
         for (int i = 0; i < planetArrayList.size() ; i++)
         {
-            planetArrayList.get(i).getSphereFromPlanet().addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED,  eventHandler);
+            planetArrayList.get(i).getSphereFromPlanet().addEventHandler
+                    (javafx.scene.input.MouseEvent.MOUSE_CLICKED,  eventHandler);
         }
 
         return scene;
@@ -327,7 +330,8 @@ public class MainFrame extends JFrame
                             Collections.singletonList(new BackgroundFill(
                                     javafx.scene.paint.Color.BLACK, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)),
                             Collections.singletonList(new BackgroundImage(
-                                    new javafx.scene.image.Image("https://i0.wp.com/metro.co.uk/wp-content/uploads/2018/10/sei_36554009-212f.jpg?quality=90&strip=all&zoom=1&resize=644%2C483&ssl=1",
+                                    new javafx.scene.image.Image("https://i0.wp.com/metro.co.uk/wp-content/uploads/2018/10/sei_36554009-212f." +
+                                            "jpg?quality=90&strip=all&zoom=1&resize=644%2C483&ssl=1",
                                             WIDTH, HEIGHT, false, true),
                                     BackgroundRepeat.NO_REPEAT,
                                     BackgroundRepeat.NO_REPEAT,
@@ -337,8 +341,6 @@ public class MainFrame extends JFrame
             });
         }
     }
-
-
 
     /**
      * Listens to the changeSpeedBtn and changes the speed on click.
@@ -358,9 +360,11 @@ public class MainFrame extends JFrame
                 {
                     durationModifier += 10;
 
-                    ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);//Planets that move 10 times slower for every click on the button
+                    //Planets that move 10 times slower for every click on the button
+                    ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);
 
-                    orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg", newPlanets));
+                    orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
+                            newPlanets));
 
                     for (int i = 0; i < newPlanets.size() ; i++) {
                         PhongMaterial map = new PhongMaterial();
