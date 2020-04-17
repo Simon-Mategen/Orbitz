@@ -253,8 +253,8 @@ public class MainFrame extends JFrame
         camera.setNearClip(0.01);
         camera.setFarClip(2000.0);
         camera.setFieldOfView(35);
-        camera.setTranslateX(650);
-        camera.setTranslateY(300);
+        camera.setTranslateX((float)orbitPanel.getSize().width / 2);
+        camera.setTranslateY((float)orbitPanel.getSize().height / 2);
         scene.setCamera(camera);
 
         scene.addEventHandler(ScrollEvent.SCROLL, event ->
