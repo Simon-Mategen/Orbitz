@@ -7,20 +7,17 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
-import javax.imageio.ImageIO;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-
 import javax.sound.sampled.*;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -252,8 +249,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     private void initFX(JFXPanel jfxPanel)
     {
-        Image soundOn = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/29_Sound_alt-128.png");
-        Image mute = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/30_Sound_off-128.png");
+        Image soundOn = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/29_Sound_alt-64.png");
+        Image mute = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/30_Sound_off-64.png");
 
         ImageView soundIcon = new ImageView(soundOn);
         ImageView muteIcon = new ImageView(mute);
@@ -264,17 +261,19 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         Scene scene = new Scene(root);
 
-        soundIcon.setFitHeight(20);
-        soundIcon.setFitWidth(20);
-        muteIcon.setFitHeight(20);
-        muteIcon.setFitWidth(20);
+        soundIcon.setFitHeight(17);
+        soundIcon.setFitWidth(17);
+        muteIcon.setFitHeight(17);
+        muteIcon.setFitWidth(17);
 
-        btnSound = new Button ("", soundIcon);
-        btnMute = new Button ("", muteIcon);
-        btnSound.setMinSize (40, 40);
+        btnSound = new Button("", soundIcon);
+        btnSound.setTooltip(new Tooltip("press to hear the sound of this planet"));
+        btnMute = new Button("", muteIcon);
+        btnMute.setTooltip(new Tooltip("press to mute it :("));
+        btnSound.setMinSize(40, 40);
+
         btnMute.setMinSize(40,40);
-        btnSound.setOnAction (event -> playSound());
-//        btnMute.setOnAction(event -> stopSound());
+        btnSound.setOnAction(event -> playSound());
 
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
@@ -303,44 +302,27 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     public void playSound()
     {
-        File file = new File("sound/Jupiter2001.wav");
-        AudioInputStream ais = null;
-        Clip clip = null;
+        try{
+            File file = new File("sound/Jupiter2001.wav");
 
-        try
-        {
-            clip = AudioSystem.getClip();
-        }
-        catch (LineUnavailableException e)
-        {
+            if(file.exists()){
+                AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+                Clip clip = AudioSystem.getClip();
+                clip.open(ais);
+                clip.start();
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+                btnMute.setOnAction(event -> {
+                    clip.getMicrosecondPosition();
+                    clip.stop();
+                });
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        try
-        {
-            ais = AudioSystem.getAudioInputStream(file);
-        }
-        catch (UnsupportedAudioFileException | IOException e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            clip.open(ais);
-        }
-        catch (LineUnavailableException | IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        //play the sound until user stops it
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-
-        SwingUtilities.invokeLater(() ->
-        {
-
-        });
     }
+
 
     private class NextListener implements ActionListener
     {
