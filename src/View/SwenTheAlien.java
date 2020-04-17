@@ -52,16 +52,14 @@ public class SwenTheAlien extends JPanel
 
     private void initFX(JFXPanel swenFX)
     {
-        javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
-
         Image swenImage = new Image("Images/Swen.png");
         ImageView swen = new ImageView(swenImage);
-        swen.setFitWidth(170);
-        swen.setFitHeight(219);
+        swen.setFitWidth(168);
+        swen.setFitHeight(218);
         Group swenRoot = new Group();
         swenRoot.getChildren().add(swen);
         Scene swenScene = new Scene(swenRoot);
-        swenScene.setFill(fxColor);
+        swenScene.setFill(new javafx.scene.paint.Color(0,0,0,1));
         swenFX.setScene(swenScene);
 
         swen.setOnMouseClicked(event -> {
@@ -85,12 +83,10 @@ public class SwenTheAlien extends JPanel
      */
     public void createPanel ()
     {
-
-        GridLayout gridLayout = new GridLayout (0, 2, 4, 4);
         TitledBorder titledBorder = BorderFactory.createTitledBorder(null, " DID YOU KNOW...",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color);
 
-        panel = new JPanel (gridLayout);
+        panel = new JPanel(new BorderLayout());
         layout = new BorderLayout();
 
         JFXPanel swenFX = new JFXPanel();
@@ -99,21 +95,27 @@ public class SwenTheAlien extends JPanel
         setBackground(Color.black);
         setBorder(titledBorder);
 
-        panel.setPreferredSize(new Dimension(400, 200));
+        panel.setPreferredSize(new Dimension(402, 240));
         panel.setBackground (Color.black);
 
-        funFactArea = new JTextArea(100, 100);
+        funFactArea = new JTextArea();//(100, 100);
         funFactArea.setLineWrap(true);
+        funFactArea.setWrapStyleWord(true);
         funFactArea.setEditable(false);
-        funFactArea.setAlignmentX(50);
-        funFactArea.setAlignmentY(100);
-        funFactArea.setPreferredSize(new Dimension(250, 100));
+        funFactArea.setAlignmentX(10);
+        funFactArea.setAlignmentY(120);
+        funFactArea.setPreferredSize(new Dimension(245, 100));
         funFactArea.setFont(font);
         funFactArea.setBackground(Color.black);
         funFactArea.setForeground(color);
 
-        panel.add(funFactArea);
-        panel.add(swenFX);
+        JPanel pnl = new JPanel();
+        pnl.setPreferredSize(new Dimension(40, 100));
+        pnl.setBackground(Color.black);
+
+        panel.add(pnl, BorderLayout.WEST);
+        panel.add(funFactArea, BorderLayout.CENTER);
+        panel.add(swenFX, BorderLayout.EAST);
 
         add(panel, BorderLayout.SOUTH);
 
