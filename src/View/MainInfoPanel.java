@@ -69,6 +69,6 @@ public class MainInfoPanel extends JPanel
 
         add (imgPanel, BorderLayout.NORTH);
         add (swenPanel, BorderLayout.EAST);
-        setBackground(java.awt.Color.BLUE);
+        setBackground(Color.BLACK);
     }
 }

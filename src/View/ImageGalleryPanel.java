@@ -10,9 +10,11 @@ import javafx.scene.control.Button;
 import javax.imageio.ImageIO;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,7 +88,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         this.planet = planet;
 
         panel = new JPanel (new BorderLayout());
-        panelBtn = new JPanel();
+        panelBtn = new JPanel(new BorderLayout());
 
         lblimage1 = new JLabel();
         lblimage2 = new JLabel();
@@ -97,16 +99,16 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         previousListener = new PreviousListener();
         nextListener = new NextListener();
 
-        btnNext = new JButton("==>");
-        btnPrevious = new JButton("<==");
+        btnNext = new JButton(">");
+        btnPrevious = new JButton("<");
         btnNext.setFont(new Font("TimesRoman", Font.BOLD, 22));
         btnPrevious.setFont(new Font("TimesRoman", Font.BOLD, 22));
-        btnNext.setPreferredSize(new Dimension(100, 50));
-        btnPrevious.setPreferredSize(new Dimension(100, 50));
+        btnNext.setPreferredSize(new Dimension(60, 50));
+        btnPrevious.setPreferredSize(new Dimension(60, 50));
         btnNext.addActionListener(nextListener);
         btnPrevious.addActionListener(previousListener);
 
-        lblImage.setSize(300, 200);
+        lblImage.setSize(300, 250);
 
         imageList = new ArrayList<>();
 
@@ -141,10 +143,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
          */
 
 
-        panel.setPreferredSize (new Dimension (500,200));
+        panel.setPreferredSize (new Dimension (410,250));
         panel.setBackground (Color.black);
 
-        panelBtn.setPreferredSize(new Dimension(300, 200));
+        panelBtn.setPreferredSize(new Dimension(590, 200));
 
         setBackground (Color.BLACK);
 /*
@@ -154,17 +156,16 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel.add (lblimage4);
 
  */
-
         panel.add(lblImage, BorderLayout.CENTER);
         panel.add(btnPrevious, BorderLayout.WEST);
         panel.add(btnNext, BorderLayout.EAST);
         lblImage.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
-        panelBtn.add(jfx);
+        panelBtn.add(jfx, BorderLayout.WEST);
         panelBtn.setBackground(Color.black);
 
-        add (panel, BorderLayout.WEST);
-        add (panelBtn, BorderLayout.EAST);
+        add(panel, BorderLayout.EAST);
+        add(panelBtn, BorderLayout.WEST);
 
         Platform.runLater(new Runnable(){
             public void run(){
@@ -278,10 +279,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
 
-        btnSound.setLayoutY(45);
-        btnSound.setLayoutX(255);
-        btnMute.setLayoutY(103);
-        btnMute.setLayoutX(255);
+        btnSound.setLayoutY(0);
+        btnSound.setLayoutX(0);
+        btnMute.setLayoutY(40);
+        btnMute.setLayoutX(0);
 
         scene.setFill(fxColor);
         jfxPanel.setBackground(Color.black);
