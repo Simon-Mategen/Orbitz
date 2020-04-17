@@ -42,9 +42,9 @@ public class MainInfoFrame extends JInternalFrame
     public void frame (Planet planet)
     {
         setLayout(new BorderLayout());
-        panel = new MainInfoPanel ();
+        panel = new MainInfoPanel (planet);
         planetaryPanel = new JFXPanel();
-        setSize (1200, 800);
+        setSize (1920, 1080);
         setVisible (true);
 
         add(panel, BorderLayout.NORTH);
@@ -99,7 +99,7 @@ public class MainInfoFrame extends JInternalFrame
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(Color.BLACK);
         placePlanets();
-        //startOrbit();
+        startOrbit();
 
         VBox vbox = new VBox();
         vbox.setLayoutX(20);

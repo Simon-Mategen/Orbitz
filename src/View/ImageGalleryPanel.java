@@ -1,5 +1,6 @@
 package View;
 
+import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
@@ -16,6 +17,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -33,8 +35,14 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
     private JLabel lblimage1, lblimage2, lblimage3, lblimage4;
 
+    private JLabel lblImage;
+
+    private ArrayList<ImageIcon> imageList;
+
     private Button btnSound;
     private Button btnMute;
+
+    Planet planet;
 
     /**
      * @Author Manna Manojlovic
@@ -43,10 +51,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * Constructor
      * Calls createPanel()
      */
-    public ImageGalleryPanel()
+    public ImageGalleryPanel(Planet planet)
     {
-
-        createPanel();
+        createPanel(planet);
+        addImages();
     }
 
     /**
@@ -62,10 +70,13 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * This method also has a JavaFX-panel and a JavaFX- sound icon,
      * which plays a planetary sound on click, by calling playSound().
      */
-    public void createPanel()
+    public void createPanel(Planet planet)
     {
+        setBorder(BorderFactory.createLineBorder(Color.RED));
         GridLayout layout = new GridLayout (1,5,4,4);
         JFXPanel jfx = new JFXPanel();
+
+        this.planet = planet;
 
         panel = new JPanel (layout);
         panelBtn = new JPanel();
@@ -74,6 +85,9 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         lblimage2 = new JLabel();
         lblimage3 = new JLabel();
         lblimage4 = new JLabel();
+        lblImage = new JLabel();
+
+        imageList = new ArrayList<>();
 
         BufferedImage img1 = null;
         BufferedImage img2 = null;
@@ -82,6 +96,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         try
         {
+            System.out.println("test");
             img1 = ImageIO.read (new File("src/Images/image1.jpg"));
             img2 = ImageIO.read (new File ("src/Images/image2.jpg"));
             img3 = ImageIO.read (new File ("src/Images/image3.jpg"));
@@ -97,10 +112,12 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         ImageIcon icon3 = new ImageIcon (img3);
         ImageIcon icon4 = new ImageIcon (img4);
 
-        lblimage1.setIcon (icon1);
+        /*lblimage1.setIcon (icon1);
         lblimage2.setIcon (icon2);
         lblimage3.setIcon (icon3);
         lblimage4.setIcon (icon4);
+
+         */
 
         panel.setPreferredSize (new Dimension (600,200));
         panel.setBackground (Color.black);
@@ -108,11 +125,13 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panelBtn.setPreferredSize(new Dimension(300, 200));
 
         setBackground (Color.BLACK);
-
+/*
         panel.add (lblimage1);
         panel.add (lblimage2);
         panel.add (lblimage3);
         panel.add (lblimage4);
+
+ */
 
         panelBtn.add(jfx);
         panelBtn.setBackground(Color.black);
@@ -125,6 +144,59 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
                 initFX(jfx);
             }
         });
+    }
+
+    public void addImages()
+    {
+        if (planet.getName().equals("Earth"))
+        {
+            ImageIcon imageIcon = new ImageIcon("src/Images/Earth.jpg");
+            imageList.add(imageIcon);
+        }
+
+        if (planet.getName().equals("Jupiter"))
+        {
+            ImageIcon imageIcon = new ImageIcon("src/Images/Jupiter.jpg");
+            imageList.add(imageIcon);
+        }
+
+        if (planet.getName().equals("Saturn"))
+        {
+            ImageIcon imageIcon = new ImageIcon("src/Images/Saturn.jpg");
+            imageList.add(imageIcon);
+        }
+
+        if (planet.getName().equals("Neptune"))
+        {
+            ImageIcon imageIcon = new ImageIcon("src/Images/Neptune.jpg");
+            imageList.add(imageIcon);
+        }
+
+        if (planet.getName().equals("Venus"))
+        {
+            ImageIcon imageIcon = new ImageIcon("src/Images/Venus.jpg");
+            imageList.add(imageIcon);
+        }
+
+        if (planet.getName().equals("Mercury"))
+        {
+            ImageIcon imageIcon = new ImageIcon("src/Images/Mercury.jpg");
+            imageList.add(imageIcon);
+        }
+
+        if (planet.getName().equals("Uranus"))
+        {
+            ImageIcon imageIcon = new ImageIcon("src/Images/Uranus.jpg");
+            imageList.add(imageIcon);
+        }
+
+        if (planet.getName().equals("Mars"))
+        {
+            ImageIcon imageIcon = new ImageIcon("src/Images/Mars.jpg");
+            imageList.add(imageIcon);
+        }
+
+        lblImage.setIcon(imageList.get(0)); // set first image to default
     }
 
     /**

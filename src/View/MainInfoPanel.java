@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.Planet;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,6 +24,8 @@ public class MainInfoPanel extends JPanel
     private BorderLayout layout;
     private ImageGalleryPanel imgPanel;
     private SwenTheAlien swenPanel;
+
+    private Planet planet;
     //Controller controller;
 
     /**
@@ -32,13 +35,12 @@ public class MainInfoPanel extends JPanel
      * Constructor
      * Initializes the instances, calls method setupPanel()
      */
-    public MainInfoPanel ()
+    public MainInfoPanel (Planet planet)
     {
         //this.controller = controller;
-        imgPanel = new ImageGalleryPanel ();
-
+        imgPanel = new ImageGalleryPanel (planet);
         swenPanel = new SwenTheAlien ();
-        setupPanel ();
+        setupPanel(planet);
     }
 
     /**
@@ -49,10 +51,12 @@ public class MainInfoPanel extends JPanel
      * this is the main panel for the Information-GUI
      *
      */
-    public void setupPanel ()
+    public void setupPanel (Planet planet)
     {
         int width = 1000;
         int height = 600;
+
+        this.planet = planet;
 
         Border border = this.getBorder ();
         Border margin = BorderFactory.createEmptyBorder (12, 12, 12, 12);
