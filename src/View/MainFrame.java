@@ -44,6 +44,7 @@ public class MainFrame extends JFrame
     private JFXPanel orbitPanel;
     private JPanel overheadPanel;
     private MainInfoFrame mainInfoFrame;
+    private LoadingScreen loadingScreen = new LoadingScreen();
 
     private StackPane root;
     private JSlider timeSlider;
@@ -348,6 +349,8 @@ public class MainFrame extends JFrame
      */
     private class ChangeSpeedListener implements ActionListener
     {
+
+
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
@@ -356,10 +359,14 @@ public class MainFrame extends JFrame
                 @Override
                 public void run()
                 {
+                    loadingScreen.setVisible(true);
+                    
                     durationModifier += 10;
 
                     //Planets that move 10 times slower for every click on the button
                     ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);
+
+
 
                     orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
                             newPlanets));
@@ -369,6 +376,8 @@ public class MainFrame extends JFrame
                         map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
                         newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
                     }
+
+                    loadingScreen.setVisible(false);
                 }
             });
 
