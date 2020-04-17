@@ -5,7 +5,6 @@ import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -21,8 +20,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -53,12 +50,10 @@ public class MainFrame extends JFrame
     private JLabel timeLabel;
     private JButton changeBackgroundBtn = new JButton("Change Background");
     private JButton speedBtn = new JButton("SPEED/10");
-    private JButton infoButton = new JButton("Test info");
 
     private ChangeBackgroundListener changeBackgroundListener;
     private SliderListener sliderListener;
     private ChangeSpeedListener changeSpeedListener;
-    private InfoButtonListener infoButtonListener;
 
     private Controller controller;
 
@@ -85,7 +80,6 @@ public class MainFrame extends JFrame
 
         changeSpeedListener = new ChangeSpeedListener();
         changeBackgroundListener = new ChangeBackgroundListener();
-        infoButtonListener = new InfoButtonListener();
 
         Platform.runLater(new Runnable()
         {
@@ -118,10 +112,7 @@ public class MainFrame extends JFrame
         changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
         overheadPanel.add(changeBackgroundBtn);
         speedBtn.setPreferredSize(new Dimension(200, 40));
-        infoButton.setPreferredSize(new Dimension(200, 40));
-        infoButton.addActionListener(infoButtonListener);
         overheadPanel.add(speedBtn);
-        overheadPanel.add(infoButton);
         overheadPanel.setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE));
 
         changeBackgroundBtn.addActionListener(changeBackgroundListener);
@@ -198,7 +189,6 @@ public class MainFrame extends JFrame
 
     /**
      * Finds which planet the the sphere is connected to
-     * @
      * @author Albin Ahlbeck
 
      * @version 1.0
@@ -395,18 +385,5 @@ public class MainFrame extends JFrame
         JOptionPane.showInternalMessageDialog(null, mainInfoFrame,
                 planet.getName(), JOptionPane.PLAIN_MESSAGE);
     }
-
-    private class InfoButtonListener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent)
-        {
-            // test
-            mainInfoFrame = new MainInfoFrame(guiPlanetList.get(5));
-            JOptionPane.showInternalMessageDialog(null, mainInfoFrame,
-                    "Planetary Window", JOptionPane.PLAIN_MESSAGE);
-        }
-    }
-
 
 }
