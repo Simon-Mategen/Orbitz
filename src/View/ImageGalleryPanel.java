@@ -1,6 +1,5 @@
 package View;
 
-import Controller.Controller;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
@@ -11,12 +10,13 @@ import javax.imageio.ImageIO;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
+
 
 /**
  * @Author: Manna Manojlovic
@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * 1 enlarged image shows up when user clicks one of the small images.
  *
  */
-
 public class ImageGalleryPanel extends JPanel //implements ActionListener
 {
     private JPanel panel;
@@ -37,11 +36,16 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     private Button btnSound;
     private Button btnMute;
 
-    private Controller controller;
-
+    /**
+     * @Author Manna Manojlovic
+     * @version 1.0
+     * 
+     * Constructor
+     * Calls createPanel()
+     */
     public ImageGalleryPanel()
     {
-        this.controller = controller;
+
         createPanel();
     }
 
@@ -139,6 +143,12 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         ImageView soundIcon = new ImageView(soundOn);
         ImageView muteIcon = new ImageView(mute);
 
+        javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
+
+        Group root = new Group();
+
+        Scene scene = new Scene(root);
+
         soundIcon.setFitHeight(20);
         soundIcon.setFitWidth(20);
         muteIcon.setFitHeight(20);
@@ -148,12 +158,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         btnMute = new Button ("", muteIcon);
         btnSound.setMinSize (40, 40);
         btnMute.setMinSize(40,40);
-        btnSound.setOnAction (event -> controller.startSoundThread());    //starts thread and resumes after pause
-        btnMute.setOnAction(event -> controller.togglePauseSound());                 //pause thread
-
-        javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
-
-        Group root = new Group();
+        btnSound.setOnAction (event -> playSound());
+//        btnMute.setOnAction(event -> stopSound());
 
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
@@ -163,11 +169,62 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         btnMute.setLayoutY(103);
         btnMute.setLayoutX(255);
 
-        Scene scene = new Scene(root);
         scene.setFill(fxColor);
         jfxPanel.setBackground(Color.black);
         jfxPanel.setScene(scene);
     }
 
+    /**
+     * @Author: Manna Manojlovic
+     * @version 1.0
+     *
+     * When user clicks play button, a thread that calls this method starts.
+     *
+     * Method for playing a .wav-file. Reads the .wav through AudioInputStream an plays it via Clip.
+     * Clip class also has a built in loop for continuously playing the sound until user stops it manually.
+     *
+     * Stop button currently is NOT WORKING!!! Pressing the soundOn button will increase sound instead,
+     * because it creates new instances every time
+     */
+    public void playSound()
+    {
+        File file = new File("sound/Jupiter2001.wav");
+        AudioInputStream ais = null;
+        Clip clip = null;
+
+        try
+        {
+            clip = AudioSystem.getClip();
+        }
+        catch (LineUnavailableException e)
+        {
+            e.printStackTrace();
+        }
+
+        try
+        {
+            ais = AudioSystem.getAudioInputStream(file);
+        }
+        catch (UnsupportedAudioFileException | IOException e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            clip.open(ais);
+        }
+        catch (LineUnavailableException | IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        //play the sound until user stops it
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+        SwingUtilities.invokeLater(() ->
+        {
+
+        });
+    }
 
 }

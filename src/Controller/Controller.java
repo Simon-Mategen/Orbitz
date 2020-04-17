@@ -5,20 +5,12 @@ import Controller.Calculators.PlanetCalculator;
 import Controller.Calculators.PositionCalculator;
 import Model.Sun;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import Model.Planet;
 import Enum.*;
 import View.MainFrame;
-import View.SoundThread;
 import javafx.util.Duration;
-
-import javax.sound.sampled.*;
-import javax.swing.*;
 
 public class Controller
 {
@@ -27,7 +19,6 @@ public class Controller
     private PlanetCalculator planetCalculator;
     private PositionCalculator positionCalculator;
     private MainFrame mainframe;
-    private SoundThread soundThread;
 
     private Sun sun;
 
@@ -90,114 +81,6 @@ public class Controller
 
         return newPlanets;
     }
-
-
-
-    /**
-     * @Author Manna Manojlovic
-     * version 1.0
-     *
-     * user clicks the soundOn-button, then the thread starts,which calls playSound()
-     */
-    public void startSoundThread()
-    {
-        if (soundThread == null)
-        {
-            soundThread = new SoundThread(this);
-
-            Thread t1 = new Thread (soundThread);
-            t1.start();
-
-        }
-
-        //if thread is already running, no new thread will be created
-        if (soundThread.isRunning())
-        {
-            System.out.println("Already running");
-
-            return;
-        }
-
-        resumeSound();      //when user clicks the soundOn-button after pausing the sound, the sound resumes
-                            //pause == false
-    }
-
-
-    /**
-     * @Author Manna Manojlovic
-     * version 1.0
-     *
-     * Pauses the thread on buttonclick mute
-     */
-    public void togglePauseSound()
-    {
-        soundThread.paused = true;
-
-        System.out.println("Thread is now " + (soundThread.paused ? "paused" : "running") + ".");
-    }
-
-    /**
-     * @Author Manna Manojlovic
-     * version 1.0
-     * Continues playing the sound after soundOn-button is clicked on
-     */
-
-    public void resumeSound()
-    {
-        soundThread.paused = false;
-    }
-
-    /**
-     * @Author: Manna Manojlovic
-     * @version 1.0
-     *
-     * When user clicks play button, a thread that calls this method starts.
-     *
-     * Method for playing a .wav-file. Reads the .wav through AudioInputStream an plays it via Clip.
-     * Clip class also has a built in loop for continuously playing the sound until user stops it manually.
-     */
-    public void playSound()
-    {
-        File file = new File("sound/Jupiter2001.wav");
-        AudioInputStream ais = null;
-        Clip clip = null;
-
-        try
-        {
-            clip = AudioSystem.getClip();
-        }
-        catch (LineUnavailableException e)
-        {
-            e.printStackTrace();
-        }
-
-        try
-        {
-            ais = AudioSystem.getAudioInputStream(file);
-        }
-        catch (UnsupportedAudioFileException | IOException e)
-        {
-            e.printStackTrace();
-        }
-        try
-        {
-            clip.open(ais);
-        }
-        catch (LineUnavailableException | IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        //play the sound until user stops it
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-
-        SwingUtilities.invokeLater(() ->
-        {
-
-        });
-    }
-
-
     
     public static void main(String[] args)
 {
