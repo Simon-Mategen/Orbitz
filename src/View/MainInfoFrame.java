@@ -51,7 +51,7 @@ public class MainInfoFrame extends JFrame
         add(panel, BorderLayout.NORTH);
         planetaryPanel.setPreferredSize(new Dimension(500, 400));
         add(planetaryPanel, BorderLayout.SOUTH);
-        setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 
         Platform.runLater(new Runnable() {
             @Override

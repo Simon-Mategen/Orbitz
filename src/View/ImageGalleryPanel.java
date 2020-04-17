@@ -180,7 +180,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
             if (planet.getName().equals("Earth"))
             {
-               addImage("src/Images/earthWhole.jpg");
+               addImage("src/Images/earthWhole.png");
                addImage("src/Images/earthMountains.jpg");
                addImage("src/Images/earthOceanAndSand.jpg");
                 addImage("src/Images/meteorCrater.jpg");
@@ -208,7 +208,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
                 addImage("src/Images/saturnFront.jpg");
                 addImage("src/Images/saturnMoons.jpg");
                 addImage("src/Images/saturnRings.jpg");
-                addImage("src/Images/saturnWhole.jpg");
+                addImage("src/Images/saturnWhole.png");
             }
             else if (planet.getName().equals("Uranus")) {
                 addImage("src/Images/uranusWhole.jpg");
