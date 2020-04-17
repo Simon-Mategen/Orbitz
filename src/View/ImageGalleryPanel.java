@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 import javax.imageio.ImageIO;
+
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -270,7 +272,9 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         muteIcon.setFitWidth(20);
 
         btnSound = new Button ("", soundIcon);
+        btnSound.setTooltip(new Tooltip("press to hear the sound of this planet"));
         btnMute = new Button ("", muteIcon);
+        btnMute.setTooltip(new Tooltip("press to mute it :("));
         btnSound.setMinSize (40, 40);
         btnMute.setMinSize(40,40);
         btnSound.setOnAction (event -> playSound());

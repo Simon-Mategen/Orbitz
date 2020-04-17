@@ -54,11 +54,12 @@ public class SwenTheAlien extends JPanel
     {
         Image swenImage = new Image("Images/Swen.png");
         ImageView swen = new ImageView(swenImage);
-        swen.setFitWidth(168);
-        swen.setFitHeight(218);
+        swen.setFitWidth(170);
+        swen.setFitHeight(220);
         Group swenRoot = new Group();
         swenRoot.getChildren().add(swen);
         Scene swenScene = new Scene(swenRoot);
+        swenFX.setPreferredSize(new Dimension(171, 221));
         swenScene.setFill(new javafx.scene.paint.Color(0,0,0,1));
         swenFX.setScene(swenScene);
 
