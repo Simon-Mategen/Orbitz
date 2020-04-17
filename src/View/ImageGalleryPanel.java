@@ -14,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,19 +32,24 @@ import java.util.ArrayList;
  */
 public class ImageGalleryPanel extends JPanel //implements ActionListener
 {
+    Planet planet;
     private JPanel panel;
     private JPanel panelBtn;
 
     private JLabel lblimage1, lblimage2, lblimage3, lblimage4;
-
     private JLabel lblImage;
 
     private ArrayList<ImageIcon> imageList;
 
     private Button btnSound;
     private Button btnMute;
+    private JButton btnNext;
+    private JButton btnPrevious;
 
-    Planet planet;
+    private PreviousListener previousListener;
+    private NextListener nextListener;
+
+    private int picIndex = 0;
 
     /**
      * @Author Manna Manojlovic
@@ -56,7 +63,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         createPanel(planet);
         addImages();
     }
-
     /**
      * @Author: Manna Manojlovic, Lanna Maslo
      * @version 1.0
@@ -74,11 +80,12 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     {
         setBorder(BorderFactory.createLineBorder(Color.RED));
         GridLayout layout = new GridLayout (1,5,4,4);
+        setLayout(new BorderLayout());
         JFXPanel jfx = new JFXPanel();
 
         this.planet = planet;
 
-        panel = new JPanel (layout);
+        panel = new JPanel (new BorderLayout());
         panelBtn = new JPanel();
 
         lblimage1 = new JLabel();
@@ -87,13 +94,27 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         lblimage4 = new JLabel();
         lblImage = new JLabel();
 
+        previousListener = new PreviousListener();
+        nextListener = new NextListener();
+
+        btnNext = new JButton("==>");
+        btnPrevious = new JButton("<==");
+        btnNext.setFont(new Font("TimesRoman", Font.BOLD, 22));
+        btnPrevious.setFont(new Font("TimesRoman", Font.BOLD, 22));
+        btnNext.setPreferredSize(new Dimension(100, 50));
+        btnPrevious.setPreferredSize(new Dimension(100, 50));
+        btnNext.addActionListener(nextListener);
+        btnPrevious.addActionListener(previousListener);
+
+        lblImage.setSize(300, 200);
+
         imageList = new ArrayList<>();
 
         BufferedImage img1 = null;
         BufferedImage img2 = null;
         BufferedImage img3 = null;
         BufferedImage img4 = null;
-
+/*
         try
         {
             System.out.println("test");
@@ -119,7 +140,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
          */
 
-        panel.setPreferredSize (new Dimension (600,200));
+
+        panel.setPreferredSize (new Dimension (500,200));
         panel.setBackground (Color.black);
 
         panelBtn.setPreferredSize(new Dimension(300, 200));
@@ -133,11 +155,16 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
  */
 
+        panel.add(lblImage, BorderLayout.CENTER);
+        panel.add(btnPrevious, BorderLayout.WEST);
+        panel.add(btnNext, BorderLayout.EAST);
+        lblImage.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+
         panelBtn.add(jfx);
         panelBtn.setBackground(Color.black);
 
-        add (panel, BorderLayout.EAST);
-        add (panelBtn, BorderLayout.WEST);
+        add (panel, BorderLayout.WEST);
+        add (panelBtn, BorderLayout.EAST);
 
         Platform.runLater(new Runnable(){
             public void run(){
@@ -148,55 +175,55 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
     public void addImages()
     {
-        if (planet.getName().equals("Earth"))
+        System.out.println("Planet "  + planet.getName());
+        try {
+
+            if (planet.getName().equals("Earth"))
+            {
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Earth.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
+                imageList.add(imageIcon);
+            }
+            else if (planet.getName().equals("Jupiter")) {
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Jupiter.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
+                imageList.add(imageIcon);
+            }
+            else if (planet.getName().equals("Mars")) {
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Mars.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
+                imageList.add(imageIcon);
+            }
+            else if (planet.getName().equals("Mercury")) {
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Mercury.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
+                imageList.add(imageIcon);
+            }
+            else if (planet.getName().equals("Neptune")) {
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Neptune.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
+                imageList.add(imageIcon);
+            }
+            else if (planet.getName().equals("Saturn")) {
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Saturn.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
+                imageList.add(imageIcon);
+            }
+            else if (planet.getName().equals("Uranus")) {
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Uranus.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
+                imageList.add(imageIcon);
+            }
+
+            else if (planet.getName().equals("Venus")) {
+
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/Images/Venus.jpg").getImage().getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), java.awt.Image.SCALE_DEFAULT));
+                imageList.add(imageIcon);
+            }
+            else
+            {
+                System.out.println("No planet found");
+            }
+        }
+        catch (Exception e)
         {
-            ImageIcon imageIcon = new ImageIcon("src/Images/Earth.jpg");
-            imageList.add(imageIcon);
+            System.out.println(e);
         }
 
-        if (planet.getName().equals("Jupiter"))
-        {
-            ImageIcon imageIcon = new ImageIcon("src/Images/Jupiter.jpg");
-            imageList.add(imageIcon);
-        }
-
-        if (planet.getName().equals("Saturn"))
-        {
-            ImageIcon imageIcon = new ImageIcon("src/Images/Saturn.jpg");
-            imageList.add(imageIcon);
-        }
-
-        if (planet.getName().equals("Neptune"))
-        {
-            ImageIcon imageIcon = new ImageIcon("src/Images/Neptune.jpg");
-            imageList.add(imageIcon);
-        }
-
-        if (planet.getName().equals("Venus"))
-        {
-            ImageIcon imageIcon = new ImageIcon("src/Images/Venus.jpg");
-            imageList.add(imageIcon);
-        }
-
-        if (planet.getName().equals("Mercury"))
-        {
-            ImageIcon imageIcon = new ImageIcon("src/Images/Mercury.jpg");
-            imageList.add(imageIcon);
-        }
-
-        if (planet.getName().equals("Uranus"))
-        {
-            ImageIcon imageIcon = new ImageIcon("src/Images/Uranus.jpg");
-            imageList.add(imageIcon);
-        }
-
-        if (planet.getName().equals("Mars"))
-        {
-            ImageIcon imageIcon = new ImageIcon("src/Images/Mars.jpg");
-            imageList.add(imageIcon);
-        }
-
-        lblImage.setIcon(imageList.get(0)); // set first image to default
+        lblImage.setIcon(imageList.get(0));
     }
 
     /**
@@ -299,4 +326,43 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         });
     }
 
+    private class NextListener implements ActionListener
+    {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            if (picIndex < imageList.size() - 1)
+            {
+                picIndex++;
+            }
+            else
+            {
+                picIndex = 0;
+            }
+            lblImage.setIcon(imageList.get(picIndex));
+        }
+
+
+    }
+
+    private class PreviousListener implements ActionListener
+    {
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            if (picIndex > 0)
+            {
+                picIndex--;
+            }
+            else
+            {
+                picIndex = imageList.size() - 1;
+            }
+            lblImage.setIcon(imageList.get(picIndex));
+        }
+
+
+    }
 }

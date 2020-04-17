@@ -20,7 +20,7 @@ import java.awt.*;
  * It has the MainInfoPanel main panel placed on it and the FX panel for lunar orbit.
  *
  */
-public class MainInfoFrame extends JInternalFrame
+public class MainInfoFrame extends JFrame
 {
     private MainInfoPanel panel;
     private JFXPanel planetaryPanel;
@@ -37,6 +37,7 @@ public class MainInfoFrame extends JInternalFrame
        // this.controller = controller;
         this.planet = planet;
         frame(planet);
+
     }
 
     public void frame (Planet planet)
@@ -44,32 +45,33 @@ public class MainInfoFrame extends JInternalFrame
         setLayout(new BorderLayout());
         panel = new MainInfoPanel (planet);
         planetaryPanel = new JFXPanel();
-        setSize (1920, 1080);
+        setSize (1000, 600);
         setVisible (true);
 
         add(panel, BorderLayout.NORTH);
-        planetaryPanel.setPreferredSize(new Dimension(600, 400));
-        add(planetaryPanel);
+        planetaryPanel.setPreferredSize(new Dimension(500, 400));
+        add(planetaryPanel, BorderLayout.SOUTH);
         setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                initFX(planetaryPanel, planet); // starts on the Java FX thread
+                initFX(planetaryPanel); // starts on the Java FX thread
             }
         });
-
+        System.out.println(planetaryPanel.getX() + " " + planetaryPanel.getY());
+        planetaryPanel.setLayout(null);
+        planetaryPanel.setLocation(500, 500);
     }
 
     /**
      * Creates a new scene from createScene and adds it to the Java FX window
      *
      * @param fxPanel The JavaFX panel to be created
-     * @param planet to be displayed
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    private void initFX(JFXPanel fxPanel, Planet planet)
+    private void initFX(JFXPanel fxPanel)
     {
         // This method is invoked on JavaFX thread
         Scene scene = createScene(); // default background
@@ -96,14 +98,16 @@ public class MainInfoFrame extends JInternalFrame
     private Scene createScene()
     {
         root = new StackPane();
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        scene.setFill(Color.BLACK);
-        placePlanets();
-        startOrbit();
+        Scene scene = new Scene(root, 300, 300);
+        scene.setFill(Color.BLUE);
+        //placePlanets();
+        //startOrbit();
 
-        VBox vbox = new VBox();
+        /*VBox vbox = new VBox();
         vbox.setLayoutX(20);
         vbox.setLayoutY(20);
+
+         */
         return scene;
     }
 
