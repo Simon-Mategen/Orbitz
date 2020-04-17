@@ -15,13 +15,11 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Hashtable;
 
 /**
  * MainFrame is the main window which contains various  graphical components
@@ -37,7 +35,7 @@ public class MainFrame extends JFrame
 {
     private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private final int MAX_SLIDER_VALUE = 100;
+    private final int MAX_SLIDER_VALUE = 30;
 
     private ArrayList<Planet> guiPlanetList;
 
@@ -58,7 +56,7 @@ public class MainFrame extends JFrame
 
     private Controller controller;
 
-    private int durationModifier;
+    private String durationModifier;
 
     /**
      * Constructs the GUI components and starts the Java-FX window.
@@ -76,8 +74,8 @@ public class MainFrame extends JFrame
         orbitPanel = new JFXPanel();
         overheadPanel = new JPanel();
         sliderListener = new SliderListener();
-        timeLabel = new JLabel("1");
-        timeSlider = new JSlider(1, 100);
+        timeLabel = new JLabel("Real Speed");
+        timeSlider = new JSlider();
 
         changeSpeedListener = new ChangeSpeedListener();
         changeBackgroundListener = new ChangeBackgroundListener();
@@ -98,16 +96,28 @@ public class MainFrame extends JFrame
         orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
 
         // Sets up the JSlider and components related to it
+        Hashtable<Integer, String> labels = new Hashtable<>();
+        labels.put(0, "Real speed");
+        labels.put(10, "*10");
+        labels.put(20, "*100");
+        labels.put(30, "*1000");
 
         timeSlider.setValue(0);
         timeSlider.setMaximum(MAX_SLIDER_VALUE);
+        timeSlider.setLabelTable(labels);
+        timeSlider.setPaintLabels(true);
         timeLabel.setPreferredSize(new Dimension(50, 50));
         timeSlider.setPreferredSize(new Dimension(400, 50));
-        timeSlider.addChangeListener(sliderListener);
+        timeSlider.setPaintTicks(true);
+        timeSlider.setMajorTickSpacing(10);
+        timeSlider.setForeground(Color.BLUE);
+        timeSlider.setSnapToTicks(true);
+        timeSlider.addMouseListener(sliderListener);
 
         // Sets up overheadPanel
         overheadPanel.setPreferredSize(new Dimension(1400, 60));
         overheadPanel.setBackground(java.awt.Color.WHITE);
+        timeLabel.setPreferredSize(new Dimension(80, 30));
         overheadPanel.add(timeLabel);
         overheadPanel.add(timeSlider);
         changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
@@ -290,25 +300,107 @@ public class MainFrame extends JFrame
         }
     }
 
+    /**
+     * The new orbit that generates when the speed is altered
+     */
+    private void createNewOrbits()
+    {
+        loadingScreen.setVisible(true);
 
+        durationModifier += 10;
+
+        //Planets that move 10 times slower for every click on the button
+        ArrayList<Planet> newPlanets = controller.createPlanetArray(new String("*,1"));
+
+        orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
+                newPlanets));
+
+        for (int i = 0; i < newPlanets.size() ; i++) {
+            PhongMaterial map = new PhongMaterial();
+            map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
+            newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
+        }
+
+        loadingScreen.setVisible(false);
+    }
 
     /**
      * Listens to change in timeSlider and then changes the text in timeLabel
      *
      * @author Albin Ahlbeck
+     * @author Simon Måtegen
      * @version 1.0
      */
-    private class SliderListener implements ChangeListener
+    private class SliderListener implements MouseListener
     {
+        int currentValue = 0;
+
         @Override
-        public void stateChanged(ChangeEvent changeEvent)
+        public void mouseClicked(MouseEvent mouseEvent)
         {
-            timeLabel.setText(Integer.toString(timeSlider.getValue()));
-            durationModifier = timeSlider.getValue();
 
-/*            ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);
+        }
 
-            orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg", newPlanets));*/
+        @Override
+        public void mousePressed(MouseEvent mouseEvent)
+        {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent mouseEvent)
+        {
+            JOptionPane.showMessageDialog(null, timeSlider.getValue());
+
+            if (timeSlider.getValue() == currentValue)
+            {
+                durationModifier = "*,1";
+                JOptionPane.showMessageDialog(null, durationModifier);
+            }
+            else if (timeSlider.getValue() == 10 && timeSlider.getValue() > currentValue)
+            {
+                durationModifier = "*,10";
+                JOptionPane.showMessageDialog(null, durationModifier);
+            }
+            else if (timeSlider.getValue() == 10 && timeSlider.getValue() < currentValue)
+            {
+                durationModifier = "/,10";
+                JOptionPane.showMessageDialog(null, durationModifier);
+            }
+            else if (timeSlider.getValue() == 20 && timeSlider.getValue() > currentValue)
+            {
+                durationModifier = "*,100";
+                JOptionPane.showMessageDialog(null, durationModifier);
+            }
+            else if (timeSlider.getValue() == 20 && timeSlider.getValue() < currentValue)
+            {
+                durationModifier = "/,100";
+                JOptionPane.showMessageDialog(null, durationModifier);
+            }
+            else if (timeSlider.getValue() == 30 && timeSlider.getValue() > currentValue)
+            {
+                durationModifier = "*,1000";
+                JOptionPane.showMessageDialog(null, durationModifier);
+            }
+            else if (timeSlider.getValue() == 30 && timeSlider.getValue() < currentValue)
+            {
+                durationModifier = "/,1000";
+                JOptionPane.showMessageDialog(null, durationModifier);
+            }
+
+            currentValue = timeSlider.getValue();
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent mouseEvent)
+        {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent mouseEvent)
+        {
+
         }
     }
 
@@ -359,25 +451,7 @@ public class MainFrame extends JFrame
                 @Override
                 public void run()
                 {
-                    loadingScreen.setVisible(true);
-                    
-                    durationModifier += 10;
 
-                    //Planets that move 10 times slower for every click on the button
-                    ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);
-
-
-
-                    orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
-                            newPlanets));
-
-                    for (int i = 0; i < newPlanets.size() ; i++) {
-                        PhongMaterial map = new PhongMaterial();
-                        map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
-                        newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
-                    }
-
-                    loadingScreen.setVisible(false);
                 }
             });
 
