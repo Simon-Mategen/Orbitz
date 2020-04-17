@@ -23,12 +23,12 @@ public class PlanetCalculator
      */
     public double calculatePlanetSunOrbitTime(Sun sun, Planet planet)
     {
-        double mu = -1; //The greek letter ?
+        double mu = -1; //The greek letter
         double time = -1;
 
         mu = G*sun.getMass();
 
-        time = ((2*Math.PI)*(Math.sqrt((Math.pow(((double) planet.getSemiMajorAxis()*1000), 3))/mu)))/SCALE_VALUE;
+        time = ((2*Math.PI)*(Math.sqrt((Math.pow(((double) planet.getSemiMajorAxis()*1000), 3))/mu)));
 
         return time;
     }
