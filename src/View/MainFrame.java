@@ -97,15 +97,9 @@ public class MainFrame extends JFrame
         orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
 
         // Sets up the JSlider and components related to it
-        Hashtable<Integer, String> labels = new Hashtable<>();
-        labels.put(0, "Real speed");
-        labels.put(10, "*10");
-        labels.put(20, "*100");
-        labels.put(30, "*1000");
 
         timeSlider.setValue(0);
         timeSlider.setMaximum(MAX_SLIDER_VALUE);
-        timeSlider.setLabelTable(labels);
         timeSlider.setPaintLabels(true);
         timeLabel.setPreferredSize(new Dimension(50, 50));
         timeSlider.setPreferredSize(new Dimension(400, 50));

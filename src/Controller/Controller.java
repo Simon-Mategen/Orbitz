@@ -67,11 +67,10 @@ public class Controller
             p.setPlanetOrbit(orbitCalculator.getPlanetSunOrbit(sun, p));//Create orbit
         }
 
-
-        //Sets planet duration
+        //Sets planet duration [*1000 is to make it into seconds instead of milliseconds]
         for (Planet planet: newPlanets)
         {
-            planet.setDuration(new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet))/durationModifier)); //*1000 is to make it into seconds instead of milliseconds
+            planet.setDuration(new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*1000)*durationModifier)); //* makes them go slower and / makes them go faster
         }
 
 
