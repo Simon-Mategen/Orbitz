@@ -34,56 +34,89 @@ public class PositionCalculator {
         d = 367*year-(7*(year+((month+9)/12)))/4 +((275+month)/9)+day-730530;
 
         //Mercury värden
-        N = 48.3313 + (3.24587E-5 * d);
-        i = 7.0047 + (5.00E-8 * d);
-        w = 29.1241 + (1.01444E-5 * d);
+        N = 48.3313 + 3.24587E-5 * d;
+        i = 7.0047 + 5.00E-8 * d;
+        w = 29.1241 + 1.01444E-5 * d;
         a = 0.387098;
-        e = 0.205635 + (5.59E-10 * d);
-        M = 168.6562 + (4.0923344368 * -3543) + 360*40;
+        e = 0.205635 + 5.59E-10 * d;
+        M = 168.6562 + 4.0923344368 * d;
+
+        //Venus
+        N = 76.6799 + 2.46590E-5 * d;
+        i = 3.3946 + 2.75E-8 * d;
+        w = 54.8910 + 1.38374E-5 * d;
+        a = 0.723330;
+        e = 0.006773 - 1.302E-9 * d;
+        M = 48.0052 + 1.6021302244 * d;
+
+        //Mars
+        N = 49.5574 + 2.11081E-5 * d;
+        i = 1.8497 - 1.78E-8 * d;
+        w = 286.5016 + 2.92961E-5 * d;
+        a = 1.523688;
+        e = 0.093405 + 2.516E-9 * d;
+        M = 18.6021 + 0.5240207766 * d;
+
+        //Jupiter
+        N = 100.4542 + 2.76854E-5 * d;
+        i = 1.3030 - 1.557E-7 * d;
+        w = 273.8777 + 1.64505E-5 * d;
+        a = 5.20256;
+        e = 0.048498 + 4.469E-9 * d;
+        M = 19.8950 + 0.0830853001 * d;
+
+        //Saturn
+        N = 113.6634 + 2.38980E-5 * d;
+        i = 2.4886 - 1.081E-7 * d;
+        w = 339.3939 + 2.97661E-5 * d;
+        a = 9.55475;
+        e = 0.055546 - 9.499E-9 * d;
+        M = 316.9670 + 0.0334442282 * d;
+
+        //Uranus
+        N = 74.0005 + 1.3978E-5 * d;
+        i = 0.7733 + 1.9E-8 * d;
+        w = 96.6612 + 3.0565E-5 * d;
+        a = 19.18171 - 1.55E-8 * d;
+        e = 0.047318 + 7.45E-9 * d;
+        M = 142.5905 + 0.011725806 * d;
+
+        //Neptune
+        N = 131.7806 + 3.0173E-5 * d;
+        i = 1.7700 - 2.55E-7 * d;
+        w = 272.8461 - 6.027E-6 * d;
+        a = 30.05826 + 3.313E-8 * d;
+        e = 0.008606 + 2.15E-9 * d;
+        M = 260.2471 + 0.005995147 * d;
+
+
+
         System.out.println("d = " + d + "\n" + "N = " +  N + "\n" + "i = " + i + "\n" + "w = " + w + "\n" + "a = " + a + "\n" + "e = " +  e + "\n" + "M = " +  M);
 
-        //Mercury, E = the eccentric anomaly, FÅR INTE RÄTT VÄRDE PÅ E
-        E0 = M + (180/Math.PI)*e*Math.sin(M)*(1+(e*Math.cos(M)));
-        E1 = E0 - (E0-(180/Math.PI) * e * Math.sin(E0)-M)/(1-e*Math.cos(E0));
-        E2 = E1 - (E1-(180/Math.PI) * e * Math.sin(E1)-M)/(1-e*Math.cos(E1));
-        E3 = E2 - (E2-(180/Math.PI) * e * Math.sin(E2)-M)/(1-e*Math.cos(E2));
-        E4 = E3 - (E3-(180/Math.PI) * e * Math.sin(E3)-M)/(1-e*Math.cos(E3));
-        E5 = E4 - (E4-(180/Math.PI) * e * Math.sin(E4)-M)/(1-e*Math.cos(E4));
-        E6 = E5 - (E5-(180/Math.PI) * e * Math.sin(E5)-M)/(1-e*Math.cos(E5));
-        E7 = E6 - (E6-(180/Math.PI) * e * Math.sin(E6)-M)/(1-e*Math.cos(E6));
-        E8 = E7 - (E7-(180/Math.PI) * e * Math.sin(E7)-M)/(1-e*Math.cos(E7));
-        E9 = E8 - (E8-(180/Math.PI) * e * Math.sin(E8)-M)/(1-e*Math.cos(E8));
-        E10 = E9 - (E9-(180/Math.PI) * e * Math.sin(E9)-M)/(1-e*Math.cos(E9));
-        E11 = E10 - (E10 -(180/Math.PI) * e * Math.sin(E10)-M)/(1-e*Math.cos(E10));
-        E12 = E11 - (E11-(180/Math.PI) * e * Math.sin(E11)-M)/(1-e*Math.cos(E11));
-        E13 = E12 - (E12-(180/Math.PI) * e * Math.sin(E12)-M)/(1-e*Math.cos(E12));
-        E14 = E13 - (E13-(180/Math.PI) * e * Math.sin(E13)-M)/(1-e*Math.cos(E13));
-        E15 = E14 - (E14-(180/Math.PI) * e * Math.sin(E14)-M)/(1-e*Math.cos(E14));
-        E16 = E15 - (E15-(180/Math.PI) * e * Math.sin(E15)-M)/(1-e*Math.cos(E15));
-        System.out.println("E16 = " + E16);
+        E0 = M + (180/Math.PI)*e*Math.sin(Math.PI/180*M)*(1+(e*Math.cos(Math.PI/180*M)));
+        E1 = E0 - (E0-(180/Math.PI) * e * Math.sin(Math.PI/180*E0)-M)/(1-e*Math.cos(Math.PI/180*E0));
 
-        //Mercurys rectangular coordinates
-        //x och y blir fel eftersom E är fel. Nu antar vi att E = 81.1572
-        x = a * (Math.cos(81.1572)-e);
-        y = a * (Math.sqrt(1-(e*e)))*Math.sin(81.1572);
+        System.out.println("E1 = " + E1);
+
+        x = a * (Math.cos(Math.PI/180*E1)-e);
+        y = a * (Math.sqrt(1-(e*e)))*Math.sin(Math.PI/180*E1);
         System.out.println("x = " + x);
         System.out.println("y = " + y);
 
-        //Mercury, r = radius vector, v = true anomaly
-        //Blir fel även med samma värde på E som på sidan
-        //Enligt sidan ska det bli: r = 0.374862 (nära vår beräkning), v = 93.0727 (vår beräkning blir helt fel)
         r = Math.sqrt((x*x)+(y*y));
-        v = Math.atan2(y, x);
+        v = Math.toDegrees(Math.atan2(y, x));
         System.out.println("r = " + r);
         System.out.println("v = " + v);
 
-        //Mercurys heliocentric ecliptic rectangular coordinates
-        //Blir fel, sadface
-        //Enligt sidan ska det bli: x = -0.367821, y = +0.061084
-        xeclip = r * (Math.cos(N)*Math.cos(v+w)-Math.sin(N)*Math.sin(v+w)*Math.cos(i));
-        yeclip = r * (Math.sin(N)*Math.cos(v+w)+Math.cos(N)*Math.sin(v+w)*Math.cos(i));
+        xeclip = r * (Math.cos(Math.PI/180*N)*Math.cos(Math.PI/180*(v+w))-Math.sin(Math.PI/180*N)*Math.sin(Math.PI/180*(v+w))*Math.cos(Math.PI/180*i));
+        yeclip = r * (Math.sin(Math.PI/180*N)*Math.cos(Math.PI/180*(v+w))+Math.cos(Math.PI/180*N)*Math.sin(Math.PI/180*(v+w))*Math.cos(Math.PI/180*i));
         System.out.println("xeclip = " + xeclip);
         System.out.println("yeclip = " + yeclip);
+    }
+
+    public static void main(String[] args) {
+        PositionCalculator pos = new PositionCalculator();
+        pos.setValues(1990, 4, 19);
     }
 
 
