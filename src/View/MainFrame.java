@@ -56,7 +56,8 @@ public class MainFrame extends JFrame
 
     private Controller controller;
 
-    private String durationModifier;
+    private double durationModifier;
+
 
     /**
      * Constructs the GUI components and starts the Java-FX window.
@@ -305,23 +306,7 @@ public class MainFrame extends JFrame
      */
     private void createNewOrbits()
     {
-        loadingScreen.setVisible(true);
 
-        durationModifier += 10;
-
-        //Planets that move 10 times slower for every click on the button
-        ArrayList<Planet> newPlanets = controller.createPlanetArray(new String("*,1"));
-
-        orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
-                newPlanets));
-
-        for (int i = 0; i < newPlanets.size() ; i++) {
-            PhongMaterial map = new PhongMaterial();
-            map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
-            newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
-        }
-
-        loadingScreen.setVisible(false);
     }
 
     /**
@@ -350,45 +335,7 @@ public class MainFrame extends JFrame
         @Override
         public void mouseReleased(MouseEvent mouseEvent)
         {
-            JOptionPane.showMessageDialog(null, timeSlider.getValue());
 
-            if (timeSlider.getValue() == currentValue)
-            {
-                durationModifier = "*,1";
-                JOptionPane.showMessageDialog(null, durationModifier);
-            }
-            else if (timeSlider.getValue() == 10 && timeSlider.getValue() > currentValue)
-            {
-                durationModifier = "*,10";
-                JOptionPane.showMessageDialog(null, durationModifier);
-            }
-            else if (timeSlider.getValue() == 10 && timeSlider.getValue() < currentValue)
-            {
-                durationModifier = "/,10";
-                JOptionPane.showMessageDialog(null, durationModifier);
-            }
-            else if (timeSlider.getValue() == 20 && timeSlider.getValue() > currentValue)
-            {
-                durationModifier = "*,100";
-                JOptionPane.showMessageDialog(null, durationModifier);
-            }
-            else if (timeSlider.getValue() == 20 && timeSlider.getValue() < currentValue)
-            {
-                durationModifier = "/,100";
-                JOptionPane.showMessageDialog(null, durationModifier);
-            }
-            else if (timeSlider.getValue() == 30 && timeSlider.getValue() > currentValue)
-            {
-                durationModifier = "*,1000";
-                JOptionPane.showMessageDialog(null, durationModifier);
-            }
-            else if (timeSlider.getValue() == 30 && timeSlider.getValue() < currentValue)
-            {
-                durationModifier = "/,1000";
-                JOptionPane.showMessageDialog(null, durationModifier);
-            }
-
-            currentValue = timeSlider.getValue();
         }
 
         @Override
@@ -451,7 +398,23 @@ public class MainFrame extends JFrame
                 @Override
                 public void run()
                 {
+                    loadingScreen.setVisible(true);
 
+                    durationModifier += 10;
+
+                    //Planets that move 10 times slower for every click on the button
+                    ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);
+
+                    orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
+                            newPlanets));
+
+                    for (int i = 0; i < newPlanets.size() ; i++) {
+                        PhongMaterial map = new PhongMaterial();
+                        map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
+                        newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
+                    }
+
+                    loadingScreen.setVisible(false);
                 }
             });
 

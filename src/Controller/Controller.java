@@ -36,7 +36,7 @@ public class Controller
         sun.setYCord(0);
         sun.setXCord(0);
 
-        planetArrayList = createPlanetArray(new String("*,1")); //No duration modifier should be added here.
+        planetArrayList = createPlanetArray(1); //No duration modifier should be added here.
 
         mainframe = new MainFrame(this);
         
@@ -51,14 +51,9 @@ public class Controller
      * Creates an ArrayList with planets and their orbits generated.
      * @return An ArrayList filled with newly generated planet objects
      */
-    public ArrayList<Planet> createPlanetArray(String durationModifier)
+    public ArrayList<Planet> createPlanetArray(double durationModifier)
     {
         ArrayList<Planet> newPlanets = new ArrayList<>();
-
-        String[] splitDurationModifier = durationModifier.split(",");
-
-        String arithmetic = splitDurationModifier[0];
-        double number = Double.parseDouble(splitDurationModifier[1]);
 
         //Reads the planets from the API
         for(Planets p : Planets.values())
@@ -72,21 +67,11 @@ public class Controller
             p.setPlanetOrbit(orbitCalculator.getPlanetSunOrbit(sun, p));//Create orbit
         }
 
-        if (arithmetic == "*") //Detta skitet funkar inte VARFÖR!!!!!!!!!!!!!!!!!!
+
+        //Sets planet duration
+        for (Planet planet: newPlanets)
         {
-            //Sets planet duration
-            for (Planet planet: newPlanets)
-            {
-                planet.setDuration(new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet))*number)); //*1000 is to make it into seconds instead of milliseconds
-            }
-        }
-        else if (arithmetic == "/")
-        {
-            //Sets planet duration
-            for (Planet planet: newPlanets)
-            {
-                planet.setDuration(new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet))/number)); //*1000 is to make it into seconds instead of milliseconds
-            }
+            planet.setDuration(new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet))/durationModifier)); //*1000 is to make it into seconds instead of milliseconds
         }
 
 
