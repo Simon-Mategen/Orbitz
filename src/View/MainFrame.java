@@ -101,6 +101,15 @@ public class MainFrame extends JFrame
         timeSlider.setValue(0);
         timeSlider.setMaximum(MAX_SLIDER_VALUE);
         timeSlider.setPaintLabels(true);
+
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+        labelTable.put(0, new JLabel("Real speed"));
+        labelTable.put(10, new JLabel("100"));
+        labelTable.put(20, new JLabel("1000"));
+        labelTable.put(30, new JLabel("10000"));
+
+        timeSlider.setLabelTable(labelTable);
+
         timeLabel.setPreferredSize(new Dimension(50, 50));
         timeSlider.setPreferredSize(new Dimension(400, 50));
         timeSlider.setPaintTicks(true);
@@ -295,13 +304,25 @@ public class MainFrame extends JFrame
         }
     }
 
-    /**
-     * The new orbit that generates when the speed is altered
-     */
-    private void createNewOrbits()
+    private void speedChangeScene(double inDurationModifier) //Denna funkar inte än
     {
+        loadingScreen.setVisible(true);
 
+        //Planets that move 10 times slower for every click on the button
+        ArrayList<Planet> newPlanets = controller.createPlanetArray(inDurationModifier);
+
+        orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
+                newPlanets));
+
+        for (int i = 0; i < newPlanets.size() ; i++) {
+            PhongMaterial map = new PhongMaterial();
+            map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
+            newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
+        }
+
+        loadingScreen.setVisible(false);
     }
+
 
     /**
      * Listens to change in timeSlider and then changes the text in timeLabel
@@ -329,7 +350,22 @@ public class MainFrame extends JFrame
         @Override
         public void mouseReleased(MouseEvent mouseEvent)
         {
-
+            if (timeSlider.getValue() == 0)
+            {
+                speedChangeScene(1);
+            }
+            else if (timeSlider.getValue() == 10)
+            {
+                speedChangeScene(100);
+            }
+            else if (timeSlider.getValue() == 20)
+            {
+                speedChangeScene(1000);
+            }
+            else if (timeSlider.getValue() == 30)
+            {
+                speedChangeScene(10000);
+            }
         }
 
         @Override
@@ -382,8 +418,6 @@ public class MainFrame extends JFrame
      */
     private class ChangeSpeedListener implements ActionListener
     {
-
-
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {

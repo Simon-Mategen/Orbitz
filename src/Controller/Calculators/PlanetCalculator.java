@@ -28,7 +28,7 @@ public class PlanetCalculator
 
         mu = G*sun.getMass();
 
-        time = ((2*Math.PI)*(Math.sqrt((Math.pow(((double) planet.getSemiMajorAxis()*1000), 3))/mu)))/SCALE_VALUE;
+        time = ((2*Math.PI)*(Math.sqrt((Math.pow(((double) planet.getSemiMajorAxis()*1000), 3))/mu)));
 
         return time;
     }
