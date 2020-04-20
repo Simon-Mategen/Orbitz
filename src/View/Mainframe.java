@@ -12,6 +12,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 
 import javax.swing.*;
@@ -208,7 +209,7 @@ public class Mainframe extends JFrame
         });
 
         placePlanets(root);
-        startOrbits(root);
+        //startOrbits(root);
 
         return scene;
     }
