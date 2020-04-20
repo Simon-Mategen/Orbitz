@@ -53,9 +53,6 @@ public class MainFrame extends JFrame
 
     private Controller controller;
 
-    private double durationModifier;
-
-
     /**
      * Constructs the GUI components and starts the Java-FX window.
      *

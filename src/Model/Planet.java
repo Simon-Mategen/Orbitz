@@ -1,10 +1,12 @@
 package Model;
 
+import Controller.Calculators.PositionCalculator;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.*;
+import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
 
@@ -31,6 +33,8 @@ public class Planet
     private PathTransition pathTransition;
 
     private Orbit planetOrbit;
+
+    private PositionCalculator pos = new PositionCalculator();
 
     /**
      * Constructor that, when created, creates a planet-object by getting specific values
@@ -180,8 +184,7 @@ public class Planet
         return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\n"
                 + "Width: " + planetOrbit.getWidth() + "\n" + "x: " + planetOrbit.getXCord()
                 + "\n" + "y: " + planetOrbit.getYCord() + "\n" + "A: " + getAphelion() + "\n"
-                + "P: " + getPerihelion() + "\n" + "Circumference: "
-                + planetOrbit.getCircumference() + "\n" + planetOrbit.getRealCircumference()
+                + "P: " + getPerihelion() + "\n"
                 + "\n" + "Mass (kg): " + getMass() + "\n" + "Radius (km): " + getMeanRadius();
     }
 
@@ -190,9 +193,14 @@ public class Planet
      */
     public void createPathTransition()
     {
-        //sphere.getTransforms().add(new Translate(0, 0)); Placing a node at a specific coordinate
+        //double d = pos.setDay(2020, 4, 20);
+
+
         pathTransition = new PathTransition();
+        //sphere.getTransforms().addAll(new Translate((pos.getValues(d, getName(),2)), (pos.getValues(d, getName(), 1))));
+        //sphere.getTransforms().addAll(new Translate(0,0));
         pathTransition.setNode(sphere);
+
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
         pathTransition.setDuration(duration);
         pathTransition.setCycleCount(Animation.INDEFINITE);
