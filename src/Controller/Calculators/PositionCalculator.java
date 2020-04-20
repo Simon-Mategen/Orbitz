@@ -22,18 +22,13 @@ public class PositionCalculator {
 
 
 
-    public double calculateDay(double year, double month, double day){
+    public double setDay(double year, double month, double day){
         d = 367*year-(7*(year+((month+9)/12)))/4+((275+month)/9)+day-730530;
         return d;
     }
 
-    public double setValues(double year, double month, double day, String planet, int alpha){
-        //De avrundar i denna formeln i deras uträkning och får d till -3543, utan
-        //avrundningar får man -3634 ungefär. Använder man -3634 i de andra uträkningarna
-        //får man samma svar på alla förutom för M, där bytte jag tillbaka till -3543 för att testa.
-        d = 367*year-(7*(year+((month+9)/12)))/4 +((275+month)/9)+day-730530;
+    public double getValues(double d, String planet, int xy){
 
-        //Mercury värden
         if (planet.equals("Mercury")) {
             N = 48.3313 + 3.24587E-5 * d;
             i = 7.0047 + 5.00E-8 * d;
@@ -44,7 +39,6 @@ public class PositionCalculator {
         }
 
         if (planet.equals("Venus")) {
-            //Venus
             N = 76.6799 + 2.46590E-5 * d;
             i = 3.3946 + 2.75E-8 * d;
             w = 54.8910 + 1.38374E-5 * d;
@@ -53,8 +47,14 @@ public class PositionCalculator {
             M = 48.0052 + 1.6021302244 * d;
         }
 
+        if (planet.equals("Earth")){
+            w = 282.9404  + 4.70935E-5 * d;
+            a = 1.000000;
+            e = 0.016709 - 1.151E-9 * d;
+            M = 356.0470 + 0.9856002585 * d;
+        }
+
         if (planet.equals("Mars")) {
-            //Mars
             N = 49.5574 + 2.11081E-5 * d;
             i = 1.8497 - 1.78E-8 * d;
             w = 286.5016 + 2.92961E-5 * d;
@@ -64,7 +64,6 @@ public class PositionCalculator {
         }
 
         if (planet.equals("Jupiter")) {
-            //Jupiter
             N = 100.4542 + 2.76854E-5 * d;
             i = 1.3030 - 1.557E-7 * d;
             w = 273.8777 + 1.64505E-5 * d;
@@ -74,7 +73,6 @@ public class PositionCalculator {
         }
 
         if (planet.equals("Saturn")) {
-            //Saturn
             N = 113.6634 + 2.38980E-5 * d;
             i = 2.4886 - 1.081E-7 * d;
             w = 339.3939 + 2.97661E-5 * d;
@@ -84,7 +82,6 @@ public class PositionCalculator {
         }
 
         if (planet.equals("Uranus")) {
-            //Uranus
             N = 74.0005 + 1.3978E-5 * d;
             i = 0.7733 + 1.9E-8 * d;
             w = 96.6612 + 3.0565E-5 * d;
@@ -94,7 +91,6 @@ public class PositionCalculator {
         }
 
         if (planet.equals("Neptune")) {
-            //Neptune
             N = 131.7806 + 3.0173E-5 * d;
             i = 1.7700 - 2.55E-7 * d;
             w = 272.8461 - 6.027E-6 * d;
@@ -103,7 +99,10 @@ public class PositionCalculator {
             M = 260.2471 + 0.005995147 * d;
         }
 
-        System.out.println("d = " + d + "\n" + "N = " +  N + "\n" + "i = " + i + "\n" + "w = " + w + "\n" + "a = " + a + "\n" + "e = " +  e + "\n" + "M = " +  M);
+        System.out.println("d = " + d + "\n" + "N = "
+                +  N + "\n" + "i = " + i + "\n" + "w = "
+                + w + "\n" + "a = " + a + "\n" + "e = "
+                +  e + "\n" + "M = " +  M);
 
         E0 = M + (180/Math.PI)*e*Math.sin(Math.PI/180*M)*(1+(e*Math.cos(Math.PI/180*M)));
         E1 = E0 - (E0-(180/Math.PI) * e * Math.sin(Math.PI/180*E0)-M)/(1-e*Math.cos(Math.PI/180*E0));
@@ -120,25 +119,34 @@ public class PositionCalculator {
         System.out.println("r = " + r);
         System.out.println("v = " + v);
 
+        if (planet.equals("Earth")){
+            xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
+            yeclip = -1 * r * Math.sin(Math.PI/180*(v + w));
+        }
+
+        else
         xeclip = r * (Math.cos(Math.PI/180*N)*Math.cos(Math.PI/180*(v+w))-Math.sin(Math.PI/180*N)*Math.sin(Math.PI/180*(v+w))*Math.cos(Math.PI/180*i));
         yeclip = r * (Math.sin(Math.PI/180*N)*Math.cos(Math.PI/180*(v+w))+Math.cos(Math.PI/180*N)*Math.sin(Math.PI/180*(v+w))*Math.cos(Math.PI/180*i));
         System.out.println("xeclip = " + xeclip);
         System.out.println("yeclip = " + yeclip);
 
-        if (alpha == 1){
+        if (xy == 1){
             return 2*(xeclip * 149600000)/25000000;
         }
-        else if (alpha == 2){
+        else if (xy == 2){
             return -2*(yeclip * 149600000)/25000000;
         }
         else
         return -1;
     }
 
-    public static void main(String[] args) {
+
+  /*  public static void main(String[] args) {
         PositionCalculator pos = new PositionCalculator();
-        pos.setValues(1990, 4, 19, "Neptune", 1);
+        pos.getValues(pos.setDay(1990, 4, 19),"Neptune", 1);
     }
+
+   */
 
 
 }
