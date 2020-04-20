@@ -3,7 +3,6 @@ package View;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -13,17 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
-import java.io.File;
-import java.io.IOException;
-
-import java.util.Random;
+import java.io.*;
+import java.util.*;
 
 /**
- * @Author: Manna Manojlovic
+ * @Author: Manna Manojlovic, Lanna Maslo
  *
  * Funfact panel/area for Swen The Alien.
  * When user clicks on the alien a new fun fact about the planet/its moon/moons displays in a textarea.
@@ -44,6 +38,9 @@ public class SwenTheAlien extends JPanel
             "...that Jupiter has 67 moons?",
             "...that Jupiter has rings?"};
 
+    /**
+     * Constructor
+     */
     public SwenTheAlien ()
     {
         createPanel();
@@ -63,16 +60,37 @@ public class SwenTheAlien extends JPanel
         swenScene.setFill(new javafx.scene.paint.Color(0,0,0,1));
         swenFX.setScene(swenScene);
 
-        swen.setOnMouseClicked(event -> {
-            int index = randomFacts.nextInt (funFactsTest.length);
+        swen.setOnMouseClicked(event ->
+        {
+            /*int index = randomFacts.nextInt (funFactsTest.length);
             for (int i = 0; i < index; i++) {
             funFactArea.setText (funFactsTest[index]);
+
+
             }
+
+             */
+
+            //TODO make this return one line per button click, NOT the entire txt file content!
+            try (BufferedReader br = new BufferedReader(new FileReader("funfacts/jupiter.txt")))
+            {
+                String line;
+                while ((line = br.readLine()) != null)
+                {
+                    funFactArea.setText(line);
+                }
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+
+
         });
     }
 
     /**
-     * @Author: Manna Manojlovic
+     * @Author: Manna Manojlovic, Lanna Maslo
      * @version: 1.0
      *
      * Panel for Swen The Alien and the fun fact textarea.
@@ -120,11 +138,13 @@ public class SwenTheAlien extends JPanel
 
         add(panel, BorderLayout.SOUTH);
 
-        Platform.runLater(new Runnable(){
+        Platform.runLater(new Runnable()
+        {
             public void run(){
                 initFX(swenFX);
             }
         });
     }
+
 }
 
