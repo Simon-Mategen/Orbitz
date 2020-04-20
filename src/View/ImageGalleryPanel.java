@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 
@@ -18,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -77,7 +80,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     public void createPanel(Planet planet)
     {
-        setBorder(BorderFactory.createLineBorder(Color.RED));
+        //setBorder(BorderFactory.createLineBorder(Color.RED));
         GridLayout layout = new GridLayout (1,5,4,4);
         setLayout(new BorderLayout());
         JFXPanel jfx = new JFXPanel();
@@ -85,7 +88,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         this.planet = planet;
 
         panel = new JPanel (new BorderLayout());
-        panelBtn = new JPanel(new BorderLayout());
+        panelBtn = new JPanel();
 
         lblimage1 = new JLabel();
         lblimage2 = new JLabel();
@@ -98,14 +101,14 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         btnNext = new JButton(">");
         btnPrevious = new JButton("<");
-        btnNext.setFont(new Font("TimesRoman", Font.BOLD, 22));
-        btnPrevious.setFont(new Font("TimesRoman", Font.BOLD, 22));
+        btnNext.setFont(new Font("Arial", Font.BOLD, 20));
+        btnPrevious.setFont(new Font("Arial", Font.BOLD, 20));
         btnNext.setPreferredSize(new Dimension(60, 50));
         btnPrevious.setPreferredSize(new Dimension(60, 50));
         btnNext.addActionListener(nextListener);
         btnPrevious.addActionListener(previousListener);
 
-        lblImage.setSize(300, 250);
+        lblImage.setSize(336, 280);
 
         imageList = new ArrayList<>();
 
@@ -140,10 +143,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
          */
 
 
-        panel.setPreferredSize (new Dimension (410,250));
+        panel.setPreferredSize (new Dimension (410,280));
         panel.setBackground (Color.black);
 
-        panelBtn.setPreferredSize(new Dimension(590, 200));
+        panelBtn.setPreferredSize(new Dimension(540, 200));
 
         setBackground (Color.BLACK);
 /*
@@ -158,7 +161,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel.add(btnNext, BorderLayout.EAST);
         lblImage.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
-        panelBtn.add(jfx, BorderLayout.WEST);
+        panelBtn.add(jfx);
         panelBtn.setBackground(Color.black);
 
         add(panel, BorderLayout.EAST);
@@ -251,9 +254,11 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     {
         Image soundOn = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/29_Sound_alt-64.png");
         Image mute = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/30_Sound_off-64.png");
+        Image info = new Image("Images/JupiterInfobox.png");
 
         ImageView soundIcon = new ImageView(soundOn);
         ImageView muteIcon = new ImageView(mute);
+        ImageView infoBox = new ImageView(info);
 
         javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
 
@@ -265,22 +270,28 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         soundIcon.setFitWidth(17);
         muteIcon.setFitHeight(17);
         muteIcon.setFitWidth(17);
+        infoBox.setFitHeight(289);
+        infoBox.setFitWidth(512);
 
         btnSound = new Button("", soundIcon);
         btnSound.setTooltip(new Tooltip("press to hear the sound of this planet"));
         btnMute = new Button("", muteIcon);
         btnMute.setTooltip(new Tooltip("press to mute it :("));
-        btnSound.setMinSize(40, 40);
-        btnMute.setMinSize(40,40);
+        btnSound.setMinSize(35, 35);
+        btnMute.setMinSize(35,35);
         btnSound.setOnAction(event -> playSound());
 
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
+        root.getChildren().add(infoBox);
 
         btnSound.setLayoutY(0);
-        btnSound.setLayoutX(0);
+        btnSound.setLayoutX(5);
         btnMute.setLayoutY(40);
-        btnMute.setLayoutX(0);
+        btnMute.setLayoutX(5);
+
+        infoBox.setLayoutY(0);
+        infoBox.setLayoutX(45);
 
         scene.setFill(fxColor);
         jfxPanel.setBackground(Color.black);

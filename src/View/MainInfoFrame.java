@@ -47,6 +47,7 @@ public class MainInfoFrame extends JFrame
         planetaryPanel = new JFXPanel();
         setSize (1000, 600);
         setVisible (true);
+        setResizable(false);
 
         add(panel, BorderLayout.NORTH);
         planetaryPanel.setPreferredSize(new Dimension(500, 400));

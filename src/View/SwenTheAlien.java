@@ -59,7 +59,7 @@ public class SwenTheAlien extends JPanel
         Group swenRoot = new Group();
         swenRoot.getChildren().add(swen);
         Scene swenScene = new Scene(swenRoot);
-        swenFX.setPreferredSize(new Dimension(171, 221));
+        swenFX.setPreferredSize(new Dimension(171, 220));
         swenScene.setFill(new javafx.scene.paint.Color(0,0,0,1));
         swenFX.setScene(swenScene);
 
@@ -96,7 +96,7 @@ public class SwenTheAlien extends JPanel
         setBackground(Color.black);
         setBorder(titledBorder);
 
-        panel.setPreferredSize(new Dimension(402, 240));
+        panel.setPreferredSize(new Dimension(402, 220));
         panel.setBackground (Color.black);
 
         funFactArea = new JTextArea();//(100, 100);
