@@ -46,13 +46,10 @@ public class MainFrame extends JFrame
 
     private StackPane root;
     private JSlider timeSlider;
-    private JLabel timeLabel;
     private JButton changeBackgroundBtn = new JButton("Change Background");
-    private JButton speedBtn = new JButton("SPEED/10");
 
     private ChangeBackgroundListener changeBackgroundListener;
     private SliderListener sliderListener;
-    private ChangeSpeedListener changeSpeedListener;
 
     private Controller controller;
 
@@ -75,10 +72,8 @@ public class MainFrame extends JFrame
         orbitPanel = new JFXPanel();
         overheadPanel = new JPanel();
         sliderListener = new SliderListener();
-        timeLabel = new JLabel("Real Speed");
         timeSlider = new JSlider();
 
-        changeSpeedListener = new ChangeSpeedListener();
         changeBackgroundListener = new ChangeBackgroundListener();
 
         Platform.runLater(new Runnable()
@@ -110,7 +105,6 @@ public class MainFrame extends JFrame
 
         timeSlider.setLabelTable(labelTable);
 
-        timeLabel.setPreferredSize(new Dimension(50, 50));
         timeSlider.setPreferredSize(new Dimension(400, 50));
         timeSlider.setPaintTicks(true);
         timeSlider.setMajorTickSpacing(10);
@@ -120,22 +114,16 @@ public class MainFrame extends JFrame
 
         // Sets up overheadPanel
         overheadPanel.setPreferredSize(new Dimension(1400, 60));
-        overheadPanel.setBackground(java.awt.Color.WHITE);
-        timeLabel.setPreferredSize(new Dimension(80, 30));
-        overheadPanel.add(timeLabel);
+        overheadPanel.setBackground(Color.BLACK);
         overheadPanel.add(timeSlider);
         changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
         overheadPanel.add(changeBackgroundBtn);
-        speedBtn.setPreferredSize(new Dimension(200, 40));
-        overheadPanel.add(speedBtn);
-        overheadPanel.setBorder(BorderFactory.createLineBorder(java.awt.Color.WHITE));
+        overheadPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         changeBackgroundBtn.addActionListener(changeBackgroundListener);
 
         add(orbitPanel, BorderLayout.WEST);
         add(overheadPanel, BorderLayout.NORTH);
-
-        speedBtn.addActionListener(changeSpeedListener);
 
     }
 
@@ -306,21 +294,30 @@ public class MainFrame extends JFrame
 
     private void speedChangeScene(double inDurationModifier) //Denna funkar inte än
     {
-        loadingScreen.setVisible(true);
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                loadingScreen.setVisible(true);
 
-        //Planets that move 10 times slower for every click on the button
-        ArrayList<Planet> newPlanets = controller.createPlanetArray(inDurationModifier);
+                //Planets that move 10 times slower for every click on the button
+                ArrayList<Planet> newPlanets = controller.createPlanetArray(inDurationModifier);
 
-        orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
-                newPlanets));
+                orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
+                        newPlanets));
 
-        for (int i = 0; i < newPlanets.size() ; i++) {
-            PhongMaterial map = new PhongMaterial();
-            map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
-            newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
-        }
+                for (int i = 0; i < newPlanets.size() ; i++) {
+                    PhongMaterial map = new PhongMaterial();
+                    map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
+                    newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
+                }
 
-        loadingScreen.setVisible(false);
+                loadingScreen.setVisible(false);
+            }
+        });
+
+
     }
 
 
@@ -333,7 +330,6 @@ public class MainFrame extends JFrame
      */
     private class SliderListener implements MouseListener
     {
-        int currentValue = 0;
 
         @Override
         public void mouseClicked(MouseEvent mouseEvent)
@@ -410,44 +406,6 @@ public class MainFrame extends JFrame
         }
     }
 
-    /**
-     * Listens to the changeSpeedBtn and changes the speed on click.
-     * @author Albin Ahlbeck
-     * @author Simon Måtegen
-     * @version 1.0
-     */
-    private class ChangeSpeedListener implements ActionListener
-    {
-        @Override
-        public void actionPerformed(ActionEvent actionEvent)
-        {
-            Platform.runLater(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    loadingScreen.setVisible(true);
-
-                    durationModifier += 10;
-
-                    //Planets that move 10 times slower for every click on the button
-                    ArrayList<Planet> newPlanets = controller.createPlanetArray(durationModifier);
-
-                    orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
-                            newPlanets));
-
-                    for (int i = 0; i < newPlanets.size() ; i++) {
-                        PhongMaterial map = new PhongMaterial();
-                        map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
-                        newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
-                    }
-
-                    loadingScreen.setVisible(false);
-                }
-            });
-
-        }
-    }
     /**
      * Opens an information window
      * @param planet The planet to showcase
