@@ -44,10 +44,10 @@ public class SwenTheAlien extends JPanel
     public SwenTheAlien ()
     {
         createPanel();
-
     }
 
-    private void initFX(JFXPanel swenFX) {
+    private void initFX(JFXPanel swenFX)
+    {
         Image swenImage = new Image("Images/Swen.png");
         ImageView swen = new ImageView(swenImage);
         swen.setFitWidth(170);
@@ -59,25 +59,30 @@ public class SwenTheAlien extends JPanel
         swenScene.setFill(new javafx.scene.paint.Color(0, 0, 0, 1));
         swenFX.setScene(swenScene);
 
-
             swen.setOnMouseClicked(event ->
             {
-                ArrayList<String[]> funfact = new ArrayList<>();
 
+                int currentIndex = 0;
                 try(BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt")))
                 {
+                    ArrayList<String> lines = new ArrayList<String>();
                     String line;
-                    while((line = in.readLine())!=null)
-                    {
-                        String[] pair = line.split(".");
-                        funfact.add(pair);
 
-                        for (String[] strings : funfact)
-                        {
-                            funFactArea.setText(String.valueOf(strings));       //printar hashblabla för kan inte printa nåt annat
-                        }
+                    while((line = in.readLine()) != null)
+                    {
+                        lines.add(line);
+                    }
+
+                    if (currentIndex >= lines.size())
+                    {
+                        currentIndex = 0;
 
                     }
+
+                    currentIndex++;
+
+                    funFactArea.setText(String.valueOf(lines.get(currentIndex)));
+
                 } catch (IOException e)
                 {
                     e.printStackTrace();
