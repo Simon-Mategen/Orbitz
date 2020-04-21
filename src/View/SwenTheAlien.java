@@ -44,6 +44,7 @@ public class SwenTheAlien extends JPanel
      */
     public SwenTheAlien ()
     {
+        this.planet = planet;
         createPanel();
     }
 
@@ -71,41 +72,75 @@ public class SwenTheAlien extends JPanel
         
             swen.setOnMouseClicked(event ->
             {
-                    try (BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt"))) {
+                readFunFacts();
+
+                //LÅT STÅ! denna kod testas med Jupiter, kolla setFunFacts() för "riktig" kod.
+
+                   /* try (BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt")))
+                    {
                         ArrayList<String> lines = new ArrayList<String>();
                         String line;
 
-                        while ((line = in.readLine()) != null) {
+                        while ((line = in.readLine()) != null)
+                        {
                             lines.add(line);
                         }
 
-                        if (currentIndex >= lines.size()) {
+                        if (currentIndex >= lines.size())
+                        {
                             currentIndex = 0;
 
                         }
                         currentIndex++;
 
-                        funFactArea.setText(String.valueOf(lines.get(currentIndex)));
+                        funFactArea.setText(String.valueOf(lines.get(currentIndex)));   //++ to keep in bounds, but then only 5 of 10 funfacts are printed
+                        //currentindex++ here gives only a couple of funfacts
 
-                    } catch (IOException e) {
+                    } catch (IOException e)
+                    {
                         e.printStackTrace();
                     }
+
+                    */
 
             });
         }
 
         public void readFunFacts()
         {
-            if (planet.getName().equals("Earth"))
+            if (planet.getName().equals("Mercury"))
             {
-
+                setFunFacts("funfacts/mercury.txt");
             }
 
         }
 
         public void setFunFacts(String filePath)
         {
+            try (BufferedReader in = new BufferedReader(new FileReader(filePath)))
+            {
+                ArrayList<String> lines = new ArrayList<String>();
+                String line;
 
+                while ((line = in.readLine()) != null)
+                {
+                    lines.add(line);
+                }
+
+                if (currentIndex >= lines.size())
+                {
+                    currentIndex = 0;
+
+                }
+                currentIndex++;
+
+                funFactArea.setText(String.valueOf(lines.get(currentIndex)));   //++ to keep in bounds, but then only 5 of 10 funfacts are printed
+                //currentindex++ here gives only a couple of funfacts
+
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
 
