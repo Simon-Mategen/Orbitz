@@ -34,9 +34,9 @@ public class SwenTheAlien extends JPanel
     private final Color color = Color.yellow;
 
     private Random randomFacts = new Random ();
-    private String [] funFactsTest = new String [] { "...that Jupiter can not become a star?",
-            "...that Jupiter has 67 moons?",
-            "...that Jupiter has rings?"};
+   // private String [] funFactsTest = new String [] { "...that Jupiter can not become a star?",
+       //     "...that Jupiter has 67 moons?",
+       //     "...that Jupiter has rings?"};
 
     /**
      * Constructor
@@ -47,8 +47,7 @@ public class SwenTheAlien extends JPanel
 
     }
 
-    private void initFX(JFXPanel swenFX)
-    {
+    private void initFX(JFXPanel swenFX) {
         Image swenImage = new Image("Images/Swen.png");
         ImageView swen = new ImageView(swenImage);
         swen.setFitWidth(170);
@@ -57,37 +56,36 @@ public class SwenTheAlien extends JPanel
         swenRoot.getChildren().add(swen);
         Scene swenScene = new Scene(swenRoot);
         swenFX.setPreferredSize(new Dimension(171, 220));
-        swenScene.setFill(new javafx.scene.paint.Color(0,0,0,1));
+        swenScene.setFill(new javafx.scene.paint.Color(0, 0, 0, 1));
         swenFX.setScene(swenScene);
 
-        swen.setOnMouseClicked(event ->
-        {
-            /*int index = randomFacts.nextInt (funFactsTest.length);
-            for (int i = 0; i < index; i++) {
-            funFactArea.setText (funFactsTest[index]);
 
-
-            }
-
-             */
-
-            //TODO make this return one line per button click, NOT the entire txt file content!
-            try (BufferedReader br = new BufferedReader(new FileReader("funfacts/jupiter.txt")))
+            swen.setOnMouseClicked(event ->
             {
-                String line;
-                while ((line = br.readLine()) != null)
+                ArrayList<String[]> funfact = new ArrayList<>();
+
+                try(BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt")))
                 {
-                    funFactArea.setText(line);
+                    String line;
+                    while((line = in.readLine())!=null)
+                    {
+                        String[] pair = line.split(".");
+                        funfact.add(pair);
+
+                        for (String[] strings : funfact)
+                        {
+                            funFactArea.setText(String.valueOf(strings));       //printar hashblabla för kan inte printa nåt annat
+                        }
+
+                    }
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
                 }
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
 
+            });
+        }
 
-
-        });
-    }
 
     /**
      * @Author: Manna Manojlovic, Lanna Maslo
@@ -147,4 +145,6 @@ public class SwenTheAlien extends JPanel
     }
 
 }
+
+
 
