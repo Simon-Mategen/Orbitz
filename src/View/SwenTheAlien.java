@@ -1,5 +1,6 @@
 package View;
 
+import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 
@@ -33,10 +34,9 @@ public class SwenTheAlien extends JPanel
     private final Font font = new Font ("SansSerif", Font.PLAIN, 23);
     private final Color color = Color.yellow;
 
-    private Random randomFacts = new Random ();
-   // private String [] funFactsTest = new String [] { "...that Jupiter can not become a star?",
-       //     "...that Jupiter has 67 moons?",
-       //     "...that Jupiter has rings?"};
+    private int currentIndex = 0;
+
+    private Planet planet;
 
     /**
      * Constructor
@@ -66,7 +66,7 @@ public class SwenTheAlien extends JPanel
         swenFX.setPreferredSize(new Dimension(171, 220));
         swenScene.setFill(new javafx.scene.paint.Color(0, 0, 0, 1));
         swenFX.setScene(swenScene);
-        final int[] currentIndex = {0};
+        
             swen.setOnMouseClicked(event ->
             {
                     try (BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt"))) {
@@ -77,19 +77,33 @@ public class SwenTheAlien extends JPanel
                             lines.add(line);
                         }
 
-                        if (currentIndex[0] >= lines.size()) {
-                            currentIndex[0] = 0;
+                        if (currentIndex >= lines.size()) {
+                            currentIndex = 0;
 
                         }
-                        currentIndex[0]++;
+                        currentIndex++;
 
-                        funFactArea.setText(String.valueOf(lines.get(currentIndex[0])));
+                        funFactArea.setText(String.valueOf(lines.get(currentIndex)));
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    
+
             });
+        }
+
+        public void readFunFacts()
+        {
+            if (planet.getName().equals("Earth"))
+            {
+
+            }
+
+        }
+
+        public void setFunFacts(String filePath)
+        {
+
         }
 
 
