@@ -46,6 +46,14 @@ public class SwenTheAlien extends JPanel
         createPanel();
     }
 
+    /**
+     * @Author: Manna Manojlovic, Lanna Maslo
+     * @version: 1.0
+     *
+     * JavaFX-panel for Swen The Alien
+     * Sets text from file containing funfacts to funfact area on button click.
+     * Every button click generates a new fun fact.
+     */
     private void initFX(JFXPanel swenFX)
     {
         Image swenImage = new Image("Images/Swen.png");
