@@ -6,6 +6,7 @@ import javafx.embed.swing.JFXPanel;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -65,6 +66,7 @@ public class SwenTheAlien extends JPanel
         Scene swenScene = new Scene(swenRoot);
         swenFX.setPreferredSize(new Dimension(171, 220));
         swenScene.setFill(new javafx.scene.paint.Color(0, 0, 0, 1));
+        swen.setCursor(Cursor.HAND);
         swenFX.setScene(swenScene);
         final int[] currentIndex = {0};
             swen.setOnMouseClicked(event ->

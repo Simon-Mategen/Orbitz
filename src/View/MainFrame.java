@@ -5,6 +5,7 @@ import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -173,6 +174,7 @@ public class MainFrame extends JFrame
         {
             planetArrayList.get(i).getSphereFromPlanet().addEventHandler
                     (javafx.scene.input.MouseEvent.MOUSE_CLICKED,  eventHandler);
+            planetArrayList.get(i).getSphereFromPlanet().setCursor(Cursor.HAND);
         }
 
         return scene;
@@ -253,7 +255,7 @@ public class MainFrame extends JFrame
     {
         PerspectiveCamera camera = new PerspectiveCamera(true);
         camera.setTranslateZ(-1000);
-        camera.setNearClip(0.01);
+        camera.setNearClip(0.001);
         camera.setFarClip(2000.0);
         camera.setFieldOfView(35);
         camera.setTranslateX((float)orbitPanel.getSize().width / 2);

@@ -3,6 +3,7 @@ package View;
 import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -286,9 +287,11 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         root.getChildren().add(infoBox);
 
         btnSound.setLayoutY(0);
-        btnSound.setLayoutX(5);
+        btnSound.setLayoutX(10);
+        btnSound.setCursor(Cursor.HAND);
         btnMute.setLayoutY(40);
-        btnMute.setLayoutX(5);
+        btnMute.setLayoutX(10);
+        btnMute.setCursor(Cursor.HAND);
 
         infoBox.setLayoutY(0);
         infoBox.setLayoutX(45);
