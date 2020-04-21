@@ -58,36 +58,29 @@ public class SwenTheAlien extends JPanel
         swenFX.setPreferredSize(new Dimension(171, 220));
         swenScene.setFill(new javafx.scene.paint.Color(0, 0, 0, 1));
         swenFX.setScene(swenScene);
-
+        final int[] currentIndex = {0};
             swen.setOnMouseClicked(event ->
             {
+                    try (BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt"))) {
+                        ArrayList<String> lines = new ArrayList<String>();
+                        String line;
 
-                int currentIndex = 0;
-                try(BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt")))
-                {
-                    ArrayList<String> lines = new ArrayList<String>();
-                    String line;
+                        while ((line = in.readLine()) != null) {
+                            lines.add(line);
+                        }
 
-                    while((line = in.readLine()) != null)
-                    {
-                        lines.add(line);
+                        if (currentIndex[0] >= lines.size()) {
+                            currentIndex[0] = 0;
+
+                        }
+                        currentIndex[0]++;
+
+                        funFactArea.setText(String.valueOf(lines.get(currentIndex[0])));
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-
-                    if (currentIndex >= lines.size())
-                    {
-                        currentIndex = 0;
-
-                    }
-
-                    currentIndex++;
-
-                    funFactArea.setText(String.valueOf(lines.get(currentIndex)));
-
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-
+                    
             });
         }
 
