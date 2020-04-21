@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -55,6 +56,11 @@ public class MainFrame extends JFrame
     private Controller controller;
 
     private double durationModifier;
+
+    private double startDragX;
+    private double startDragY;
+    private double orgTransX;
+    private double orgTransY;
 
 
     /**
@@ -158,6 +164,7 @@ public class MainFrame extends JFrame
         scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(createBackground(backgroundURL));
         setupCamera(scene);
+        handleMouse(root);
         placePlanets(root, planetArrayList);
         paintPlanets();
         startOrbits(planetArrayList);
@@ -251,6 +258,12 @@ public class MainFrame extends JFrame
         }
     }
 
+    /**
+     * Sets the viewing perspective and enables a zoom-function
+     *
+     * @author Lanna Maslo
+     * @version 1.0
+     */
     public void setupCamera(Scene scene)
     {
         PerspectiveCamera camera = new PerspectiveCamera(true);
@@ -278,6 +291,36 @@ public class MainFrame extends JFrame
                     root.translateZProperty().set(root.getTranslateZ() - 10);
                     break;
             }
+        });
+    }
+
+    /**
+     * Allows the user to move the solar system by dragging it
+     *
+     * @author Lanna Maslo
+     * @version 1.0
+     */
+    public void handleMouse(Node root)
+    {
+        root.setOnMousePressed(event ->
+        {
+            startDragX = event.getSceneX();
+            startDragY = event.getSceneY();
+
+            orgTransX = root.getTranslateX();
+            orgTransY = root.getTranslateY();
+        });
+
+        root.setOnMouseDragged(event ->
+        {
+            double offsetX = event.getSceneX() - startDragX;
+            double offsetY = event.getSceneY() - startDragY;
+
+            double newTransX = orgTransX + offsetX;
+            double newTransY = orgTransY + offsetY;
+
+            root.setTranslateX(newTransX);
+            root.setTranslateY(newTransY);
         });
     }
 

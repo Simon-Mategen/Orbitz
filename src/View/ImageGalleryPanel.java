@@ -288,10 +288,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         btnSound.setLayoutY(0);
         btnSound.setLayoutX(10);
-        btnSound.setCursor(Cursor.HAND);
         btnMute.setLayoutY(40);
         btnMute.setLayoutX(10);
-        btnMute.setCursor(Cursor.HAND);
 
         infoBox.setLayoutY(0);
         infoBox.setLayoutX(45);
