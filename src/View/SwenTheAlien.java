@@ -21,7 +21,7 @@ import java.util.*;
 /**
  * @Author: Manna Manojlovic, Lanna Maslo
  *
- * Funfact panel/area for Swen The Alien.
+ * Funfact pa   nel/area for Swen The Alien.
  * When user clicks on the alien a new fun fact about the planet/its moon/moons displays in a textarea.
  */
 
@@ -42,7 +42,7 @@ public class SwenTheAlien extends JPanel
     /**
      * Constructor
      */
-    public SwenTheAlien ()
+    public SwenTheAlien (Planet planet)
     {
         this.planet = planet;
         createPanel();

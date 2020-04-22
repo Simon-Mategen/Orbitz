@@ -39,7 +39,7 @@ public class MainInfoPanel extends JPanel
     {
         //this.controller = controller;
         imgPanel = new ImageGalleryPanel (planet);
-        swenPanel = new SwenTheAlien ();
+        swenPanel = new SwenTheAlien (planet);
         setupPanel(planet);
     }
 
