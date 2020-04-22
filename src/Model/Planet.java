@@ -1,10 +1,12 @@
 package Model;
 
+import Controller.Calculators.PositionCalculator;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.*;
+import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
 
@@ -32,6 +34,8 @@ public class Planet
 
     private Orbit planetOrbit;
 
+    private PositionCalculator pos = new PositionCalculator();
+
     /**
      * Constructor that, when created, creates a planet-object by getting specific values
      * for a specific planet from an API.
@@ -58,7 +62,7 @@ public class Planet
      * The semi-major axis is half the value of the longest diameter of an ellipse.
      * @return a planets semi-major axis in km
      */
-    public long getSemiMajorAxis()
+    public double getSemiMajorAxis()
     {
         semiMajorAxis = (long)planetInfo.get("semimajorAxis");
 
@@ -190,10 +194,14 @@ public class Planet
      */
     public void createPathTransition()
     {
-        //sphere.getTransforms().add(new Translate(0, 0)); Placing a node at a specific coordinate
         pathTransition = new PathTransition();
-        pathTransition.setNode(sphere);
+        double d = pos.setDay(2020, 4, 22);
+
+        planetOrbit.getEllipseFromOrbit().setRotate(-90);
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
+        sphere.getTransforms().addAll(new Translate(0, planetOrbit.getWidth()+planetOrbit.getXCord()));
+        sphere.getTransforms().addAll(new Translate(pos.getValues(d, getName(), 1), pos.getValues(d, getName(), 2)));
+        pathTransition.setNode(sphere);
         pathTransition.setDuration(duration);
         pathTransition.setCycleCount(Animation.INDEFINITE);
         pathTransition.setInterpolator(Interpolator.LINEAR);

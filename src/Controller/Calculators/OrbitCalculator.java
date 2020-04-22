@@ -59,7 +59,7 @@ public class OrbitCalculator
 
     private void calculateOrbit(Planet planet)
     {
-        orbitWidth = (planet.getSemiMajorAxis()) * 2;
+        orbitWidth = (long)(planet.getSemiMajorAxis()) * 2;
         orbitHeight = (long) ((Math.sqrt((planet.getAphelion() * planet.getPerihelion())))) * 2;
 
         orbitOffsetFromSun = planet.getAphelion() - planet.getSemiMajorAxis();
