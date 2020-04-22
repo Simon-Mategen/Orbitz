@@ -26,8 +26,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 
 
 /**
@@ -276,32 +274,19 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * This method reads the sound files depending on which planet is selected by user.
      * Go to playSound() for the code for playing the actual sound.
      */
-
-
     public void planetSounds()
     {
         if  (planet.getName().equals("Jupiter"))
         {
-            playSound("sound/Jupiter2001.wav");
+            playWav("sound/Jupiter2001.wav");
         }
         else if (planet.getName().equals("Sun"))
         {
-            playSound("sound/sun.wav");
+            playWav("sound/sun.wav");
         }
         else if (planet.getName().equals("Saturn"))
         {
-            String bip = "sound/saturn.mp3";
-            Media hit = new Media(new File(bip).toURI().toString());
-            mediaPlayer = new MediaPlayer(hit);
-            mediaPlayer.setOnReady(new Runnable()
-            {
-                public void run()
-                {
-                    mediaPlayer.play();
-                }
-            });
-
-
+            playMp3("sound/saturn.mp3");
         }
 
     }
@@ -314,11 +299,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      *
      * Method for playing a .wav-file. Reads the .wav through AudioInputStream an plays it via Clip.
      * Clip class also has a built in loop for continuously playing the sound until user stops it manually.
-     *
-     * Stop button currently is NOT WORKING!!! Pressing the soundOn button will increase sound instead,
-     * because it creates new instances every time
      */
-    public void playSound(String filePath)
+    public void playWav(String filePath)
     {
         try{
             File file = new File(filePath);
@@ -339,6 +321,33 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @author Manna Manojlovic
+     * @param filePath takes mp3 as parameter
+     *
+     *  This method is for the mp3-files that JavaFX can play when user selects a planet which has recordings in mp3.
+     */
+    public void playMp3(String filePath)
+    {
+        String bip = filePath;
+        Media hit = new Media(new File(bip).toURI().toString());
+        mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.setOnReady(new Runnable()
+        {
+            public void run()
+            {
+                mediaPlayer.play();
+
+                btnMute.setOnAction(event -> {
+
+                    mediaPlayer.stop();
+                });
+
+            }
+        });
+
     }
 
 
