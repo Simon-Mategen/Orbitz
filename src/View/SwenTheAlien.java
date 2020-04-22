@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -32,8 +33,8 @@ public class SwenTheAlien extends JPanel
 
     private JTextArea funFactArea;
 
-    private final Font font = new Font ("SansSerif", Font.PLAIN, 23);
-    private final Color color = Color.yellow;
+    private final Font font = new Font ("Chalkboard", Font.PLAIN, 23);
+    private final Color color = Color.white;
 
     private int currentIndex = 0;
 
@@ -60,11 +61,20 @@ public class SwenTheAlien extends JPanel
     {
         Image swenImage = new Image("Images/Swen.png");
         ImageView swen = new ImageView(swenImage);
+        Tooltip tooltip = new Tooltip("CLICK ON MY FOREHEAD!");
+
+        swen.setPickOnBounds(true);
+        Tooltip.install(swen, tooltip);
+
         swen.setFitWidth(170);
         swen.setFitHeight(220);
+
         Group swenRoot = new Group();
+
         swenRoot.getChildren().add(swen);
+
         Scene swenScene = new Scene(swenRoot);
+
         swenFX.setPreferredSize(new Dimension(171, 220));
         swenScene.setFill(new javafx.scene.paint.Color(0, 0, 0, 1));
         swen.setCursor(Cursor.HAND);
@@ -148,7 +158,7 @@ public class SwenTheAlien extends JPanel
             currentIndex++;
 
             funFactArea.setText(String.valueOf(lines.get(currentIndex)));   //++ to keep in bounds, but then only 5 of 10 funfacts are printed
-            currentIndex++;
+            //currentIndex++;
 
         } catch (IOException e)
         {
