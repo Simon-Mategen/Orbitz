@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import Model.Planet;
 import Enum.*;
 import View.MainFrame;
+import View.Star;
 import javafx.util.Duration;
 
 public class Controller
@@ -19,7 +20,6 @@ public class Controller
     private PlanetCalculator planetCalculator;
     private PositionCalculator positionCalculator;
     private MainFrame mainframe;
-
     private Sun sun;
 
     private ArrayList<Planet> planetArrayList;
@@ -30,8 +30,6 @@ public class Controller
         orbitCalculator = new OrbitCalculator();
         planetCalculator = new PlanetCalculator();
         positionCalculator = new PositionCalculator();
-
-
         this.sun = new Sun(reader.readBodyFromAPI(Stars.soleil.toString()));
         sun.setYCord(0);
         sun.setXCord(0);

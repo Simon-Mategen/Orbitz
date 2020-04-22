@@ -2,6 +2,7 @@ package View;
 
 import Controller.Controller;
 import Model.Planet;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
@@ -16,6 +17,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Random;
 
 /**
  * MainFrame is the main window which contains various  graphical components
@@ -62,6 +65,8 @@ public class MainFrame extends JFrame
     private double startDragY;
     private double orgTransX;
     private double orgTransY;
+
+    private ArrayList<Star> stars = new ArrayList<>();
 
 
     /**
@@ -161,14 +166,15 @@ public class MainFrame extends JFrame
     private Scene createScene(String backgroundURL, ArrayList<Planet> planetArrayList)
     {
         root = new StackPane();
-        Scene scene = new Scene(root, WIDTH - 100, HEIGHT - 100);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.setFill(javafx.scene.paint.Color.BLACK);
-        root.setBackground(createBackground(backgroundURL));
+        //root.setBackground(createBackground(backgroundURL));
         setupCamera(scene);
         handleMouse(root);
         placePlanets(root, planetArrayList);
         paintPlanets();
         startOrbits(planetArrayList);
+        addStars();
         EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>()
         {
             @Override
@@ -275,12 +281,6 @@ public class MainFrame extends JFrame
         camera.setTranslateX((float)orbitPanel.getSize().width / 2);
         camera.setTranslateY((float)orbitPanel.getSize().height / 2);
         scene.setCamera(camera);
-
-        scene.addEventHandler(ZoomEvent.ZOOM, event ->
-        {
-            double delta = event.getZoomFactor();
-            root.translateZProperty().set(root.getTranslateZ() + delta);
-        });
 
         scene.addEventHandler(ScrollEvent.SCROLL, event ->
         {
@@ -428,6 +428,38 @@ public class MainFrame extends JFrame
 
         }
     }
+    /**
+     * Adds star at randomized positions on the scene
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
+    public void addStars()
+    {
+        Random randomX = new Random();
+        Random randomY = new Random();
+        Random randomZ = new Random();
+        int x;
+        int y;
+        int z;
+        int minX = -WIDTH;
+        int maxX = WIDTH;
+        int minY = -HEIGHT;
+        int maxY = HEIGHT;
+        int minZ = 300;
+        int maxZ = 1000;
+        int radius = 1;
+
+        for (int i = 0; i < 1000 ; i++)
+        {
+            x = randomX.nextInt(maxX - minX + 1) + minX;
+            y = randomY.nextInt(maxY - minY + 1) + minY;
+            z = randomZ.nextInt(maxZ - minZ + 1) + minZ;
+
+            Star tempStar = new Star(radius, x, y, z);
+            root.getChildren().add(tempStar);
+        }
+
+    }
 
     /**
      * Listens to the changeBackgroundBtn on click it changes the background
@@ -442,6 +474,7 @@ public class MainFrame extends JFrame
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
+
                     root.setBackground(new Background(
                             Collections.singletonList(new BackgroundFill(
                                     javafx.scene.paint.Color.BLACK, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)),
@@ -453,6 +486,7 @@ public class MainFrame extends JFrame
                                     BackgroundRepeat.NO_REPEAT,
                                     BackgroundPosition.CENTER,
                                     BackgroundSize.DEFAULT))));
+
                 }
             });
         }
