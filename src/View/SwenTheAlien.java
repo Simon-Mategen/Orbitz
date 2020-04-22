@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.awt.*;
 
@@ -20,7 +21,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- * @Author: Manna Manojlovic, Lanna Maslo
+ * @Author: Manna Manojlovic
+ * @author: Lanna Maslo
  *
  * Funfact panel/area for Swen The Alien.
  * When user clicks on the alien a new fun fact about the planet/its moon/moons displays in a textarea.
@@ -50,7 +52,9 @@ public class SwenTheAlien extends JPanel
     }
 
     /**
-     * @Author: Manna Manojlovic, Lanna Maslo
+     * @author: Manna Manojlovic
+     * @author: Lanna Maslo
+     *
      * @version: 1.0
      *
      * JavaFX-panel for Swen The Alien
@@ -61,7 +65,10 @@ public class SwenTheAlien extends JPanel
     {
         Image swenImage = new Image("Images/Swen.png");
         ImageView swen = new ImageView(swenImage);
+
         Tooltip tooltip = new Tooltip("CLICK ON MY FOREHEAD!");
+        tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
+        tooltip.setShowDelay(Duration.millis(1));               //sets time before text appears after hovering over image
 
         swen.setPickOnBounds(true);
         Tooltip.install(swen, tooltip);
@@ -168,7 +175,9 @@ public class SwenTheAlien extends JPanel
 
 
     /**
-     * @Author: Manna Manojlovic, Lanna Maslo
+     * @Author: Manna Manojlovic
+     * @author: Lanna Maslo
+     *
      * @version: 1.0
      *
      * Panel for Swen The Alien and the fun fact textarea.
