@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.MediaPlayer;
 
 
 import javax.sound.sampled.*;
@@ -23,6 +24,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import java.util.ArrayList;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 
 /**
@@ -279,6 +283,13 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         else if (planet.getName().equals("Sun"))
         {
             playSound("sound/sun.wav");
+        }
+        else if (planet.getName().equals("Saturn"))
+        {
+            String bip = "sound/saturn.mp3";
+            Media hit = new Media(new File(bip).toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(hit);
+            mediaPlayer.play();
         }
 
     }
