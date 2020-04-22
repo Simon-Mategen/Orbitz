@@ -41,6 +41,7 @@ public class SwenTheAlien extends JPanel
 
     /**
      * Constructor
+     * @param planet takes a planet as parameter
      */
     public SwenTheAlien (Planet planet)
     {
@@ -73,49 +74,61 @@ public class SwenTheAlien extends JPanel
             swen.setOnMouseClicked(event ->
             {
                 readFunFacts();
-
-                //LÅT STÅ! denna kod testas med Jupiter, kolla setFunFacts() för "riktig" kod.
-
-                   /* try (BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt")))
-                    {
-                        ArrayList<String> lines = new ArrayList<String>();
-                        String line;
-
-                        while ((line = in.readLine()) != null)
-                        {
-                            lines.add(line);
-                        }
-
-                        if (currentIndex >= lines.size())
-                        {
-                            currentIndex = 0;
-
-                        }
-                        currentIndex++;
-
-                        funFactArea.setText(String.valueOf(lines.get(currentIndex)));   //++ to keep in bounds, but then only 5 of 10 funfacts are printed
-                        //currentindex++ here gives only a couple of funfacts
-
-                    } catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-
-                    */
-
             });
         }
 
+    /**
+     * @Author: Manna Manojlovic
+     * @version: 1.0
+     *
+     * Reads funfacts from file depending on which planet user has selected
+     * Go to setFunFacts() for the code for the function
+     */
         public void readFunFacts()
         {
             if (planet.getName().equals("Mercury"))
             {
                 setFunFacts("funfacts/mercury.txt");
             }
-
+            else if (planet.getName().equals("Venus"))
+            {
+                setFunFacts("funfacts/venus.txt");
+            }
+            else if (planet.getName().equals("Earth"))
+            {
+                setFunFacts("funfacts/earth.txt");
+            }
+            else if (planet.getName().equals("Mars"))
+            {
+                setFunFacts("funfacts/mars.txt");
+            }
+            else if (planet.getName().equals("Jupiter"))
+            {
+                setFunFacts("funfacts/jupiter.txt");
+            }
+            else if (planet.getName().equals("Saturn"))
+            {
+                setFunFacts("funfacts/saturn.txt");
+            }
+            else if(planet.getName().equals("Uranus"))
+            {
+                setFunFacts("funfacts/uranus.txt");
+            }
+            else if (planet.getName().equals("Neptune"))
+            {
+                setFunFacts("funfacts/neptune.txt");
+            }
         }
 
-        public void setFunFacts(String filePath)
+    /**
+     * @author Manna Manojlovic
+     * @version 1.0
+     * @param filePath takes a path to file as parameter
+     * buffers a file and reads it
+     * takes each line from file and places in ArrayList
+     * with each button click from user, a new line from the list is displayed to textarea.
+     */
+    public void setFunFacts(String filePath)
         {
             try (BufferedReader in = new BufferedReader(new FileReader(filePath)))
             {
