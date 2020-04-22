@@ -292,6 +292,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         {
             playMp3("sound/saturn.mp3");
         }
+        else if (planet.getName().equals("Earth"))
+        {
+            playMp3("sound/earth.mp3");
+        }
 
     }
 
