@@ -171,10 +171,11 @@ public class MainFrame extends JFrame
         //root.setBackground(createBackground(backgroundURL));
         setupCamera(scene);
         handleMouse(root);
+        addStars();
         placePlanets(root, planetArrayList);
         paintPlanets();
         startOrbits(planetArrayList);
-        addStars();
+
         EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>()
         {
             @Override

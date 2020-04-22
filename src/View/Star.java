@@ -25,7 +25,6 @@ public class Star extends Circle
     public Star(double radius, int x, int y , int z)
     {
         super(radius);
-        setOpacity(0.7);
         setVisible(true);
         setTranslateZ(z);
         setTranslateX(x);
