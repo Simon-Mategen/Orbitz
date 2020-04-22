@@ -62,7 +62,7 @@ public class Planet
      * The semi-major axis is half the value of the longest diameter of an ellipse.
      * @return a planets semi-major axis in km
      */
-    public long getSemiMajorAxis()
+    public double getSemiMajorAxis()
     {
         semiMajorAxis = (long)planetInfo.get("semimajorAxis");
 
@@ -194,12 +194,13 @@ public class Planet
      */
     public void createPathTransition()
     {
-        double d = pos.setDay(2020, 4, 19);
-        sphere.getTransforms().addAll(new Translate(pos.getValues(d, getName(), 1), pos.getValues(d, getName(), 2)));
-        //sphere.getTransforms().add(new Translate(0, 0)); Placing a node at a specific coordinate
         pathTransition = new PathTransition();
+        double d = pos.setDay(2020, 4, 22);
+
+        pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
+        sphere.getTransforms().addAll(new Translate(0, planetOrbit.getWidth()+planetOrbit.getXCord()));
+        sphere.getTransforms().addAll(new Translate(pos.getValues(d, getName(), 1), pos.getValues(d, getName(), 2)));
         pathTransition.setNode(sphere);
-        //pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
         pathTransition.setDuration(duration);
         pathTransition.setCycleCount(Animation.INDEFINITE);
         pathTransition.setInterpolator(Interpolator.LINEAR);
