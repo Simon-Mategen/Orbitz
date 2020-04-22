@@ -1,10 +1,12 @@
 package Model;
 
+import Controller.Calculators.PositionCalculator;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.*;
+import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import org.json.simple.JSONObject;
 
@@ -31,6 +33,8 @@ public class Planet
     private PathTransition pathTransition;
 
     private Orbit planetOrbit;
+
+    private PositionCalculator pos = new PositionCalculator();
 
     /**
      * Constructor that, when created, creates a planet-object by getting specific values
@@ -190,10 +194,12 @@ public class Planet
      */
     public void createPathTransition()
     {
+        double d = pos.setDay(2020, 4, 19);
+        sphere.getTransforms().addAll(new Translate(pos.getValues(d, getName(), 1), pos.getValues(d, getName(), 2)));
         //sphere.getTransforms().add(new Translate(0, 0)); Placing a node at a specific coordinate
         pathTransition = new PathTransition();
         pathTransition.setNode(sphere);
-        pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
+        //pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
         pathTransition.setDuration(duration);
         pathTransition.setCycleCount(Animation.INDEFINITE);
         pathTransition.setInterpolator(Interpolator.LINEAR);
