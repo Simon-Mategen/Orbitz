@@ -21,7 +21,7 @@ import java.util.*;
 /**
  * @Author: Manna Manojlovic, Lanna Maslo
  *
- * Funfact pa   nel/area for Swen The Alien.
+ * Funfact panel/area for Swen The Alien.
  * When user clicks on the alien a new fun fact about the planet/its moon/moons displays in a textarea.
  */
 
@@ -73,35 +73,6 @@ public class SwenTheAlien extends JPanel
             swen.setOnMouseClicked(event ->
             {
                 readFunFacts();
-
-                //LÅT STÅ! denna kod testas med Jupiter, kolla setFunFacts() för "riktig" kod.
-
-                   /* try (BufferedReader in = new BufferedReader(new FileReader("funfacts/jupiter.txt")))
-                    {
-                        ArrayList<String> lines = new ArrayList<String>();
-                        String line;
-
-                        while ((line = in.readLine()) != null)
-                        {
-                            lines.add(line);
-                        }
-
-                        if (currentIndex >= lines.size())
-                        {
-                            currentIndex = 0;
-
-                        }
-                        currentIndex++;
-
-                        funFactArea.setText(String.valueOf(lines.get(currentIndex)));   //++ to keep in bounds, but then only 5 of 10 funfacts are printed
-                        //currentindex++ here gives only a couple of funfacts
-
-                    } catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-
-                    */
 
             });
         }

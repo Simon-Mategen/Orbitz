@@ -3,7 +3,7 @@ package View;
 import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.scene.Cursor;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
+
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -19,9 +19,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
-import java.net.URL;
+
 import java.util.ArrayList;
 
 
@@ -113,50 +113,13 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         imageList = new ArrayList<>();
 
-        BufferedImage img1 = null;
-        BufferedImage img2 = null;
-        BufferedImage img3 = null;
-        BufferedImage img4 = null;
-/*
-        try
-        {
-            System.out.println("test");
-            img1 = ImageIO.read (new File("src/Images/image1.jpg"));
-            img2 = ImageIO.read (new File ("src/Images/image2.jpg"));
-            img3 = ImageIO.read (new File ("src/Images/image3.jpg"));
-            img4 = ImageIO.read (new File ("src/Images/image4.jpg"));
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
-        ImageIcon icon1 = new ImageIcon (img1);
-        ImageIcon icon2 = new ImageIcon (img2);
-        ImageIcon icon3 = new ImageIcon (img3);
-        ImageIcon icon4 = new ImageIcon (img4);
-
-        /*lblimage1.setIcon (icon1);
-        lblimage2.setIcon (icon2);
-        lblimage3.setIcon (icon3);
-        lblimage4.setIcon (icon4);
-
-         */
-
-
         panel.setPreferredSize (new Dimension (410,280));
         panel.setBackground (Color.black);
 
         panelBtn.setPreferredSize(new Dimension(540, 200));
 
         setBackground (Color.BLACK);
-/*
-        panel.add (lblimage1);
-        panel.add (lblimage2);
-        panel.add (lblimage3);
-        panel.add (lblimage4);
 
- */
         panel.add(lblImage, BorderLayout.CENTER);
         panel.add(btnPrevious, BorderLayout.WEST);
         panel.add(btnNext, BorderLayout.EAST);
