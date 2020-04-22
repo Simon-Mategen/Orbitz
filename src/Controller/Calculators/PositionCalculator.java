@@ -123,7 +123,7 @@ public class PositionCalculator {
 
         if (planet.equals("Earth")){
             xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
-            yeclip = -1 * r * Math.sin(Math.PI/180*(v + w));
+            yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
         }
 
         else {
