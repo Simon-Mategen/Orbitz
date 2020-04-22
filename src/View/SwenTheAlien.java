@@ -148,7 +148,7 @@ public class SwenTheAlien extends JPanel
             currentIndex++;
 
             funFactArea.setText(String.valueOf(lines.get(currentIndex)));   //++ to keep in bounds, but then only 5 of 10 funfacts are printed
-            //currentindex++ here gives only a couple of funfacts
+            currentIndex++;
 
         } catch (IOException e)
         {
