@@ -280,7 +280,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         btnMute.setTooltip(new Tooltip("press to mute it :("));
         btnSound.setMinSize(35, 35);
         btnMute.setMinSize(35,35);
-        btnSound.setOnAction(event -> planetSounds());
+        btnSound.setOnAction(event -> playSound());
 
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
@@ -298,29 +298,9 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         jfxPanel.setBackground(Color.black);
         jfxPanel.setScene(scene);
     }
+
     /**
      * @Author: Manna Manojlovic
-     * @version 1.0
-     *
-     * This method reads the sound files depending on which planet is selected by user.
-     * Go to playSound() for the code for playing the actual sound.
-     */
-
-    public void planetSounds()
-    {
-        if  (planet.getName().equals("Jupiter"))
-        {
-            playSound("sound/Jupiter2001.wav");
-        }
-        else if (planet.getName().equals("Sun"))
-        {
-            playSound("sound/sun.wav");
-        }
-
-    }
-
-    /**
-     * @Author: Manna Manojlovic, Lanna Maslo
      * @version 1.0
      *
      * When user clicks play button, a thread that calls this method starts.
@@ -328,30 +308,28 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * Method for playing a .wav-file. Reads the .wav through AudioInputStream an plays it via Clip.
      * Clip class also has a built in loop for continuously playing the sound until user stops it manually.
      *
+     * Stop button currently is NOT WORKING!!! Pressing the soundOn button will increase sound instead,
+     * because it creates new instances every time
      */
-    public void playSound(String filePath)
+    public void playSound()
     {
-        try
-        {
-            File file = new File(filePath);
+        try{
+            File file = new File("sound/Jupiter2001.wav");
 
-            if(file.exists())
-            {
+            if(file.exists()){
                 AudioInputStream ais = AudioSystem.getAudioInputStream(file);
                 Clip clip = AudioSystem.getClip();
                 clip.open(ais);
                 clip.start();
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
 
-                btnMute.setOnAction(event ->
-                {
+                btnMute.setOnAction(event -> {
                     clip.getMicrosecondPosition();
                     clip.stop();
                 });
             }
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
