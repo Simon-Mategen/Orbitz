@@ -280,7 +280,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         btnMute.setTooltip(new Tooltip("press to mute it :("));
         btnSound.setMinSize(35, 35);
         btnMute.setMinSize(35,35);
-        btnSound.setOnAction(event -> playSound());
+        btnSound.setOnAction(event -> planetSounds());
 
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
@@ -303,6 +303,27 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * @Author: Manna Manojlovic
      * @version 1.0
      *
+     * This method reads the sound files depending on which planet is selected by user.
+     * Go to playSound() for the code for playing the actual sound.
+     */
+
+    public void planetSounds()
+    {
+        if  (planet.getName().equals("Jupiter"))
+        {
+            playSound("sound/Jupiter2001.wav");
+        }
+        else if (planet.getName().equals("Sun"))
+        {
+            playSound("sound/sun.wav");
+        }
+
+    }
+
+    /**
+     * @Author: Manna Manojlovic
+     * @version 1.0
+     *
      * When user clicks play button, a thread that calls this method starts.
      *
      * Method for playing a .wav-file. Reads the .wav through AudioInputStream an plays it via Clip.
@@ -311,10 +332,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * Stop button currently is NOT WORKING!!! Pressing the soundOn button will increase sound instead,
      * because it creates new instances every time
      */
-    public void playSound()
+    public void playSound(String filePath)
     {
         try{
-            File file = new File("sound/Jupiter2001.wav");
+            File file = new File(filePath);
 
             if(file.exists()){
                 AudioInputStream ais = AudioSystem.getAudioInputStream(file);
