@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 
 /**
@@ -39,7 +40,7 @@ import javafx.scene.media.MediaPlayer;
  */
 public class ImageGalleryPanel extends JPanel //implements ActionListener
 {
-    Planet planet;
+    private Planet planet;
     private JPanel panel;
     private JPanel panelBtn;
 
@@ -55,6 +56,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
     private PreviousListener previousListener;
     private NextListener nextListener;
+
+    private MediaPlayer mediaPlayer;
 
     private int picIndex = 0;
 
@@ -274,6 +277,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * Go to playSound() for the code for playing the actual sound.
      */
 
+
     public void planetSounds()
     {
         if  (planet.getName().equals("Jupiter"))
@@ -288,8 +292,16 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         {
             String bip = "sound/saturn.mp3";
             Media hit = new Media(new File(bip).toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(hit);
-            mediaPlayer.play();
+            mediaPlayer = new MediaPlayer(hit);
+            mediaPlayer.setOnReady(new Runnable()
+            {
+                public void run()
+                {
+                    mediaPlayer.play();
+                }
+            });
+
+
         }
 
     }
