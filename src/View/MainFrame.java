@@ -11,6 +11,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -274,6 +275,12 @@ public class MainFrame extends JFrame
         camera.setTranslateX((float)orbitPanel.getSize().width / 2);
         camera.setTranslateY((float)orbitPanel.getSize().height / 2);
         scene.setCamera(camera);
+
+        scene.addEventHandler(ZoomEvent.ZOOM, event ->
+        {
+            double delta = event.getZoomFactor();
+            root.translateZProperty().set(root.getTranslateZ() + delta);
+        });
 
         scene.addEventHandler(ScrollEvent.SCROLL, event ->
         {
