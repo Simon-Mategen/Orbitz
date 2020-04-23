@@ -12,11 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -53,6 +57,7 @@ public class MainFrame extends JFrame {
 
     private StackPane root;
     private JSlider timeSlider;
+    private JSlider musicSlider;
     private JButton changeBackgroundBtn = new JButton("Change Background");
 
     private ChangeBackgroundListener changeBackgroundListener;
@@ -88,6 +93,7 @@ public class MainFrame extends JFrame {
         overheadPanel = new JPanel();
         sliderListener = new SliderListener();
         timeSlider = new JSlider();
+        musicSlider = new JSlider();
         changeBackgroundBtn.setFont(new Font("Earth Orbiter", Font.PLAIN, 20));
         titleLabel = new JLabel();
         titleLabel.setPreferredSize(new Dimension(700, 100));
@@ -110,6 +116,14 @@ public class MainFrame extends JFrame {
         setVisible(true);
 
         orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
+
+        musicSlider.setOrientation(JSlider.VERTICAL);
+        musicSlider.setPreferredSize(new Dimension(10, 30));
+        musicSlider.setMinimum(0);
+        musicSlider.setMaximum(30);
+        musicSlider.setValue(15);
+        musicSlider.setForeground(Color.BLUE);
+        musicSlider.setSnapToTicks(true);
 
         // Sets up the JSlider and components related to it
 
@@ -137,7 +151,8 @@ public class MainFrame extends JFrame {
         overheadPanel.setPreferredSize(new Dimension(1400, 100));
         overheadPanel.setBackground(Color.DARK_GRAY);
         //overheadPanel.setForeground(Color.BLACK);
-        overheadPanel.add(timeSlider);
+        overheadPanel.add(timeSlider, BorderLayout.EAST);
+        overheadPanel.add(musicSlider, BorderLayout.CENTER);
         changeBackgroundBtn.setPreferredSize(new Dimension(300, 60));
         overheadPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         overheadPanel.add(titleLabel, BorderLayout.WEST);
@@ -161,6 +176,22 @@ public class MainFrame extends JFrame {
         // This method is invoked on JavaFX thread
         Scene scene = createScene(guiPlanetList); // default background
         fxPanel.setScene(scene);
+
+        String musicFile = "sound/spacesound.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer player = new MediaPlayer(sound);
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        musicSlider.setValue((int)player.getVolume() * 30);
+
+        musicSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+                double value = (double)musicSlider.getValue() / 30;
+                player.setVolume(value);
+                System.out.println("value is" + player.getVolume());
+            }
+        });
+
+        player.play();
     }
 
     /**
