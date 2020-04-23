@@ -2,27 +2,25 @@ package View;
 
 import Controller.Controller;
 import Model.Planet;
-import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
-import javafx.util.Duration;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -38,8 +36,10 @@ import java.util.Random;
  @version 1.0
  @
  */
-public class MainFrame extends JFrame
-{
+public class MainFrame extends JFrame {
+
+    private JLabel titleLabel;
+
     private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     private final int MAX_SLIDER_VALUE = 30;
@@ -67,6 +67,9 @@ public class MainFrame extends JFrame
     private double orgTransX;
     private double orgTransY;
 
+    ArrayList<Font> fonts;
+
+    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
 
     /**
@@ -77,20 +80,28 @@ public class MainFrame extends JFrame
      * @author Simon Måtegen
      * @version 1.0
      */
-    public MainFrame(Controller inController)
-    {
+    public MainFrame(Controller inController) {
         this.controller = inController;
-
+        initFonts();
+        for (int i = 0; i < ge.getAvailableFontFamilyNames().length ; i++)
+        {
+            System.out.println(i + " " + ge.getAvailableFontFamilyNames()[i]);
+        }
         guiPlanetList = controller.getPlanetArrayList(); // copy the planet list from controller
         orbitPanel = new JFXPanel();
         overheadPanel = new JPanel();
         sliderListener = new SliderListener();
         timeSlider = new JSlider();
+        changeBackgroundBtn.setFont(new Font("Earth Orbiter", Font.PLAIN, 20));
+        titleLabel = new JLabel();
+        titleLabel.setPreferredSize(new Dimension(700, 100));
+        titleLabel.setText("Orbitz");
+        titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
+        titleLabel.setOpaque(true);
 
         changeBackgroundListener = new ChangeBackgroundListener();
 
-        Platform.runLater(new Runnable()
-        {
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 initFX(orbitPanel); // starts on the Java FX thread
@@ -126,12 +137,14 @@ public class MainFrame extends JFrame
         timeSlider.addMouseListener(sliderListener);
 
         // Sets up overheadPanel
-        overheadPanel.setPreferredSize(new Dimension(1400, 60));
-        overheadPanel.setBackground(Color.BLACK);
+        overheadPanel.setLayout(new BorderLayout());
+        overheadPanel.setPreferredSize(new Dimension(1400, 100));
+        overheadPanel.setBackground(Color.DARK_GRAY);
+        //overheadPanel.setForeground(Color.BLACK);
         overheadPanel.add(timeSlider);
-        changeBackgroundBtn.setPreferredSize(new Dimension(200, 40));
-        overheadPanel.add(changeBackgroundBtn);
-        overheadPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        changeBackgroundBtn.setPreferredSize(new Dimension(300, 60));
+        overheadPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        overheadPanel.add(titleLabel, BorderLayout.WEST);
 
         changeBackgroundBtn.addActionListener(changeBackgroundListener);
 
@@ -148,8 +161,7 @@ public class MainFrame extends JFrame
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    private void initFX(JFXPanel fxPanel)
-    {
+    private void initFX(JFXPanel fxPanel) {
         // This method is invoked on JavaFX thread
         Scene scene = createScene(guiPlanetList); // default background
         fxPanel.setScene(scene);
@@ -163,13 +175,11 @@ public class MainFrame extends JFrame
      * @author Manna Manojlovic
      * @version 1.0
      */
-    private Scene createScene(ArrayList<Planet> planetArrayList)
-    {
+    private Scene createScene(ArrayList<Planet> planetArrayList) {
         root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         root.setBackground(null);
         scene.setFill(javafx.scene.paint.Color.BLACK);
-        //root.setBackground(createBackground(backgroundURL));
         setupCamera(scene);
         handleMouse(root);
         addStars();
@@ -177,17 +187,14 @@ public class MainFrame extends JFrame
         paintPlanets();
         startOrbits(planetArrayList);
 
-        EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>()
-        {
+        EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
-            public void handle(javafx.scene.input.MouseEvent mouseEvent)
-            {
-                openInfoWindow(determinePlanet((Sphere)mouseEvent.getSource()));
+            public void handle(javafx.scene.input.MouseEvent mouseEvent) {
+                openInfoWindow(determinePlanet((Sphere) mouseEvent.getSource()));
             }
 
-    };
-        for (int i = 0; i < planetArrayList.size() ; i++)
-        {
+        };
+        for (int i = 0; i < planetArrayList.size(); i++) {
             planetArrayList.get(i).getSphereFromPlanet().addEventHandler
                     (javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
             planetArrayList.get(i).getSphereFromPlanet().setCursor(Cursor.HAND);
@@ -198,16 +205,13 @@ public class MainFrame extends JFrame
 
     /**
      * Finds which planet the the sphere is connected to
+     *
      * @author Albin Ahlbeck
-
      * @version 1.0
      */
-    public Planet determinePlanet(Sphere sphere)
-    {
-        for (int i = 0; i < guiPlanetList.size() ; i++)
-        {
-            if (sphere.getId().equals(guiPlanetList.get(i).getName()))
-            {
+    public Planet determinePlanet(Sphere sphere) {
+        for (int i = 0; i < guiPlanetList.size(); i++) {
+            if (sphere.getId().equals(guiPlanetList.get(i).getName())) {
                 return guiPlanetList.get(i);
             }
         }
@@ -218,12 +222,10 @@ public class MainFrame extends JFrame
      * Paints the surface of the planets by calling their individual mappings
      *
      * @author Lanna Maslo
-
      * @version 1.0
      */
-    public void paintPlanets()
-    {
-        for (int i = 0; i < guiPlanetList.size() ; i++) {
+    public void paintPlanets() {
+        for (int i = 0; i < guiPlanetList.size(); i++) {
             PhongMaterial map = new PhongMaterial();
             map.setDiffuseMap(new Image("Images/" + guiPlanetList.get(i).getName() + ".jpg"));
             guiPlanetList.get(i).getSphereFromPlanet().setMaterial(map);
@@ -240,15 +242,13 @@ public class MainFrame extends JFrame
      * @author Simon Måtegen
      * @version 1.0
      */
-    public void placePlanets(Pane root, ArrayList<Planet> planetArrayList)
-    {
-        for (int i = 0; i < planetArrayList.size(); i++)
-        {
+    public void placePlanets(Pane root, ArrayList<Planet> planetArrayList) {
+        for (int i = 0; i < planetArrayList.size(); i++) {
             root.getChildren().add(planetArrayList.get(i).getSphereFromPlanet()); //Adds planets
             root.getChildren().add(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
             planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
             StackPane.setMargin(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
-                    new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord()*2));
+                    new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord() * 2));
         }
     }
 
@@ -258,15 +258,14 @@ public class MainFrame extends JFrame
      * @author Lanna Maslo
      * @version 1.0
      */
-    public void setupCamera(Scene scene)
-    {
+    public void setupCamera(Scene scene) {
         PerspectiveCamera camera = new PerspectiveCamera(true);
         camera.setTranslateZ(-1000);
         camera.setNearClip(0.001);
         camera.setFarClip(2000.0);
         camera.setFieldOfView(35);
-        camera.setTranslateX((float)orbitPanel.getSize().width / 2);
-        camera.setTranslateY((float)orbitPanel.getSize().height / 2);
+        camera.setTranslateX((float) orbitPanel.getSize().width / 2);
+        camera.setTranslateY((float) orbitPanel.getSize().height / 2);
         scene.setCamera(camera);
 
         scene.addEventHandler(ScrollEvent.SCROLL, event ->
@@ -294,8 +293,7 @@ public class MainFrame extends JFrame
      * @author Lanna Maslo
      * @version 1.0
      */
-    public void handleMouse(Node root)
-    {
+    public void handleMouse(Node root) {
         root.setOnMousePressed(event ->
         {
             startDragX = event.getSceneX();
@@ -319,13 +317,12 @@ public class MainFrame extends JFrame
     }
 
     /**
- * Starts the the planets movement
- *
- * @author Albin Ahlbeck
- * @version 1.0
- */
-    public void startOrbits(ArrayList<Planet> planetArrayList)
-    {
+     * Starts the the planets movement
+     *
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
+    public void startOrbits(ArrayList<Planet> planetArrayList) {
         for (int i = 0; i < planetArrayList.size(); i++) {
             planetArrayList.get(i).getPathTransiton().play(); // starts orbits
         }
@@ -333,18 +330,16 @@ public class MainFrame extends JFrame
 
     private void speedChangeScene(double inDurationModifier) //Denna funkar inte än
     {
-        Platform.runLater(new Runnable()
-        {
+        Platform.runLater(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 loadingScreen.setVisible(true);
 
                 //Planets that move 10 times slower for every click on the button
                 ArrayList<Planet> newPlanets = controller.createPlanetArray(inDurationModifier);
                 orbitPanel.setScene(createScene(newPlanets));
 
-                for (int i = 0; i < newPlanets.size() ; i++) {
+                for (int i = 0; i < newPlanets.size(); i++) {
                     PhongMaterial map = new PhongMaterial();
                     map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
                     newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
@@ -365,61 +360,49 @@ public class MainFrame extends JFrame
      * @author Simon Måtegen
      * @version 1.0
      */
-    private class SliderListener implements MouseListener
-    {
+    private class SliderListener implements MouseListener {
 
         @Override
-        public void mouseClicked(MouseEvent mouseEvent)
-        {
+        public void mouseClicked(MouseEvent mouseEvent) {
 
         }
 
         @Override
-        public void mousePressed(MouseEvent mouseEvent)
-        {
+        public void mousePressed(MouseEvent mouseEvent) {
 
         }
 
         @Override
-        public void mouseReleased(MouseEvent mouseEvent)
-        {
-            if (timeSlider.getValue() == 0)
-            {
+        public void mouseReleased(MouseEvent mouseEvent) {
+            if (timeSlider.getValue() == 0) {
                 speedChangeScene(1);
-            }
-            else if (timeSlider.getValue() == 10)
-            {
+            } else if (timeSlider.getValue() == 10) {
                 speedChangeScene(100);
-            }
-            else if (timeSlider.getValue() == 20)
-            {
+            } else if (timeSlider.getValue() == 20) {
                 speedChangeScene(1000);
-            }
-            else if (timeSlider.getValue() == 30)
-            {
+            } else if (timeSlider.getValue() == 30) {
                 speedChangeScene(10000);
             }
         }
 
         @Override
-        public void mouseEntered(MouseEvent mouseEvent)
-        {
+        public void mouseEntered(MouseEvent mouseEvent) {
 
         }
 
         @Override
-        public void mouseExited(MouseEvent mouseEvent)
-        {
+        public void mouseExited(MouseEvent mouseEvent) {
 
         }
     }
+
     /**
      * Adds star at randomized positions on the scene
+     *
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    public void addStars()
-    {
+    public void addStars() {
         Random randomX = new Random();
         Random randomY = new Random();
         Random randomZ = new Random();
@@ -434,8 +417,7 @@ public class MainFrame extends JFrame
         int maxZ = 1000;
         int radius = 1;
 
-        for (int i = 0; i < 1000 ; i++)
-        {
+        for (int i = 0; i < 1000; i++) {
             x = randomX.nextInt(maxX - minX + 1) + minX;
             y = randomY.nextInt(maxY - minY + 1) + minY;
             z = randomZ.nextInt(maxZ - minZ + 1) + minZ;
@@ -453,8 +435,7 @@ public class MainFrame extends JFrame
      * @author Simon Måtegen
      * @version 1.0
      */
-    private class ChangeBackgroundListener implements ActionListener
-    {
+    private class ChangeBackgroundListener implements ActionListener {
         public void actionPerformed(ActionEvent actionEvent) {
             Platform.runLater(new Runnable() {
                 @Override
@@ -479,13 +460,38 @@ public class MainFrame extends JFrame
 
     /**
      * Opens an information window
+     *
      * @param planet The planet to showcase
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    public void openInfoWindow(Planet planet)
-    {
+    public void openInfoWindow(Planet planet) {
         mainInfoFrame = new MainInfoFrame(planet);
     }
 
+
+    /**
+     * Adds fonts to the GraphicsEnviroment for later use
+     *
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
+    public void initFonts() {
+        try {
+            // register fonts here
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/earth_orbiter/earthorbiter.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/earth_orbiter/earthorbiterbold.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/earth_orbiter/earthorbitertitleital.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/nasalization/nasalization-rg.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/revolution_saji/REVOLUTION.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/Starjedi.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/Starjhol.ttf")));
+
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
 }

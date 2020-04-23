@@ -35,7 +35,10 @@ public class SwenTheAlien extends JPanel
 
     private JTextArea funFactArea;
 
-    private final Font font = new Font ("Chalkboard", Font.PLAIN, 23);
+    private final Font funFactAreaFont = new Font ("Nasalization Rg", Font.PLAIN, 20);
+
+    private final Font titleFont = new Font ("Nasalization Rg", Font.PLAIN, 12);
+
     private final Color color = Color.white;
 
     private int currentIndex = 0;
@@ -193,7 +196,7 @@ public class SwenTheAlien extends JPanel
     public void createPanel ()
     {
         TitledBorder titledBorder = BorderFactory.createTitledBorder(null, " DID YOU KNOW...",
-                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, font, color);
+                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, titleFont, color);
 
         panel = new JPanel(new BorderLayout());
         layout = new BorderLayout();
@@ -214,10 +217,10 @@ public class SwenTheAlien extends JPanel
         funFactArea.setAlignmentX(10);
         funFactArea.setAlignmentY(120);
         funFactArea.setPreferredSize(new Dimension(245, 100));
-        funFactArea.setFont(font);
+        funFactArea.setFont(funFactAreaFont);
         funFactArea.setBackground(Color.black);
         funFactArea.setForeground(color);
-
+        funFactArea.setForeground(Color.YELLOW);
         JPanel pnl = new JPanel();
         pnl.setPreferredSize(new Dimension(40, 100));
         pnl.setBackground(Color.black);
