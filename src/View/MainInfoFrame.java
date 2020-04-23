@@ -102,7 +102,7 @@ public class MainInfoFrame extends JFrame
         root = new StackPane();
         Scene scene = new Scene(root, 300, 300);
         scene.setFill(Color.BLUE);
-        //placePlanets();
+        placePlanets();
         //startOrbit();
 
         /*VBox vbox = new VBox();

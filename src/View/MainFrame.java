@@ -6,6 +6,7 @@ import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
@@ -66,7 +67,6 @@ public class MainFrame extends JFrame
     private double orgTransX;
     private double orgTransY;
 
-    private ArrayList<Star> stars = new ArrayList<>();
 
 
     /**
@@ -138,6 +138,7 @@ public class MainFrame extends JFrame
         add(orbitPanel, BorderLayout.WEST);
         add(overheadPanel, BorderLayout.NORTH);
 
+
     }
 
     /**
@@ -150,8 +151,7 @@ public class MainFrame extends JFrame
     private void initFX(JFXPanel fxPanel)
     {
         // This method is invoked on JavaFX thread
-        Scene scene = createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
-                guiPlanetList); // default background
+        Scene scene = createScene(guiPlanetList); // default background
         fxPanel.setScene(scene);
     }
 
@@ -163,10 +163,11 @@ public class MainFrame extends JFrame
      * @author Manna Manojlovic
      * @version 1.0
      */
-    private Scene createScene(String backgroundURL, ArrayList<Planet> planetArrayList)
+    private Scene createScene(ArrayList<Planet> planetArrayList)
     {
         root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
+        root.setBackground(null);
         scene.setFill(javafx.scene.paint.Color.BLACK);
         //root.setBackground(createBackground(backgroundURL));
         setupCamera(scene);
@@ -188,26 +189,11 @@ public class MainFrame extends JFrame
         for (int i = 0; i < planetArrayList.size() ; i++)
         {
             planetArrayList.get(i).getSphereFromPlanet().addEventHandler
-                    (javafx.scene.input.MouseEvent.MOUSE_CLICKED,  eventHandler);
+                    (javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
             planetArrayList.get(i).getSphereFromPlanet().setCursor(Cursor.HAND);
         }
 
         return scene;
-    }
-
-    public Background createBackground(String backgroundURL)
-    {
-        Background tempBackground = new Background(
-                Collections.singletonList(new BackgroundFill(
-                        javafx.scene.paint.Color.BLACK, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)),
-                Collections.singletonList(new BackgroundImage(
-                        new javafx.scene.image.Image(backgroundURL,
-                                WIDTH, HEIGHT, false, true),
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.CENTER,
-                        BackgroundSize.DEFAULT)));
-        return tempBackground;
     }
 
     /**
@@ -356,9 +342,7 @@ public class MainFrame extends JFrame
 
                 //Planets that move 10 times slower for every click on the button
                 ArrayList<Planet> newPlanets = controller.createPlanetArray(inDurationModifier);
-
-                orbitPanel.setScene(createScene("https://www.solarsystemscope.com/textures/download/8k_stars.jpg",
-                        newPlanets));
+                orbitPanel.setScene(createScene(newPlanets));
 
                 for (int i = 0; i < newPlanets.size() ; i++) {
                     PhongMaterial map = new PhongMaterial();
