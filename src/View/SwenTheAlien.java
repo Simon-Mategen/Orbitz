@@ -163,15 +163,15 @@ public class SwenTheAlien extends JPanel
                 lines.add(line);
             }
 
-            if (currentIndex >= lines.size())
+            if (currentIndex >= lines.size()-1)
             {
                 currentIndex = 0;
 
             }
             currentIndex++;
 
-            funFactArea.setText(String.valueOf(lines.get(currentIndex)));   //++ to keep in bounds, but then only 5 of 10 funfacts are printed
-            //currentIndex++;
+            funFactArea.setText(String.valueOf(lines.get(currentIndex))); 
+
 
         } catch (IOException e)
         {
