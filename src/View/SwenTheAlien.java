@@ -98,6 +98,7 @@ public class SwenTheAlien extends JPanel
                 readFunFacts();
 
             });
+
         }
 
     /**

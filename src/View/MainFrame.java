@@ -83,10 +83,6 @@ public class MainFrame extends JFrame {
     public MainFrame(Controller inController) {
         this.controller = inController;
         initFonts();
-        for (int i = 0; i < ge.getAvailableFontFamilyNames().length ; i++)
-        {
-            System.out.println(i + " " + ge.getAvailableFontFamilyNames()[i]);
-        }
         guiPlanetList = controller.getPlanetArrayList(); // copy the planet list from controller
         orbitPanel = new JFXPanel();
         overheadPanel = new JPanel();
