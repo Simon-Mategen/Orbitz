@@ -24,7 +24,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -117,13 +116,25 @@ public class MainFrame extends JFrame {
 
         orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
 
+        Font f = new Font("Arial", Font.BOLD, 8);
+        JLabel labelMin = new JLabel("MIN");
+        JLabel labelMax = new JLabel("MAX");
+        labelMin.setFont(f);
+        labelMax.setFont(f);
+
+        Hashtable<Integer, JLabel> labelTableM = new Hashtable<>();
+        labelTableM.put(2, labelMin);
+        labelTableM.put(19, labelMax);
+
         musicSlider.setOrientation(JSlider.VERTICAL);
-        musicSlider.setPreferredSize(new Dimension(10, 30));
+        musicSlider.setPreferredSize(new Dimension(10, 20));
         musicSlider.setMinimum(0);
-        musicSlider.setMaximum(30);
-        musicSlider.setValue(15);
+        musicSlider.setMaximum(20);
+        musicSlider.setValue(10);
         musicSlider.setForeground(Color.BLUE);
         musicSlider.setSnapToTicks(true);
+        musicSlider.setLabelTable(labelTableM);
+        musicSlider.setPaintLabels(true);
 
         // Sets up the JSlider and components related to it
 
@@ -167,9 +178,11 @@ public class MainFrame extends JFrame {
 
     /**
      * Creates a new scene from createScene and adds it to the Java FX window
+     * Sets background music
      *
      * @param fxPanel The JavaFX panel to be created
      * @author Albin Ahlbeck
+     * @author Lanna Maslo
      * @version 1.0
      */
     private void initFX(JFXPanel fxPanel) {
@@ -181,16 +194,14 @@ public class MainFrame extends JFrame {
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer player = new MediaPlayer(sound);
         player.setCycleCount(MediaPlayer.INDEFINITE);
-        musicSlider.setValue((int)player.getVolume() * 30);
+        musicSlider.setValue((int)player.getVolume() * 20);
 
         musicSlider.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
-                double value = (double)musicSlider.getValue() / 30;
+                double value = (double)musicSlider.getValue() / 20;
                 player.setVolume(value);
-                System.out.println("value is" + player.getVolume());
             }
         });
-
         player.play();
     }
 
