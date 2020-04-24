@@ -38,6 +38,10 @@ public class Planet
 
     private PlanetInfo planetTableInfo = new PlanetInfo();
 
+    private int numOfMoons; // TODO
+
+    private int distanceFromSun; // TODO
+
     /**
      * Constructor that, when created, creates a planet-object by getting specific values
      * for a specific planet from an API.
@@ -50,6 +54,7 @@ public class Planet
         this.aphelion = (long)planetInfo.get("aphelion");
         this.sphere = new Sphere((double)planetInfo.get("meanRadius")*1000/SCALE_RADIUS_VALUE);
         this.sphere.setId(getName());  // set ID so sphere's planet can be found
+        //this.planetTableInfo = new PlanetInfo(getMass(), getMeanRadius(), 0, );
     }
     /**
      * Default constructor
