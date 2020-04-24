@@ -1,19 +1,18 @@
 package View;
 
 import Model.Planet;
+;
 import javafx.application.Platform;
+
 import javafx.embed.swing.JFXPanel;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 
 
-import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,7 +29,6 @@ import java.awt.event.ActionListener;
 
 import java.io.File;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 import javafx.scene.media.Media;
@@ -226,25 +224,16 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      *
      * @param jfxPanel The JavaFX panel to be created
      * @author Lanna Maslo
+     * @author Manna Manojlovic
      * @version 1.0
      */
     private void initFX(JFXPanel jfxPanel)
     {
         Image soundOn = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/29_Sound_alt-64.png");
         Image mute = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/30_Sound_off-64.png");
-        Image info = new Image("Images/JupiterInfobox.png");
 
         ImageView soundIcon = new ImageView(soundOn);
         ImageView muteIcon = new ImageView(mute);
-        ImageView infoBox = new ImageView(info);
-
-        TableView table = new TableView();
-
-        TableColumn massCol = new TableColumn("Mass");
-        TableColumn circumferenceCol = new TableColumn("Circumference");
-        TableColumn numOfMoonsCol = new TableColumn("Number of moons");
-        TableColumn lengthOfYearCol = new TableColumn("Length of year");        //duration
-        TableColumn distanceFrSunCol = new TableColumn("Distance from sun");
 
         javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
 
@@ -252,24 +241,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         Scene scene = new Scene(root);
 
-        int colWidth = 100;
-        distanceFrSunCol.setMinWidth(colWidth);
-        lengthOfYearCol.setMinWidth(colWidth);
-        numOfMoonsCol.setMinWidth(colWidth);
-
-        table.getColumns().addAll(massCol, circumferenceCol,numOfMoonsCol,lengthOfYearCol,distanceFrSunCol);
-        table.setEditable(false);
-//        massCol.setCellValueFactory(new PropertyValueFactory<Planet, Double>(planet.getMass()));      //?? :D
-//        table.setStyle("-fx-background-color: black;");
-
-
-
         soundIcon.setFitHeight(17);
         soundIcon.setFitWidth(17);
         muteIcon.setFitHeight(17);
         muteIcon.setFitWidth(17);
-        infoBox.setFitHeight(289);
-        infoBox.setFitWidth(512);
 
         btnSound = new Button("", soundIcon);
         btnSound.setTooltip(new Tooltip("press to hear the sound of this planet"));
@@ -281,15 +256,11 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
-        root.getChildren().add(table);
 
         btnSound.setLayoutY(0);
         btnSound.setLayoutX(10);
         btnMute.setLayoutY(40);
         btnMute.setLayoutX(10);
-
-        table.setLayoutY(0);
-        table.setLayoutX(45);
 
         scene.setFill(fxColor);
         jfxPanel.setBackground(Color.black);
@@ -303,8 +274,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      * This method reads the sound files depending on which planet is selected by user.
      * Go to playSound() for the code for playing the actual sound.
      */
-
-
     public void planetSounds()
     {
         if  (planet.getName().equals("Jupiter"))
