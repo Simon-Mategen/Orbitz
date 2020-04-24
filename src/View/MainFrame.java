@@ -113,6 +113,10 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setVisible(true);
+        setTitle("Orbitz");
+
+        ImageIcon solarSystem = new ImageIcon("src/Images/orbitz.png");
+        setIconImage(solarSystem.getImage());
 
         orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
 
