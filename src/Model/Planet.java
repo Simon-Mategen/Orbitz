@@ -36,6 +36,8 @@ public class Planet
 
     private PositionCalculator pos = new PositionCalculator();
 
+    private PlanetInfo planetTableInfo = new PlanetInfo();
+
     /**
      * Constructor that, when created, creates a planet-object by getting specific values
      * for a specific planet from an API.
