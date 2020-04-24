@@ -5,12 +5,17 @@ import Model.Planet;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.geometry.Point3D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -41,6 +46,15 @@ public class MainInfoPanel extends JPanel
     private StackPane root;
 
     private Sphere planetSphere; // the sphere that will be shown
+
+    private double startDragX;
+    private double startDragY;
+    private double orgTransY;
+    private double orgTransX;
+
+    private Rotate rotate;
+
+    private AnimationTimer timer = null;
 
     //Controller controller;
 
@@ -96,6 +110,10 @@ public class MainInfoPanel extends JPanel
         add(planetaryPanel, BorderLayout.WEST);
         setBackground(Color.BLACK);
         planetSphere = new Sphere(80);
+        rotate = new Rotate();
+        rotate.setPivotX(planetSphere.getRadius());
+        rotate.setPivotY(planetSphere.getRadius());
+
     }
 
     /**
@@ -123,27 +141,84 @@ public class MainInfoPanel extends JPanel
         scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(null);
         root.getChildren().add(planetSphere);
-        planetSphere.setRotationAxis(Rotate.Y_AXIS);
-        prepareAnimation();
-        paintPlanet();
-        /*VBox vbox = new VBox();
-        vbox.setLayoutX(20);
-        vbox.setLayoutY(20);
 
-         */
+        Tooltip tooltip = new Tooltip("Rotate me!");
+        tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
+        tooltip.setShowDelay(Duration.millis(1));               //sets time before text appears after hovering over image
+
+        planetSphere.setPickOnBounds(true);
+        Tooltip.install(planetSphere, tooltip);
+        paintPlanet();
+        handleMouse();
         return scene;
     }
 
-    public void prepareAnimation()
+    public void prepareAnimationX(double spinvalue)
     {
-        AnimationTimer timer = new AnimationTimer() {
+        planetSphere.setRotationAxis(Rotate.X_AXIS);
+        timer = new AnimationTimer() {
             @Override
             public void handle(long l)
             {
-                planetSphere.rotateProperty().set(planetSphere.getRotate() + 0.2);
+                planetSphere.rotateProperty().set(planetSphere.getRotate() + spinvalue);
             }
         };
         timer.start();
+    }
+
+    public void prepareAnimationY(double spinvalue)
+    {
+        planetSphere.setRotationAxis(Rotate.Y_AXIS);
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long l)
+            {
+                planetSphere.rotateProperty().set(planetSphere.getRotate() + spinvalue * l);
+            }
+        };
+        timer.start();
+    }
+
+    public void handleMouse()
+    {
+        root.setOnMousePressed(event ->
+        {
+            startDragX = event.getSceneX();
+            startDragY = event.getSceneY();
+
+            orgTransX = root.getTranslateX();
+            orgTransY = root.getTranslateY();
+        });
+
+        root.setOnMouseDragged(event ->
+        {
+            double offsetX = event.getSceneX() - startDragX;
+            double offsetY = event.getSceneY() - startDragY;
+
+            double newTransX = orgTransX + offsetX;
+            double newTransY = orgTransY + offsetY;
+            matrixRotateNode(planetSphere, 0,  -newTransY / 100, newTransX / 100);
+        });
+    }
+
+    private void matrixRotateNode(Node n, double alf, double bet, double gam){
+        double A11=Math.cos(alf)*Math.cos(gam);
+        double A12=Math.cos(bet)*Math.sin(alf)+Math.cos(alf)*Math.sin(bet)*Math.sin(gam);
+        double A13=Math.sin(alf)*Math.sin(bet)-Math.cos(alf)*Math.cos(bet)*Math.sin(gam);
+        double A21=-Math.cos(gam)*Math.sin(alf);
+        double A22=Math.cos(alf)*Math.cos(bet)-Math.sin(alf)*Math.sin(bet)*Math.sin(gam);
+        double A23=Math.cos(alf)*Math.sin(bet)+Math.cos(bet)*Math.sin(alf)*Math.sin(gam);
+        double A31=Math.sin(gam);
+        double A32=-Math.cos(gam)*Math.sin(bet);
+        double A33=Math.cos(bet)*Math.cos(gam);
+
+        double d = Math.acos((A11+A22+A33-1d)/2d);
+        if(d!=0d){
+            double den=2d*Math.sin(d);
+            Point3D p= new Point3D((A32-A23)/den,(A13-A31)/den,(A21-A12)/den);
+            n.setRotationAxis(p);
+            n.setRotate(Math.toDegrees(d));
+        }
     }
 
     /**
