@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +17,7 @@ import javafx.scene.media.MediaPlayer;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +25,7 @@ import java.awt.event.ActionListener;
 
 import java.io.File;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import javafx.scene.media.Media;
@@ -51,8 +54,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
     private Button btnSound;
     private Button btnMute;
-    private JButton btnNext;
-    private JButton btnPrevious;
+    private BasicArrowButton btnNext;
+    private BasicArrowButton btnPrevious;
 
     private PreviousListener previousListener;
     private NextListener nextListener;
@@ -60,6 +63,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     private MediaPlayer mediaPlayer;
 
     private int picIndex = 0;
+
+    private JToolBar toolBar = new JToolBar();
 
     /**
      * @Author Manna Manojlovic
@@ -88,7 +93,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     public void createPanel(Planet planet)
     {
-        //setBorder(BorderFactory.createLineBorder(Color.RED));
         GridLayout layout = new GridLayout (1,5,4,4);
         setLayout(new BorderLayout());
         JFXPanel jfx = new JFXPanel();
@@ -106,13 +110,13 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         previousListener = new PreviousListener();
         nextListener = new NextListener();
+        btnNext = new BasicArrowButton(BasicArrowButton.EAST);
+        btnNext.setPreferredSize(new Dimension(100, 50));
+        btnNext.setMinimumSize(new Dimension(100, 50));
 
-        btnNext = new JButton(">");
-        btnPrevious = new JButton("<");
-        btnNext.setFont(new Font("Arial", Font.BOLD, 20));
-        btnPrevious.setFont(new Font("Arial", Font.BOLD, 20));
-        btnNext.setPreferredSize(new Dimension(60, 50));
-        btnPrevious.setPreferredSize(new Dimension(60, 50));
+
+        btnPrevious = new BasicArrowButton(BasicArrowButton.WEST);
+        btnPrevious.setPreferredSize(new Dimension(100, 50));
         btnNext.addActionListener(nextListener);
         btnPrevious.addActionListener(previousListener);
 
@@ -128,9 +132,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         setBackground (Color.BLACK);
 
         panel.add(lblImage, BorderLayout.CENTER);
-        panel.add(btnPrevious, BorderLayout.WEST);
+        //panel.add(toolBar, BorderLayout.SOUTH);
         panel.add(btnNext, BorderLayout.EAST);
-        lblImage.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        panel.add(btnPrevious, BorderLayout.WEST);
+
 
         panelBtn.add(jfx);
         panelBtn.setBackground(Color.black);

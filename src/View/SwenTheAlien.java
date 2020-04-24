@@ -70,7 +70,7 @@ public class SwenTheAlien extends JPanel
         ImageView swen = new ImageView(swenImage);
 
 //      Image tip = new Image("Images/tip2.jpg");
-        Tooltip tooltip = new Tooltip("CLICK ON MY FOREHEAD!");
+        Tooltip tooltip = new Tooltip("CLICK ME!");
         tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
 //      tooltip.setGraphic(new ImageView(tip));
         tooltip.setShowDelay(Duration.millis(1));               //sets time before text appears after hovering over image

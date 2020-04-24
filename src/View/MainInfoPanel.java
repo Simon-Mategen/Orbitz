@@ -17,6 +17,7 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * @Author: Manna Manojlovic
@@ -54,11 +55,8 @@ public class MainInfoPanel extends JPanel
     {
         //this.controller = controller;
         imgPanel = new ImageGalleryPanel (planet);
-        imgPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
         swenPanel = new SwenTheAlien (planet);
-        swenPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
         planetaryPanel = new JFXPanel();
-        imgPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
         setupPanel(planet);
         Platform.runLater(new Runnable() {
             @Override
@@ -147,6 +145,7 @@ public class MainInfoPanel extends JPanel
         };
         timer.start();
     }
+
     /**
      * Adds material to the planetSphere
      * @author Lanna Maslo
