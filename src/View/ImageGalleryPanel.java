@@ -121,6 +121,9 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         btnPrevious.setPreferredSize(new Dimension(100, 50));
         btnNext.addActionListener(nextListener);
         btnPrevious.addActionListener(previousListener);
+        btnNext.setFocusPainted(false);
+        btnPrevious.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        btnNext.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
         lblImage.setSize(336, 280);
 
@@ -130,13 +133,13 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel.setBackground (Color.black);
 
         panelBtn.setPreferredSize(new Dimension(540, 200));
-
+        lblImage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 8, false));
         setBackground (Color.BLACK);
-
-        panel.add(lblImage, BorderLayout.CENTER);
-        //panel.add(toolBar, BorderLayout.SOUTH);
         panel.add(btnNext, BorderLayout.EAST);
         panel.add(btnPrevious, BorderLayout.WEST);
+        panel.add(lblImage, BorderLayout.CENTER);
+        //panel.add(toolBar, BorderLayout.SOUTH);
+
 
 
         panelBtn.add(jfx);
