@@ -6,9 +6,10 @@ import javafx.embed.swing.JFXPanel;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.Button;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.MediaPlayer;
@@ -26,9 +27,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
-
 
 /**
  * @Author: Manna Manojlovic
@@ -231,11 +229,31 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         ImageView muteIcon = new ImageView(mute);
         ImageView infoBox = new ImageView(info);
 
+        TableView table = new TableView();
+
+        TableColumn massCol = new TableColumn("Mass");
+        TableColumn circumferenceCol = new TableColumn("Circumference");
+        TableColumn numOfMoonsCol = new TableColumn("Number of moons");
+        TableColumn lengthOfYearCol = new TableColumn("Length of year");        //duration
+        TableColumn distanceFrSunCol = new TableColumn("Distance from sun");
+
         javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
 
         Group root = new Group();
 
         Scene scene = new Scene(root);
+
+        int colWidth = 100;
+        distanceFrSunCol.setMinWidth(colWidth);
+        lengthOfYearCol.setMinWidth(colWidth);
+        numOfMoonsCol.setMinWidth(colWidth);
+
+        table.getColumns().addAll(massCol, circumferenceCol,numOfMoonsCol,lengthOfYearCol,distanceFrSunCol);
+        table.setEditable(false);
+//        massCol.setCellValueFactory(new PropertyValueFactory<Planet, Double>(planet.getMass()));      //?? :D
+//        table.setStyle("-fx-background-color: black;");
+
+
 
         soundIcon.setFitHeight(17);
         soundIcon.setFitWidth(17);
@@ -254,15 +272,15 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
-        root.getChildren().add(infoBox);
+        root.getChildren().add(table);
 
         btnSound.setLayoutY(0);
         btnSound.setLayoutX(10);
         btnMute.setLayoutY(40);
         btnMute.setLayoutX(10);
 
-        infoBox.setLayoutY(0);
-        infoBox.setLayoutX(45);
+        table.setLayoutY(0);
+        table.setLayoutX(45);
 
         scene.setFill(fxColor);
         jfxPanel.setBackground(Color.black);
