@@ -64,7 +64,9 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
     private int picIndex = 0;
 
-    private JToolBar toolBar = new JToolBar();
+    private InfoBoxPanel infoPanel;
+
+    //private JToolBar toolBar = new JToolBar();
 
     /**
      * @Author Manna Manojlovic
@@ -75,6 +77,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     public ImageGalleryPanel(Planet planet)
     {
+        infoPanel = new InfoBoxPanel();
         createPanel(planet);
         addImages();
     }
@@ -136,8 +139,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel.add(btnNext, BorderLayout.EAST);
         panel.add(btnPrevious, BorderLayout.WEST);
         panel.add(lblImage, BorderLayout.CENTER);
-        //panel.add(toolBar, BorderLayout.SOUTH);
-
 
 
         panelBtn.add(jfx);
@@ -146,7 +147,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         add(panel, BorderLayout.EAST);
         add(panelBtn, BorderLayout.WEST);
 
-        Platform.runLater(new Runnable(){
+        Platform.runLater(new Runnable()
+        {
             public void run(){
                 initFX(jfx);
             }
@@ -259,6 +261,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
+
 
         btnSound.setLayoutY(0);
         btnSound.setLayoutX(10);

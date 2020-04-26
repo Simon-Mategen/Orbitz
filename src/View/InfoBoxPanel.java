@@ -17,6 +17,11 @@ public class InfoBoxPanel extends JPanel
     private JLabel yearInfo;
     private JLabel distanceInfo;
 
+    public InfoBoxPanel()
+    {
+        setupPanel();
+    }
+
     public void setupPanel()
     {
         GridBagLayout layout = new GridBagLayout();

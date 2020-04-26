@@ -56,8 +56,6 @@ public class MainInfoPanel extends JPanel
 
     private AnimationTimer timer = null;
 
-    //Controller controller;
-
     /**
      * @Author: Manna Manojlovic
      * version 1.0
@@ -67,14 +65,16 @@ public class MainInfoPanel extends JPanel
      */
     public MainInfoPanel (Planet planet)
     {
-        //this.controller = controller;
+
         imgPanel = new ImageGalleryPanel (planet);
         swenPanel = new SwenTheAlien (planet);
         planetaryPanel = new JFXPanel();
         setupPanel(planet);
-        Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 initFX(planetaryPanel); // starts on the Java FX thread
             }
         });
@@ -109,7 +109,9 @@ public class MainInfoPanel extends JPanel
         add (swenPanel, BorderLayout.EAST);
         add(planetaryPanel, BorderLayout.WEST);
         setBackground(Color.BLACK);
+
         planetSphere = new Sphere(80);
+
         rotate = new Rotate();
         rotate.setPivotX(planetSphere.getRadius());
         rotate.setPivotY(planetSphere.getRadius());
