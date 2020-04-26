@@ -66,14 +66,12 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
     private InfoBoxPanel infoPanel;
 
-    //private JToolBar toolBar = new JToolBar();
-
     /**
      * @Author Manna Manojlovic
      * @version 1.0
      * 
      * Constructor
-     * Calls createPanel()
+     * Calls createPanel(), addImages and creates instance of InfoBoxPanel
      */
     public ImageGalleryPanel(Planet planet)
     {
@@ -81,23 +79,24 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         createPanel(planet);
         addImages();
     }
+
     /**
      * @Author: Manna Manojlovic, Lanna Maslo
      * @version 1.0
      *
      * Method for initializing the components and the panel for images
      * Placing all components on Jpanel.
-     * This method also reads images through BufferedImage and sets the images as
-     * ImageIcons, which are then set as a swing component: JLabel in order to be
-     * shown on the swing panel.
      *
-     * This method also has a JavaFX-panel and a JavaFX- sound icon,
+     * places the table with info about planet on the panel.
+     *
+     * This method also has a JavaFX-panel and JavaFX- sound icons,
      * which plays a planetary sound on click, by calling playSound().
      */
     public void createPanel(Planet planet)
     {
-        GridLayout layout = new GridLayout (1,5,4,4);
         setLayout(new BorderLayout());
+        setBackground (Color.BLACK);
+
         JFXPanel jfx = new JFXPanel();
 
         this.planet = planet;
@@ -105,18 +104,14 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel = new JPanel (new BorderLayout());
         panelBtn = new JPanel();
 
-        lblimage1 = new JLabel();
-        lblimage2 = new JLabel();
-        lblimage3 = new JLabel();
-        lblimage4 = new JLabel();
         lblImage = new JLabel();
 
         previousListener = new PreviousListener();
         nextListener = new NextListener();
+
         btnNext = new BasicArrowButton(BasicArrowButton.EAST);
         btnNext.setPreferredSize(new Dimension(100, 50));
         btnNext.setMinimumSize(new Dimension(100, 50));
-
 
         btnPrevious = new BasicArrowButton(BasicArrowButton.WEST);
         btnPrevious.setPreferredSize(new Dimension(100, 50));
@@ -127,6 +122,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         btnNext.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
         lblImage.setSize(336, 280);
+        lblImage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 8, false));
 
         imageList = new ArrayList<>();
 
@@ -134,13 +130,12 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel.setBackground (Color.black);
 
         panelBtn.setPreferredSize(new Dimension(540, 200));
-        lblImage.setBorder(BorderFactory.createLineBorder(Color.WHITE, 8, false));
-        setBackground (Color.BLACK);
+
         panel.add(btnNext, BorderLayout.EAST);
         panel.add(btnPrevious, BorderLayout.WEST);
         panel.add(lblImage, BorderLayout.CENTER);
 
-
+        panelBtn.add(infoPanel);        //information table
         panelBtn.add(jfx);
         panelBtn.setBackground(Color.black);
 
@@ -262,7 +257,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         root.getChildren().add(btnSound);
         root.getChildren().add(btnMute);
 
-
         btnSound.setLayoutY(0);
         btnSound.setLayoutX(10);
         btnMute.setLayoutY(40);
@@ -271,6 +265,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         scene.setFill(fxColor);
         jfxPanel.setBackground(Color.black);
         jfxPanel.setScene(scene);
+
     }
 
     /**

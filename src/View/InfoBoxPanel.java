@@ -1,49 +1,100 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+/**
+ * @Author Manna Manojlovic
+ *
+ * This class is the table with information about the selected planet.
+ * Shows information about planet's mass, size, number of moons, length of year in earth years, distance from sun
+ */
 public class InfoBoxPanel extends JPanel
 {
-    private JLabel massLbl;
-    private JLabel sizeLbl;
-    private JLabel moonsLbl;
-    private JLabel yearLbl;
-    private JLabel distanceLbl;
+    private final Font font1 = new Font ("Nasalization Rg", Font.BOLD,14);
+    private final Font font2 = new Font ("Nasalization Rg", Font.PLAIN,12);
 
-    private JLabel massInfo;
-    private JLabel sizeInfo;
-    private JLabel moonsInfo;
-    private JLabel yearInfo;
-    private JLabel distanceInfo;
+    private JTable table;
+    private Object[] cols;
 
+    /**
+     * @author Manna Manojlovic
+     * Constructor
+     */
     public InfoBoxPanel()
     {
-        setupPanel();
+        setupTable();
     }
 
-    public void setupPanel()
+    /**
+     * @author Manna Manojlovic
+     * Setting up the table with columns for mass, size, year length, distance from sun
+     */
+    public void setupTable()
     {
-        GridBagLayout layout = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
-        setLayout(layout);
+        JPanel pnlTable = new JPanel();
+        pnlTable.setBackground(Color.black);
 
-        massLbl = new JLabel("Mass");
-        sizeLbl = new JLabel("Circumference");
-        moonsLbl = new JLabel("Number of moons");
-        yearLbl = new JLabel("Length of year");
-        distanceLbl = new JLabel("Distance from Sun");
+        table = new JTable();
 
-        massInfo = new JLabel("");
-        sizeInfo = new JLabel("");
-        moonsInfo = new JLabel("");
-        yearInfo = new JLabel("");
-        distanceInfo = new JLabel("");
+        JScrollPane s = new JScrollPane(table);
 
-        add(massLbl, c);
-        add(sizeLbl, c);
-        add(moonsLbl, c);
-        add(yearLbl, c);
-        add(distanceLbl, c);
+        cols = new String[]{"Mass", "Size", "Moons", "Year Length", "Distance From Sun"};
+
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setColumnIdentifiers(cols);
+
+        table.getColumnModel().getColumn(0).setPreferredWidth(5);
+        table.getColumnModel().getColumn(1).setPreferredWidth(5);
+        table.getColumnModel().getColumn(2).setPreferredWidth(10);
+        table.getColumnModel().getColumn(3).setPreferredWidth(85);
+        table.getColumnModel().getColumn(4).setPreferredWidth(115);
+
+        table.setShowGrid(false);
+        table.setRowMargin(0);
+        table.setShowVerticalLines(false);
+        table.setShowHorizontalLines(false);
+        table.setIntercellSpacing(new Dimension(40, 0));
+
+        table.setPreferredScrollableViewportSize(new Dimension(500,50));
+        table.setFillsViewportHeight(true);
+
+        table.getTableHeader().setFont(font1);
+        table.getTableHeader().setOpaque(false);
+        table.getTableHeader().setBackground(Color.black);
+        table.getTableHeader().setForeground(Color.WHITE);
+
+        table.setFont(font2);
+        table.setBackground(Color.black);
+        table.setForeground(Color.orange);
+        table.setRowHeight(25);
+
+
+        pnlTable.add (s);
+
+        addRows();
+
+        add(s,BorderLayout.CENTER);
+
+    }
+
+    /**
+     * @Author Manna Manojlovic
+     * For now hard coded info for testing for the rows
+     */
+
+    public void addRows()
+    {
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        ///if planet equals == Earth, Mercury bla bla, set rows genom nedan beroende på vilken planet det är.
+        var colArr = new String[5];
+        colArr[0] = "100";        //planet.getMass() eller nåt
+        colArr[1] = "strl";         //getCircumference osv.
+        colArr[2] = "14";
+        colArr[3] = "12";
+        colArr[4] = "54km";
+
+        model.addRow(colArr);
     }
 }
