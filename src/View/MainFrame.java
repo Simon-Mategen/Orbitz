@@ -314,7 +314,8 @@ public class MainFrame extends JFrame {
         {
             double delta = event.getDeltaY();
             root.translateZProperty().set(root.getTranslateZ() + delta);
-            zoomingThing();
+            printPlanetCurrentPosition();
+            printPlanetCurrentPosition();
         });
 
         scene.addEventHandler(KeyEvent.KEY_PRESSED, event ->
