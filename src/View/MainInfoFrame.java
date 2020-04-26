@@ -33,6 +33,7 @@ public class MainInfoFrame extends JFrame
     public MainInfoFrame (Planet planet)
     {
        // this.controller = controller;
+
         this.planet = planet;
         frame(planet);
 
@@ -42,6 +43,7 @@ public class MainInfoFrame extends JFrame
     {
         setLayout(new BorderLayout());
         panel = new MainInfoPanel (planet);
+
 
         setSize (1000, 600);
         setVisible (true);
