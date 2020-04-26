@@ -17,6 +17,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
+import javafx.scene.transform.Transform;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -24,10 +25,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.Random;
+import java.util.*;
 
 /**
  * MainFrame is the main window which contains various  graphical components
@@ -177,7 +175,6 @@ public class MainFrame extends JFrame {
         add(orbitPanel, BorderLayout.WEST);
         add(overheadPanel, BorderLayout.NORTH);
 
-
     }
 
     /**
@@ -236,6 +233,7 @@ public class MainFrame extends JFrame {
             }
 
         };
+
         for (int i = 0; i < planetArrayList.size(); i++) {
             planetArrayList.get(i).getSphereFromPlanet().addEventHandler
                     (javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
@@ -298,9 +296,11 @@ public class MainFrame extends JFrame {
      * Sets the viewing perspective and enables a zoom-function
      *
      * @author Lanna Maslo
+     * @author Simon Måtegen
      * @version 1.0
      */
-    public void setupCamera(Scene scene) {
+    public void setupCamera(Scene scene)
+    {
         PerspectiveCamera camera = new PerspectiveCamera(true);
         camera.setTranslateZ(-1000);
         camera.setNearClip(0.001);
@@ -314,6 +314,7 @@ public class MainFrame extends JFrame {
         {
             double delta = event.getDeltaY();
             root.translateZProperty().set(root.getTranslateZ() + delta);
+            zoomingThing();
         });
 
         scene.addEventHandler(KeyEvent.KEY_PRESSED, event ->
@@ -327,6 +328,28 @@ public class MainFrame extends JFrame {
                     break;
             }
         });
+    }
+
+    private void printPlanetCurrentPosition()//To be used during zooming
+    {
+        LinkedList<double[]> planetXYValues = new LinkedList<>(); //Planet XY value in order from first planet to last
+
+        for (int i = 1; i <= guiPlanetList.size(); i++) //Gets the current X and Y values for the planets
+        {
+            double[] tempArray = new double[2];
+            Transform transform = root.getChildren().get(root.getChildren().size()-i).getLocalToParentTransform();
+
+            tempArray[0] = transform.getTx();
+            tempArray[1] = transform.getTy();
+
+            planetXYValues.addFirst(tempArray);
+        }
+
+        System.out.println(planetXYValues);
+
+
+        System.out.println("Klar");
+
     }
 
     /**
