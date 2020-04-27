@@ -15,7 +15,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.media.MediaPlayer;
 
     public class MediaBar extends HBox
-    { 
+    {
 
         private Slider timeSlider = new Slider(); // Slider for time
         private Slider volumeSlider = new Slider(); // Slider for volume
@@ -30,7 +30,7 @@ import javafx.scene.media.MediaPlayer;
 
             setAlignment(Pos.CENTER); // setting the HBox to center
             setPadding(new Insets(5, 10, 5, 10));
-            // Settih the preference for volume bar
+            // Set the preference for volume bar
             volumeSlider.setPrefWidth(70);
             volumeSlider.setMinWidth(30);
             volumeSlider.setValue(100);
@@ -73,7 +73,7 @@ import javafx.scene.media.MediaPlayer;
                 }
             });
 
-            // Providing functionality to time slider
+
             player.currentTimeProperty().addListener(new InvalidationListener()
             {
                 public void invalidated(Observable ov)
@@ -82,7 +82,7 @@ import javafx.scene.media.MediaPlayer;
                 }
             });
 
-            // Inorder to jump to the certain part of video
+            // jump by clicking
             timeSlider.valueProperty().addListener(new InvalidationListener() {
                 public void invalidated(Observable ov)
                 {
@@ -94,7 +94,7 @@ import javafx.scene.media.MediaPlayer;
                 }
             });
 
-            // providing functionality to volume slider
+            // volume control
             volumeSlider.valueProperty().addListener(new InvalidationListener() {
                 public void invalidated(Observable ov)
                 {

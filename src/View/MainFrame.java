@@ -2,6 +2,7 @@ package View;
 
 import Controller.Controller;
 import Model.Planet;
+import Model.Song;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
@@ -50,14 +51,20 @@ public class MainFrame extends JFrame {
     private JPanel overheadPanel;
     private MainInfoFrame mainInfoFrame;
     private LoadingScreen loadingScreen = new LoadingScreen();
+    private JPanel pnlNorth;
+    private JPanel pnlNorthNorth;
+    private JPanel pnlNorthSouth;
 
     private StackPane root;
     private JSlider timeSlider;
     private JSlider musicSlider;
     private JButton changeBackgroundBtn = new JButton("Change Background");
+    private JComboBox<Song> cbMusic;
+    private JLabel lblMusic;
 
     private ChangeBackgroundListener changeBackgroundListener;
     private SliderListener sliderListener;
+    private ComboBoxListener comboBoxListener;
 
     private Controller controller;
 
@@ -67,6 +74,7 @@ public class MainFrame extends JFrame {
     private double startDragY;
     private double orgTransX;
     private double orgTransY;
+    Song[] songs;
 
     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
@@ -86,6 +94,10 @@ public class MainFrame extends JFrame {
         orbitPanel = new JFXPanel();
         mediaPanel = new JFXPanel();
         overheadPanel = new JPanel();
+        pnlNorth = new JPanel(new BorderLayout());
+
+        songs = initSongs();
+
         sliderListener = new SliderListener();
         timeSlider = new JSlider();
         musicSlider = new JSlider();
@@ -95,7 +107,9 @@ public class MainFrame extends JFrame {
         titleLabel.setText("Orbitz");
         titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         titleLabel.setOpaque(true);
-
+        comboBoxListener = new ComboBoxListener();
+        cbMusic = new JComboBox<Song>(songs);
+        cbMusic.addItemListener(comboBoxListener);
 
         changeBackgroundListener = new ChangeBackgroundListener();
 
@@ -158,31 +172,55 @@ public class MainFrame extends JFrame {
 
         timeSlider.setLabelTable(labelTable);
 
-        timeSlider.setPreferredSize(new Dimension(400, 50));
+        timeSlider.setPreferredSize(new Dimension(600, 50));
         timeSlider.setPaintTicks(true);
         timeSlider.setMajorTickSpacing(10);
         timeSlider.setForeground(Color.BLUE);
         timeSlider.setSnapToTicks(true);
         timeSlider.addMouseListener(sliderListener);
 
+        pnlNorth.setPreferredSize(new Dimension(1400, 150));
+        pnlNorth.setOpaque(false);
         // Sets up overheadPanel
         overheadPanel.setLayout(new BorderLayout());
-        overheadPanel.setPreferredSize(new Dimension(1400, 150));
+        overheadPanel.setPreferredSize(new Dimension(1400, 100));
+        overheadPanel.setSize(new Dimension(1400, 100));
         //overheadPanel.setBackground(Color.DARK_GRAY);
         //overheadPanel.setForeground(Color.BLACK);
         overheadPanel.add(timeSlider, BorderLayout.EAST);
         //overheadPanel.add(musicSlider, BorderLayout.CENTER);
         changeBackgroundBtn.setPreferredSize(new Dimension(300, 60));
-        overheadPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+       // overheadPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         overheadPanel.add(titleLabel, BorderLayout.WEST);
-        mediaPanel.setPreferredSize(new Dimension(1400, 50));
-        mediaPanel.setSize(new Dimension(1400, 50));
-        overheadPanel.add(mediaPanel, BorderLayout.SOUTH);
+
+        cbMusic.setPreferredSize(new Dimension(400, 50));
+        cbMusic.setFont(new Font("Earth Orbiter Bold", Font.PLAIN, 18));
+        lblMusic = new JLabel("Now playing...");
+        lblMusic.setPreferredSize(new Dimension(200, 50));
+        mediaPanel.setPreferredSize(new Dimension(1000,50));
+        mediaPanel.add(cbMusic);
+
+        pnlNorthSouth = new JPanel(new BorderLayout());
+        pnlNorthNorth = new JPanel(new BorderLayout());
+        pnlNorthNorth.setPreferredSize(new Dimension(1400, 100));
+        pnlNorthSouth.setPreferredSize(new Dimension(1400, 50));
 
         changeBackgroundBtn.addActionListener(changeBackgroundListener);
+        add(pnlNorth, BorderLayout.NORTH);
+        pnlNorth.add(pnlNorthNorth, BorderLayout.NORTH);
+        pnlNorth.add(pnlNorthSouth, BorderLayout.SOUTH);
 
-        add(orbitPanel, BorderLayout.WEST);
+        pnlNorthNorth.add(overheadPanel, BorderLayout.CENTER);
+        pnlNorthSouth.add(mediaPanel, BorderLayout.WEST);
+        pnlNorthSouth.add(cbMusic,  BorderLayout.CENTER);
+        add(orbitPanel, BorderLayout.SOUTH);
+        /*
         add(overheadPanel, BorderLayout.NORTH);
+        add(mediaPanel, BorderLayout.NORTH);
+
+         */
+
+
 
     }
 
@@ -252,21 +290,32 @@ public class MainFrame extends JFrame {
         return scene;
     }
 
-    private Scene createMedia()
+    public Scene createMedia()
     {
         StackPane mediaPane = new StackPane();
         Scene scene = new Scene(mediaPane, mediaPanel.getWidth(), mediaPanel.getHeight());
-        initMusic(mediaPane);
+        initMusic(mediaPane, songs[0]);
         return scene;
     }
 
-    public void initMusic(StackPane mediaPane)
+    private Song[] initSongs()
     {
-        String musicFile = "sound/spacesound.mp3";
+        int songs = 3;
+        Song[] tempSongs = new Song[songs];
+        tempSongs[0] = new Song("Emil Rottmayer","Descend", "sound/Emil Rottmayer - Descend.mp3");
+        tempSongs[1] = new Song("Mike Noise","Low Earth Orbit", "sound/Mike Noise Low Earth Orbit.mp3");
+        tempSongs[2] = new Song("Daniel Rosenfeld","Stranger Things  Theme Songx","sound/Stranger Things Theme Songx.mp3");
+        return tempSongs;
+    }
+
+    public void initMusic(StackPane mediaPane, Song song)
+    {
+        String musicFile = song.getPath();
         Media sound = new Media(new File(musicFile).toURI().toString());
         MediaPlayer player = new MediaPlayer(sound);
         MediaBar mediaBar = new MediaBar(player);
-        mediaBar.setMaxSize(mediaPane.getWidth(),  mediaPane.getHeight());
+        //mediaBar.setMaxSize();
+        mediaBar.setPrefSize(mediaPane.getWidth(),  mediaPane.getHeight());
         mediaPane.getChildren().add(mediaBar);
         /*player.setCycleCount(MediaPlayer.INDEFINITE);
         musicSlider.setValue((int)player.getVolume() * 20);
@@ -596,6 +645,18 @@ public class MainFrame extends JFrame {
         catch (Exception e)
         {
             System.out.println(e);
+        }
+    }
+
+    private class ComboBoxListener implements ItemListener
+    {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+            {
+                Object item = event.getItem();
+                initFXMedia(mediaPanel);
+            }
         }
     }
 }
