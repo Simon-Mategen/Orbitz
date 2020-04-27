@@ -75,7 +75,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     public ImageGalleryPanel(Planet planet)
     {
-        infoPanel = new InfoBoxPanel();
+        infoPanel = new InfoBoxPanel(planet);
         createPanel(planet);
         addImages();
     }
