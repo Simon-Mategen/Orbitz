@@ -20,8 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.transform.Transform;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -48,6 +46,7 @@ public class MainFrame extends JFrame {
     private ArrayList<Planet> guiPlanetList;
 
     private JFXPanel orbitPanel;
+    private JFXPanel mediaPanel;
     private JPanel overheadPanel;
     private MainInfoFrame mainInfoFrame;
     private LoadingScreen loadingScreen = new LoadingScreen();
@@ -69,8 +68,6 @@ public class MainFrame extends JFrame {
     private double orgTransX;
     private double orgTransY;
 
-    ArrayList<Font> fonts;
-
     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
 
@@ -87,6 +84,7 @@ public class MainFrame extends JFrame {
         initFonts();
         guiPlanetList = controller.getPlanetArrayList(); // copy the planet list from controller
         orbitPanel = new JFXPanel();
+        mediaPanel = new JFXPanel();
         overheadPanel = new JPanel();
         sliderListener = new SliderListener();
         timeSlider = new JSlider();
@@ -98,12 +96,20 @@ public class MainFrame extends JFrame {
         titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         titleLabel.setOpaque(true);
 
+
         changeBackgroundListener = new ChangeBackgroundListener();
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                initFX(orbitPanel); // starts on the Java FX thread
+                initFxOrbit(orbitPanel); // starts on the Java FX thread
+            }
+        });
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                initFXMedia(mediaPanel); // starts on the Java FX thread
             }
         });
         // Sets up the JFrame
@@ -161,14 +167,17 @@ public class MainFrame extends JFrame {
 
         // Sets up overheadPanel
         overheadPanel.setLayout(new BorderLayout());
-        overheadPanel.setPreferredSize(new Dimension(1400, 100));
-        overheadPanel.setBackground(Color.DARK_GRAY);
+        overheadPanel.setPreferredSize(new Dimension(1400, 150));
+        //overheadPanel.setBackground(Color.DARK_GRAY);
         //overheadPanel.setForeground(Color.BLACK);
         overheadPanel.add(timeSlider, BorderLayout.EAST);
-        overheadPanel.add(musicSlider, BorderLayout.CENTER);
+        //overheadPanel.add(musicSlider, BorderLayout.CENTER);
         changeBackgroundBtn.setPreferredSize(new Dimension(300, 60));
         overheadPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         overheadPanel.add(titleLabel, BorderLayout.WEST);
+        mediaPanel.setPreferredSize(new Dimension(1400, 50));
+        mediaPanel.setSize(new Dimension(1400, 50));
+        overheadPanel.add(mediaPanel, BorderLayout.SOUTH);
 
         changeBackgroundBtn.addActionListener(changeBackgroundListener);
 
@@ -186,24 +195,24 @@ public class MainFrame extends JFrame {
      * @author Lanna Maslo
      * @version 1.0
      */
-    private void initFX(JFXPanel fxPanel) {
+    private void initFxOrbit(JFXPanel fxPanel) {
         // This method is invoked on JavaFX thread
         Scene scene = createScene(guiPlanetList); // default background
         fxPanel.setScene(scene);
+    }
 
-        String musicFile = "sound/spacesound.mp3";
-        Media sound = new Media(new File(musicFile).toURI().toString());
-        MediaPlayer player = new MediaPlayer(sound);
-        player.setCycleCount(MediaPlayer.INDEFINITE);
-        musicSlider.setValue((int)player.getVolume() * 20);
-
-        musicSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                double value = (double)musicSlider.getValue() / 20;
-                player.setVolume(value);
-            }
-        });
-        player.play();
+    /**
+     * Creates a new scene from createScene and adds it to the Java FX window
+     * Sets background music
+     *
+     * @param fxPanel The JavaFX panel to be created
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
+    private void initFXMedia(JFXPanel fxPanel) {
+        // This method is invoked on JavaFX thread
+        Scene scene = createMedia(); // default background
+        fxPanel.setScene(scene);
     }
 
     /**
@@ -214,7 +223,8 @@ public class MainFrame extends JFrame {
      * @author Manna Manojlovic
      * @version 1.0
      */
-    private Scene createScene(ArrayList<Planet> planetArrayList) {
+    private Scene createScene(ArrayList<Planet> planetArrayList)
+    {
         root = new StackPane();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         root.setBackground(null);
@@ -225,7 +235,6 @@ public class MainFrame extends JFrame {
         placePlanets(root, planetArrayList);
         paintPlanets();
         startOrbits(planetArrayList);
-
         EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent mouseEvent) {
@@ -241,6 +250,35 @@ public class MainFrame extends JFrame {
         }
 
         return scene;
+    }
+
+    private Scene createMedia()
+    {
+        StackPane mediaPane = new StackPane();
+        Scene scene = new Scene(mediaPane, mediaPanel.getWidth(), mediaPanel.getHeight());
+        initMusic(mediaPane);
+        return scene;
+    }
+
+    public void initMusic(StackPane mediaPane)
+    {
+        String musicFile = "sound/spacesound.mp3";
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        MediaPlayer player = new MediaPlayer(sound);
+        MediaBar mediaBar = new MediaBar(player);
+        mediaBar.setMaxSize(mediaPane.getWidth(),  mediaPane.getHeight());
+        mediaPane.getChildren().add(mediaBar);
+        /*player.setCycleCount(MediaPlayer.INDEFINITE);
+        musicSlider.setValue((int)player.getVolume() * 20);
+        musicSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+                double value = (double)musicSlider.getValue() / 20;
+                player.setVolume(value);
+            }
+        });
+
+         */
+        player.play();
     }
 
     /**
