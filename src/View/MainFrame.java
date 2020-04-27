@@ -316,7 +316,11 @@ public class MainFrame extends JFrame {
         MediaBar mediaBar = new MediaBar(player);
         //mediaBar.setMaxSize();
         mediaBar.setPrefSize(mediaPane.getWidth(),  mediaPane.getHeight());
-        mediaPane.getChildren().add(mediaBar);
+        mediaPane.getChildren().add(0, mediaBar);
+
+
+
+        // old volume
         /*player.setCycleCount(MediaPlayer.INDEFINITE);
         musicSlider.setValue((int)player.getVolume() * 20);
         musicSlider.addChangeListener(new ChangeListener() {
@@ -655,7 +659,7 @@ public class MainFrame extends JFrame {
             if (event.getStateChange() == ItemEvent.SELECTED)
             {
                 Object item = event.getItem();
-                initFXMedia(mediaPanel);
+                //TODO
             }
         }
     }
