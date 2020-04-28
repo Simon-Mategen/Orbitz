@@ -49,6 +49,11 @@ public class InfoBoxPanel extends JPanel
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setColumnIdentifiers(cols);
 
+        table.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
+        table.getColumnModel().getColumn(1).setCellRenderer(new CellRenderer());
+        table.getColumnModel().getColumn(2).setCellRenderer(new CellRenderer());
+        table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
+
         //setting the column width for each column
         table.getColumnModel().getColumn(0).setPreferredWidth(20);
         table.getColumnModel().getColumn(1).setPreferredWidth(20);
@@ -80,11 +85,12 @@ public class InfoBoxPanel extends JPanel
         table.setFont(font2);
         table.setBackground(Color.black);
         table.setForeground(Color.yellow);
-        table.setRowHeight(50);
+        table.setRowHeight(150);
 
         addRows();                       //adding the rows to the columns respectively
 
         add(s,BorderLayout.CENTER);     //placing the table on the layout
+
 
     }
 
@@ -119,7 +125,7 @@ public class InfoBoxPanel extends JPanel
             colArr[0] = "3 days (Moon)";
             colArr[1] = "2019, Chandrayaan2";
             colArr[2] = "2024, NASA";
-            colArr[3] = "No";
+            colArr[3] = "Yes";
         }
 
         else if (planet.getName().equals("Mars"))

@@ -69,10 +69,8 @@ public class SwenTheAlien extends JPanel
         Image swenImage = new Image("Images/Swen.png");
         ImageView swen = new ImageView(swenImage);
 
-//      Image tip = new Image("Images/tip2.jpg");
-        Tooltip tooltip = new Tooltip("CLICK ME!");
+        Tooltip tooltip = new Tooltip("Click me!");
         tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
-//      tooltip.setGraphic(new ImageView(tip));
         tooltip.setShowDelay(Duration.millis(1));               //sets time before text appears after hovering over image
 
         swen.setPickOnBounds(true);
@@ -86,7 +84,6 @@ public class SwenTheAlien extends JPanel
         swenRoot.getChildren().add(swen);
 
         Scene swenScene = new Scene(swenRoot);
-
 
         swenFX.setPreferredSize(new Dimension(171, 220));
         swenScene.setFill(new javafx.scene.paint.Color(0, 0, 0, 1));
