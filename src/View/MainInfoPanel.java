@@ -107,7 +107,7 @@ public class MainInfoPanel extends JPanel
 
         add (imgPanel, BorderLayout.NORTH);
         add (swenPanel, BorderLayout.EAST);
-        add(planetaryPanel, BorderLayout.WEST);
+        add (planetaryPanel, BorderLayout.WEST);
         setBackground(Color.BLACK);
 
         planetSphere = new Sphere(80);
