@@ -10,7 +10,8 @@ import java.awt.*;
  * @Author Manna Manojlovic
  *
  * This class is the table with information about the selected planet.
- * Shows information about planet's mass, size, number of moons, length of year in earth years, distance from sun
+ * Shows information about travel time from earth, last visit, next visit and possibility of life
+ * for each planet in the solar system
  */
 public class InfoBoxPanel extends JPanel
 {
@@ -25,6 +26,7 @@ public class InfoBoxPanel extends JPanel
     /**
      * @author Manna Manojlovic
      * Constructor
+     * @param planet - takes Planet as parameter so each planet's individual data can be set
      */
     public InfoBoxPanel(Planet planet)
     {
@@ -34,6 +36,7 @@ public class InfoBoxPanel extends JPanel
 
     /**
      * @author Manna Manojlovic
+     *
      * Setting up the table with columns for travel time, latest visit, next visit and possibility of life.
      */
     public void setupTable()
@@ -49,6 +52,7 @@ public class InfoBoxPanel extends JPanel
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setColumnIdentifiers(cols);
 
+        //rendering the rows so that the data fits the rows - DOES NOT WORK!!
         table.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
         table.getColumnModel().getColumn(1).setCellRenderer(new CellRenderer());
         table.getColumnModel().getColumn(2).setCellRenderer(new CellRenderer());
@@ -65,8 +69,6 @@ public class InfoBoxPanel extends JPanel
         table.setRowMargin(0);
         table.setShowVerticalLines(false);
         table.setShowHorizontalLines(false);
-
-        //TODO custom cell renderer to remove grid lines between the columns for a modern look
 
         //setting the margin for where the data begins to display
         table.setIntercellSpacing(new Dimension(30, 0));
@@ -90,15 +92,14 @@ public class InfoBoxPanel extends JPanel
         addRows();                       //adding the rows to the columns respectively
 
         add(s,BorderLayout.CENTER);     //placing the table on the layout
-
-
     }
 
     /**
      * @Author Manna Manojlovic
-     * Hard coded info for each planet
+     *
+     * Method for adding rows to table under respective column.
+     * Hard coded info for each planet.
      */
-
     public void addRows()
     {
         DefaultTableModel model = (DefaultTableModel)table.getModel();
