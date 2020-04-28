@@ -169,6 +169,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
                 addImage("src/Images/venus2.jpg");
                 addImage("src/Images/venus3.jpg");
                 addImage("src/Images/venus4.jpg");
+                addImage("src/Images/venus5.jpg");
             }
             else if (planet.getName().equals("Earth"))
             {
@@ -176,6 +177,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
                 addImage("src/Images/earth2.jpg");
                 addImage("src/Images/earth3.jpg");
                 addImage("src/Images/earth4.jpg");
+                addImage("src/Images/earth5.jpg");
             }
             else if (planet.getName().equals("Mars"))
             {
@@ -197,21 +199,22 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
             }
             else if (planet.getName().equals("Saturn"))
             {
-                addImage("src/Images/saturnFront.jpg");
-                addImage("src/Images/saturnMoons.jpg");
-                addImage("src/Images/saturnRings.jpg");
-                addImage("src/Images/saturnWhole.png");
+                addImage("src/Images/saturn1.jpg");
+                addImage("src/Images/saturn2.jpg");
+                addImage("src/Images/saturn3.jpg");
+                addImage("src/Images/saturn4.jpg");
             }
             else if (planet.getName().equals("Uranus"))
             {
-                addImage("src/Images/uranusWhole.jpg");
+                addImage("src/Images/uranus1.jpg");
                 addImage("src/Images/uranusFront.jpg");
                 addImage("src/Images/uranusSide.jpg");
             }
             else if (planet.getName().equals("Neptune"))
             {
-                addImage("src/Images/neptuneDramatic.jpg");
-                addImage("src/Images/neptuneWhole.jpg");
+                addImage("src/Images/neptune1.jpg");
+                addImage("src/Images/neptune2.jpg");
+                addImage("src/Images/neptune3.jpg");
             }
             else
             {
