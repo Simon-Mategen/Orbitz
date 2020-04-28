@@ -59,12 +59,10 @@ public class MainFrame extends JFrame {
     private JSlider timeSlider;
     private JSlider musicSlider;
     private JButton changeBackgroundBtn = new JButton("Change Background");
-    private JComboBox<Song> cbMusic;
     private JLabel lblMusic;
 
     private ChangeBackgroundListener changeBackgroundListener;
     private SliderListener sliderListener;
-    private ComboBoxListener comboBoxListener;
 
     private Controller controller;
 
@@ -74,7 +72,6 @@ public class MainFrame extends JFrame {
     private double startDragY;
     private double orgTransX;
     private double orgTransY;
-    Song[] songs;
 
     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
@@ -87,7 +84,8 @@ public class MainFrame extends JFrame {
      * @author Simon Måtegen
      * @version 1.0
      */
-    public MainFrame(Controller inController) {
+    public MainFrame(Controller inController)
+    {
         this.controller = inController;
         initFonts();
         guiPlanetList = controller.getPlanetArrayList(); // copy the planet list from controller
@@ -95,8 +93,6 @@ public class MainFrame extends JFrame {
         mediaPanel = new JFXPanel();
         overheadPanel = new JPanel();
         pnlNorth = new JPanel(new BorderLayout());
-
-        songs = initSongs();
 
         sliderListener = new SliderListener();
         timeSlider = new JSlider();
@@ -107,9 +103,6 @@ public class MainFrame extends JFrame {
         titleLabel.setText("Orbitz");
         titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         titleLabel.setOpaque(true);
-        comboBoxListener = new ComboBoxListener();
-        cbMusic = new JComboBox<Song>(songs);
-        cbMusic.addItemListener(comboBoxListener);
 
         changeBackgroundListener = new ChangeBackgroundListener();
 
@@ -130,7 +123,6 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
-        setVisible(true);
         setTitle("Orbitz");
 
         ImageIcon solarSystem = new ImageIcon("src/Images/orbitz.png");
@@ -193,12 +185,9 @@ public class MainFrame extends JFrame {
        // overheadPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         overheadPanel.add(titleLabel, BorderLayout.WEST);
 
-        cbMusic.setPreferredSize(new Dimension(400, 50));
-        cbMusic.setFont(new Font("Earth Orbiter Bold", Font.PLAIN, 18));
         lblMusic = new JLabel("Now playing...");
         lblMusic.setPreferredSize(new Dimension(200, 50));
         mediaPanel.setPreferredSize(new Dimension(1000,50));
-        mediaPanel.add(cbMusic);
 
         pnlNorthSouth = new JPanel(new BorderLayout());
         pnlNorthNorth = new JPanel(new BorderLayout());
@@ -212,16 +201,13 @@ public class MainFrame extends JFrame {
 
         pnlNorthNorth.add(overheadPanel, BorderLayout.CENTER);
         pnlNorthSouth.add(mediaPanel, BorderLayout.WEST);
-        pnlNorthSouth.add(cbMusic,  BorderLayout.CENTER);
         add(orbitPanel, BorderLayout.SOUTH);
         /*
         add(overheadPanel, BorderLayout.NORTH);
         add(mediaPanel, BorderLayout.NORTH);
 
          */
-
-
-
+        setVisible(true);
     }
 
     /**
@@ -294,31 +280,15 @@ public class MainFrame extends JFrame {
     {
         StackPane mediaPane = new StackPane();
         Scene scene = new Scene(mediaPane, mediaPanel.getWidth(), mediaPanel.getHeight());
-        initMusic(mediaPane, songs[0]);
+        initMusic(mediaPane);
         return scene;
     }
 
-    private Song[] initSongs()
+
+    public void initMusic(StackPane mediaPane)
     {
-        int songs = 3;
-        Song[] tempSongs = new Song[songs];
-        tempSongs[0] = new Song("Emil Rottmayer","Descend", "sound/Emil Rottmayer - Descend.mp3");
-        tempSongs[1] = new Song("Mike Noise","Low Earth Orbit", "sound/Mike Noise Low Earth Orbit.mp3");
-        tempSongs[2] = new Song("Daniel Rosenfeld","Stranger Things  Theme Songx","sound/Stranger Things Theme Songx.mp3");
-        return tempSongs;
-    }
-
-    public void initMusic(StackPane mediaPane, Song song)
-    {
-        String musicFile = song.getPath();
-        Media sound = new Media(new File(musicFile).toURI().toString());
-        MediaPlayer player = new MediaPlayer(sound);
-        MediaBar mediaBar = new MediaBar(player);
-        //mediaBar.setMaxSize();
-        mediaBar.setPrefSize(mediaPane.getWidth(),  mediaPane.getHeight());
-        mediaPane.getChildren().add(0, mediaBar);
-
-
+        MediaBar mediaBar = new MediaBar();
+        mediaPane.getChildren().add(mediaBar);
 
         // old volume
         /*player.setCycleCount(MediaPlayer.INDEFINITE);
@@ -331,7 +301,6 @@ public class MainFrame extends JFrame {
         });
 
          */
-        player.play();
     }
 
     /**
@@ -652,15 +621,4 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private class ComboBoxListener implements ItemListener
-    {
-        @Override
-        public void itemStateChanged(ItemEvent event) {
-            if (event.getStateChange() == ItemEvent.SELECTED)
-            {
-                Object item = event.getItem();
-                //TODO
-            }
-        }
-    }
 }

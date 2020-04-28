@@ -1,95 +1,96 @@
 package View;
 
+import Model.Song;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-    public class MediaBar extends HBox
-    {
+import java.io.File;
 
-        private Slider timeSlider = new Slider(); // Slider for time
+
+public class MediaBar extends HBox
+    {
         private Slider volumeSlider = new Slider(); // Slider for volume
         private Button btnPlay = new Button("||"); // For pausing the player
         private Label lblVolume = new Label("Volume: ");
         private MediaPlayer player;
+        private ComboBox<Song> songComboBox;
+        private Media song;
+        private Song[] songs;
 
-        public MediaBar(MediaPlayer play)
-        { // Default constructor taking
-            // the MediaPlayer object
-            player = play;
-
-            setAlignment(Pos.CENTER); // setting the HBox to center
+        public MediaBar()
+        {
+            songs = initSongs();
+            songComboBox = new ComboBox<Song>(FXCollections.observableArrayList(songs));
+            String path = songs[0].getPath();
+            song = new Media(new File(path).toURI().toString());
+            player = new MediaPlayer(song);
+            setAlignment(Pos.CENTER);
             setPadding(new Insets(5, 10, 5, 10));
             // Set the preference for volume bar
             volumeSlider.setPrefWidth(70);
             volumeSlider.setMinWidth(30);
             volumeSlider.setValue(100);
-            HBox.setHgrow(timeSlider, Priority.ALWAYS);
             btnPlay.setPrefWidth(30);
 
-            // Adding the components to the bottom
 
-            getChildren().add(btnPlay); // Playbutton
-            getChildren().add(timeSlider); // time slider
-            getChildren().add(lblVolume); // volume slider
+            getChildren().add(btnPlay);
+            getChildren().add(lblVolume);
             getChildren().add(volumeSlider);
+            getChildren().add(songComboBox);
 
             // Adding Functionality
             // to play the media player
+
+            EventHandler<ActionEvent> event =
+                    new EventHandler<ActionEvent>() {
+                        public void handle(ActionEvent e)
+                        {
+                            player.pause();
+                            song = new Media(new File(songComboBox.getSelectionModel().getSelectedItem().getPath()).toURI().toString()); // scary code
+                            player = new MediaPlayer(song);
+                            player.play();
+                        }
+                    };
+
+            // Set on action
+            songComboBox.setOnAction(event);
+
             btnPlay.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent e)
                 {
-                    MediaPlayer.Status status = player.getStatus(); // To get the status of Player
-                    if (status == status.PLAYING) {
+                    MediaPlayer.Status status = player.getStatus();
+                    if (status == MediaPlayer.Status.PLAYING) {
 
-                        // If the status is Video playing
                         if (player.getCurrentTime().greaterThanOrEqualTo(player.getTotalDuration())) {
 
-                            // If the player is at the end of video
-                            player.seek(player.getStartTime()); // Restart the video
+
+                            player.seek(player.getStartTime());
                             player.play();
                         }
                         else {
-                            // Pausing the player
+
                             player.pause();
 
                             btnPlay.setText(">");
                         }
-                    } // If the video is stopped, halted or paused
+                    }
                     if (status == MediaPlayer.Status.HALTED || status == MediaPlayer.Status.STOPPED || status == MediaPlayer.Status.PAUSED) {
                         player.play(); // Start the video
                         btnPlay.setText("||");
-                    }
-                }
-            });
-
-
-            player.currentTimeProperty().addListener(new InvalidationListener()
-            {
-                public void invalidated(Observable ov)
-                {
-                    updatesValues();
-                }
-            });
-
-            // jump by clicking
-            timeSlider.valueProperty().addListener(new InvalidationListener() {
-                public void invalidated(Observable ov)
-                {
-                    if (timeSlider.isPressed())
-                    { // It would set the time
-                        // as specified by user by pressing
-                        player.seek(player.getMedia().getDuration().multiply(timeSlider.getValue() / 100));
                     }
                 }
             });
@@ -99,23 +100,22 @@ import javafx.scene.media.MediaPlayer;
                 public void invalidated(Observable ov)
                 {
                     if (volumeSlider.isPressed()) {
-                        player.setVolume(volumeSlider.getValue() / 100); // It would set the volume
-                        // as specified by user by pressing
+                        player.setVolume(volumeSlider.getValue() / 100);
+
                     }
                 }
             });
+            player.play();
         }
 
-        // Outside the constructor
-        protected void updatesValues()
+        private Song[] initSongs()
         {
-            Platform.runLater(new Runnable() {
-                public void run()
-                {
-                    // Updating to the new time value
-                    // This will move the slider while running your video
-                    timeSlider.setValue(player.getCurrentTime().toMillis() / player.getTotalDuration().toMillis() * 100);
-                }
-            });
+            int songs = 3;
+            Song[] tempSongs = new Song[songs];
+            tempSongs[0] = new Song("Emil Rottmayer","Descend", "sound/Emil Rottmayer - Descend.mp3");
+            tempSongs[1] = new Song("Mike Noise","Low Earth Orbit", "sound/Mike Noise Low Earth Orbit.mp3");
+            tempSongs[2] = new Song("Daniel Rosenfeld","Stranger Things  Theme Songx","sound/Stranger Things Theme Songx.mp3");
+            return tempSongs;
         }
+
     }
