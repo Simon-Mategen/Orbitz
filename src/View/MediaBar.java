@@ -17,9 +17,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
 
 import java.io.File;
+
 
 /**
  * A Media Bar that contains the ability to play music, pause it and change the volume
@@ -45,6 +47,7 @@ public class MediaBar extends HBox
             String path = songs[0].getPath();
             song = new Media(new File(path).toURI().toString());
             player = new MediaPlayer(song);
+            player.play();
             setAlignment(Pos.CENTER);
             setPadding(new Insets(5, 10, 5, 10));
             setSpacing(8);
@@ -73,7 +76,11 @@ public class MediaBar extends HBox
                     new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent e)
                         {
-                            player.pause();
+                            System.out.println("Pausing");
+                            if (player.getStatus() == Status.PLAYING) {
+                                player.pause();
+                            }
+                            btnPlay.setText("||");
                             song = new Media(new File(songComboBox.getSelectionModel().getSelectedItem().getPath()).toURI().toString()); // scary code
                             player = new MediaPlayer(song);
                             player.play();
@@ -85,24 +92,26 @@ public class MediaBar extends HBox
             btnPlay.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent e)
                 {
-                    MediaPlayer.Status status = player.getStatus();
-                    if (status == MediaPlayer.Status.PLAYING) {
+                    Status status = player.getStatus(); // To get the status of Player
+                    if (status == status.PLAYING) {
 
+                        // If the status is Video playing
                         if (player.getCurrentTime().greaterThanOrEqualTo(player.getTotalDuration())) {
 
-                            player.seek(player.getStartTime());
+                            // If the player is at the end of video
+                            player.seek(player.getStartTime()); // Restart the video
                             player.play();
                         }
                         else {
-
+                            // Pausing the player
                             player.pause();
 
                             btnPlay.setText(">");
                         }
-                    }
-                    if (status == MediaPlayer.Status.HALTED || status == MediaPlayer.Status.STOPPED || status == MediaPlayer.Status.PAUSED) {
-                        player.play();
-                        btnPlay.setText("||");
+                    } // If the video is stopped, halted or paused
+                    if (status == Status.HALTED || status == Status.STOPPED || status == Status.PAUSED) {
+                        player.play(); // Start the video
+                       btnPlay.setText("||");
                     }
                 }
             });
@@ -117,7 +126,6 @@ public class MediaBar extends HBox
                     }
                 }
             });
-            player.play();
         }
 
         private Song[] initSongs()

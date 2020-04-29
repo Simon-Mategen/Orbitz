@@ -58,6 +58,7 @@ public class MainFrame extends JFrame {
     private JComboBox<Theme> cbThemes;
     private Theme[] themes;
     private JLabel lblTheme;
+    ArrayList<Planet> newPlanets;
 
     private SliderListener sliderListener;
     private ComboBoxThemeListener comboBoxThemeListener;
@@ -104,19 +105,6 @@ public class MainFrame extends JFrame {
         titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         titleLabel.setOpaque(true);
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                initFxOrbit(orbitPanel); // starts on the Java FX thread
-            }
-        });
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                initFXMedia(mediaPanel); // starts on the Java FX thread
-            }
-        });
         // Sets up the JFrame
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -197,6 +185,15 @@ public class MainFrame extends JFrame {
 
         currentTheme = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
         setColors(currentTheme);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run()
+            {
+                initFXMedia(mediaPanel);
+                initFxOrbit(orbitPanel);
+            }
+        });
         setVisible(true);
     }
 
@@ -326,6 +323,7 @@ public class MainFrame extends JFrame {
             planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(currentTheme.getSecondaryPaint()); // Paint ellipse based on theme
             StackPane.setMargin(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
                     new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord() * 2));
+            System.out.println(currentTheme.toString());
         }
     }
 
@@ -446,7 +444,7 @@ public class MainFrame extends JFrame {
 
 
                 //Planets that move 10 times slower for every click on the button
-                ArrayList<Planet> newPlanets = controller.createPlanetArray(inDurationModifier);
+                newPlanets = controller.createPlanetArray(inDurationModifier);
                 orbitPanel.setScene(createScene(newPlanets));
 
                 for (int i = 0; i < newPlanets.size(); i++) {
@@ -522,7 +520,6 @@ public class MainFrame extends JFrame {
         Random randomX = new Random();
         Random randomY = new Random();
         Random randomZ = new Random();
-        Random randomColor = new Random();
         int x;
         int y;
         int z;
@@ -607,8 +604,6 @@ public class MainFrame extends JFrame {
         timeSlider.setBackground(null);
         timeSlider.setOpaque(true);
         lblTheme.setForeground(theme.getMainColor());
-        cbThemes.setForeground(theme.getMainColor());
-        cbThemes.setBackground(theme.getSecondaryColor());
 
         // Time slider configuration
         JLabel lbl1 = new JLabel("Real speed");
@@ -626,17 +621,22 @@ public class MainFrame extends JFrame {
         labelTable.put(10, lbl2);
         labelTable.put(20, lbl3);
         labelTable.put(30, lbl4);
-
         timeSlider.setLabelTable(labelTable);
 Platform.runLater(new Runnable() {
     @Override
     public void run()
     {
-        initFXMedia(mediaPanel);
-        initFxOrbit(orbitPanel);
+
+        for (int i = 0; i < guiPlanetList.size() ; i++)
+        {
+            guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(theme.getSecondaryPaint());
+            if (newPlanets != null) // if the scene never have been changed newPlanets will throw nullpointer
+            {
+                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(theme.getSecondaryPaint());
+            }
+        }
     }
 });
-
 
     }
 
@@ -647,7 +647,9 @@ Platform.runLater(new Runnable() {
         {
             if(event.getStateChange() == ItemEvent.SELECTED)
             {
+                loadingScreen.setVisible(true);
                 setColors((Theme)event.getItem());
+                loadingScreen.setVisible(false);
             }
         }
     }
