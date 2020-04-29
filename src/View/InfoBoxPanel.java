@@ -16,7 +16,7 @@ import java.awt.*;
 public class InfoBoxPanel extends JPanel
 {
     private final Font font1 = new Font ("Nasalization Rg", Font.BOLD,14);
-    private final Font font2 = new Font ("Nasalization Rg", Font.PLAIN,12);
+    private final Font font2 = new Font ("Nasalization Rg", Font.PLAIN,11);
 
     private JTable table;
     private Object[] cols;
@@ -53,16 +53,19 @@ public class InfoBoxPanel extends JPanel
         model.setColumnIdentifiers(cols);
 
         //rendering the rows so that the data fits the rows - DOES NOT WORK!!
-        table.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
+       /* table.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
         table.getColumnModel().getColumn(1).setCellRenderer(new CellRenderer());
         table.getColumnModel().getColumn(2).setCellRenderer(new CellRenderer());
         table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
 
+        */
+
         //setting the column width for each column
-        table.getColumnModel().getColumn(0).setPreferredWidth(20);
-        table.getColumnModel().getColumn(1).setPreferredWidth(20);
-        table.getColumnModel().getColumn(2).setPreferredWidth(20);
+        table.getColumnModel().getColumn(0).setPreferredWidth(18);
+        table.getColumnModel().getColumn(1).setPreferredWidth(32);
+        table.getColumnModel().getColumn(2).setPreferredWidth(12);
         table.getColumnModel().getColumn(3).setPreferredWidth(20);
+        //table.getAutoResizeMode();
 
         //hiding gridlines between rows
         table.setShowGrid(false);
@@ -71,7 +74,7 @@ public class InfoBoxPanel extends JPanel
         table.setShowHorizontalLines(false);
 
         //setting the margin for where the data begins to display
-        table.setIntercellSpacing(new Dimension(30, 0));
+        table.setIntercellSpacing(new Dimension(10, 0));
 
         //setting size for the table
         table.setPreferredScrollableViewportSize(new Dimension(500,100));
@@ -87,7 +90,7 @@ public class InfoBoxPanel extends JPanel
         table.setFont(font2);
         table.setBackground(Color.black);
         table.setForeground(Color.yellow);
-        table.setRowHeight(150);
+        table.setRowHeight(25);
 
         addRows();                       //adding the rows to the columns respectively
 

@@ -6,12 +6,12 @@ import java.awt.*;
 
 public class CellRenderer extends JTextArea implements TableCellRenderer
 {
-    private final Font font1 = new Font ("Nasalization Rg", Font.BOLD,12);
+    private final Font font1 = new Font ("Nasalization Rg", Font.BOLD,11);
 
     public CellRenderer()
     {
         setLineWrap(true);
-        setWrapStyleWord(true);
+        //setWrapStyleWord(true);
         setBackground(Color.black);
         setFont(font1);
         setForeground(Color.yellow);
