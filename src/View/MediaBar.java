@@ -1,6 +1,7 @@
 package View;
 
 import Model.Song;
+import Model.Theme;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -13,14 +14,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 
-
+/**
+ * A Media Bar that contains the ability to play music, pause it and change the volume
+ * Also features a Combo Box for selection of tracks.
+ * @author Albin Ahlbeck
+ */
 public class MediaBar extends HBox
     {
         private Slider volumeSlider = new Slider(); // Slider for volume
@@ -31,29 +36,38 @@ public class MediaBar extends HBox
         private Media song;
         private Song[] songs;
 
-        public MediaBar()
+        public MediaBar(Theme theme)
         {
+            System.out.println(theme.getName());
             songs = initSongs();
             songComboBox = new ComboBox<Song>(FXCollections.observableArrayList(songs));
+            songComboBox.getSelectionModel().select(0);
             String path = songs[0].getPath();
             song = new Media(new File(path).toURI().toString());
             player = new MediaPlayer(song);
             setAlignment(Pos.CENTER);
             setPadding(new Insets(5, 10, 5, 10));
+            setSpacing(8);
             // Set the preference for volume bar
             volumeSlider.setPrefWidth(70);
             volumeSlider.setMinWidth(30);
             volumeSlider.setValue(100);
             btnPlay.setPrefWidth(30);
 
+            lblVolume.setTextFill(theme.getSecondaryPaint());
+            songComboBox.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+
+            btnPlay.setTextFill(theme.getMainPaint());
+            btnPlay.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+
 
             getChildren().add(btnPlay);
             getChildren().add(lblVolume);
             getChildren().add(volumeSlider);
             getChildren().add(songComboBox);
-
-            // Adding Functionality
-            // to play the media player
+            setBackground(Background.EMPTY);
 
             EventHandler<ActionEvent> event =
                     new EventHandler<ActionEvent>() {
@@ -66,7 +80,6 @@ public class MediaBar extends HBox
                         }
                     };
 
-            // Set on action
             songComboBox.setOnAction(event);
 
             btnPlay.setOnAction(new EventHandler<ActionEvent>() {
@@ -76,7 +89,6 @@ public class MediaBar extends HBox
                     if (status == MediaPlayer.Status.PLAYING) {
 
                         if (player.getCurrentTime().greaterThanOrEqualTo(player.getTotalDuration())) {
-
 
                             player.seek(player.getStartTime());
                             player.play();
@@ -89,7 +101,7 @@ public class MediaBar extends HBox
                         }
                     }
                     if (status == MediaPlayer.Status.HALTED || status == MediaPlayer.Status.STOPPED || status == MediaPlayer.Status.PAUSED) {
-                        player.play(); // Start the video
+                        player.play();
                         btnPlay.setText("||");
                     }
                 }

@@ -35,7 +35,7 @@ public class SwenTheAlien extends JPanel
 
     private JTextArea funFactArea;
 
-    private final Font funFactAreaFont = new Font ("Nasalization Rg", Font.PLAIN, 20);
+    private final Font funFactAreaFont = new Font ("Nasalization Rg", Font.PLAIN, 18);
 
     private final Font titleFont = new Font ("Nasalization Rg", Font.PLAIN, 12);
 
