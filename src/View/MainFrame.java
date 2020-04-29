@@ -2,7 +2,7 @@ package View;
 
 import Controller.Controller;
 import Model.Planet;
-import Model.Song;
+import Model.Theme;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
@@ -13,8 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
@@ -46,23 +44,23 @@ public class MainFrame extends JFrame {
 
     private ArrayList<Planet> guiPlanetList;
 
+    private Theme currentTheme;
+
     private JFXPanel orbitPanel;
     private JFXPanel mediaPanel;
     private JPanel overheadPanel;
     private MainInfoFrame mainInfoFrame;
     private LoadingScreen loadingScreen = new LoadingScreen();
-    private JPanel pnlNorth;
-    private JPanel pnlNorthNorth;
-    private JPanel pnlNorthSouth;
 
     private StackPane root;
     private JSlider timeSlider;
     private JSlider musicSlider;
-    private JButton changeBackgroundBtn = new JButton("Change Background");
-    private JLabel lblMusic;
+    private JComboBox<Theme> cbThemes;
+    private Theme[] themes;
+    private JLabel lblTheme;
 
-    private ChangeBackgroundListener changeBackgroundListener;
     private SliderListener sliderListener;
+    private ComboBoxThemeListener comboBoxThemeListener;
 
     private Controller controller;
 
@@ -87,24 +85,24 @@ public class MainFrame extends JFrame {
     public MainFrame(Controller inController)
     {
         this.controller = inController;
+
         initFonts();
         guiPlanetList = controller.getPlanetArrayList(); // copy the planet list from controller
         orbitPanel = new JFXPanel();
         mediaPanel = new JFXPanel();
         overheadPanel = new JPanel();
-        pnlNorth = new JPanel(new BorderLayout());
-
+        themes = initThemes();
         sliderListener = new SliderListener();
         timeSlider = new JSlider();
         musicSlider = new JSlider();
-        changeBackgroundBtn.setFont(new Font("Earth Orbiter", Font.PLAIN, 20));
+        cbThemes = new JComboBox<Theme>(themes);
+        lblTheme = new JLabel("Select theme");
+        lblTheme.setFont(new Font("Nasalization Rg", Font.PLAIN, 16));
         titleLabel = new JLabel();
         titleLabel.setPreferredSize(new Dimension(700, 100));
         titleLabel.setText("Orbitz");
         titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         titleLabel.setOpaque(true);
-
-        changeBackgroundListener = new ChangeBackgroundListener();
 
         Platform.runLater(new Runnable() {
             @Override
@@ -128,7 +126,7 @@ public class MainFrame extends JFrame {
         ImageIcon solarSystem = new ImageIcon("src/Images/orbitz.png");
         setIconImage(solarSystem.getImage());
 
-        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 100));
+        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 150));
 
         Font f = new Font("Arial", Font.BOLD, 8);
         JLabel labelMin = new JLabel("MIN");
@@ -140,12 +138,13 @@ public class MainFrame extends JFrame {
         labelTableM.put(2, labelMin);
         labelTableM.put(19, labelMax);
 
+        comboBoxThemeListener = new ComboBoxThemeListener();
+
         musicSlider.setOrientation(JSlider.VERTICAL);
         musicSlider.setPreferredSize(new Dimension(10, 20));
         musicSlider.setMinimum(0);
         musicSlider.setMaximum(20);
         musicSlider.setValue(10);
-        musicSlider.setForeground(Color.BLUE);
         musicSlider.setSnapToTicks(true);
         musicSlider.setLabelTable(labelTableM);
         musicSlider.setPaintLabels(true);
@@ -164,49 +163,40 @@ public class MainFrame extends JFrame {
 
         timeSlider.setLabelTable(labelTable);
 
-        timeSlider.setPreferredSize(new Dimension(600, 50));
+        timeSlider.setPreferredSize(new Dimension(700, 100));
         timeSlider.setPaintTicks(true);
         timeSlider.setMajorTickSpacing(10);
-        timeSlider.setForeground(Color.BLUE);
         timeSlider.setSnapToTicks(true);
         timeSlider.addMouseListener(sliderListener);
 
-        pnlNorth.setPreferredSize(new Dimension(1400, 150));
-        pnlNorth.setOpaque(false);
-        // Sets up overheadPanel
-        overheadPanel.setLayout(new BorderLayout());
-        overheadPanel.setPreferredSize(new Dimension(1400, 100));
-        overheadPanel.setSize(new Dimension(1400, 100));
-        //overheadPanel.setBackground(Color.DARK_GRAY);
-        //overheadPanel.setForeground(Color.BLACK);
-        overheadPanel.add(timeSlider, BorderLayout.EAST);
-        //overheadPanel.add(musicSlider, BorderLayout.CENTER);
-        changeBackgroundBtn.setPreferredSize(new Dimension(300, 60));
-       // overheadPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        overheadPanel.add(titleLabel, BorderLayout.WEST);
-
-        lblMusic = new JLabel("Now playing...");
-        lblMusic.setPreferredSize(new Dimension(200, 50));
+        cbThemes.setPreferredSize(new Dimension(300, 50));
+        cbThemes.addItemListener(comboBoxThemeListener);
+        cbThemes.setSelectedIndex(0);
+        lblTheme.setPreferredSize(new Dimension(100, 50));
         mediaPanel.setPreferredSize(new Dimension(1000,50));
+        mediaPanel.setBackground(null);
+        // Sets up overheadPanel
+        overheadPanel.setLayout(new FlowLayout());
+        // set opaque
+        overheadPanel.setOpaque(true);
+        timeSlider.setOpaque(true);
 
-        pnlNorthSouth = new JPanel(new BorderLayout());
-        pnlNorthNorth = new JPanel(new BorderLayout());
-        pnlNorthNorth.setPreferredSize(new Dimension(1400, 100));
-        pnlNorthSouth.setPreferredSize(new Dimension(1400, 50));
+        titleLabel.setOpaque(false);
+        mediaPanel.setOpaque(true);
 
-        changeBackgroundBtn.addActionListener(changeBackgroundListener);
-        add(pnlNorth, BorderLayout.NORTH);
-        pnlNorth.add(pnlNorthNorth, BorderLayout.NORTH);
-        pnlNorth.add(pnlNorthSouth, BorderLayout.SOUTH);
+        overheadPanel.setPreferredSize(new Dimension(1400, 150));
+        overheadPanel.add(titleLabel);
+        overheadPanel.add(timeSlider);
+        overheadPanel.add(mediaPanel);
+        overheadPanel.add(lblTheme);
+        overheadPanel.add(cbThemes);
 
-        pnlNorthNorth.add(overheadPanel, BorderLayout.CENTER);
-        pnlNorthSouth.add(mediaPanel, BorderLayout.WEST);
-        add(orbitPanel, BorderLayout.SOUTH);
-        /*
+        add(orbitPanel, BorderLayout.CENTER);
+
         add(overheadPanel, BorderLayout.NORTH);
-        add(mediaPanel, BorderLayout.NORTH);
 
-         */
+        currentTheme = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
+        setColors(currentTheme);
         setVisible(true);
     }
 
@@ -280,28 +270,14 @@ public class MainFrame extends JFrame {
     {
         StackPane mediaPane = new StackPane();
         Scene scene = new Scene(mediaPane, mediaPanel.getWidth(), mediaPanel.getHeight());
-        initMusic(mediaPane);
+        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        mediaPane.setBackground(Background.EMPTY);
+
+        MediaBar mediaBar = new MediaBar(currentTheme);
+        mediaPane.getChildren().add(mediaBar);
         return scene;
     }
 
-
-    public void initMusic(StackPane mediaPane)
-    {
-        MediaBar mediaBar = new MediaBar();
-        mediaPane.getChildren().add(mediaBar);
-
-        // old volume
-        /*player.setCycleCount(MediaPlayer.INDEFINITE);
-        musicSlider.setValue((int)player.getVolume() * 20);
-        musicSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent event) {
-                double value = (double)musicSlider.getValue() / 20;
-                player.setVolume(value);
-            }
-        });
-
-         */
-    }
 
     /**
      * Finds which planet the the sphere is connected to
@@ -347,6 +323,7 @@ public class MainFrame extends JFrame {
             root.getChildren().add(planetArrayList.get(i).getSphereFromPlanet()); //Adds planets
             root.getChildren().add(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
             planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
+            planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(currentTheme.getSecondaryPaint()); // Paint ellipse based on theme
             StackPane.setMargin(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
                     new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord() * 2));
         }
@@ -459,7 +436,14 @@ public class MainFrame extends JFrame {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                loadingScreen.setVisible(true);
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        loadingScreen.setVisible(true);
+                    }
+                });
+
 
                 //Planets that move 10 times slower for every click on the button
                 ArrayList<Planet> newPlanets = controller.createPlanetArray(inDurationModifier);
@@ -470,8 +454,14 @@ public class MainFrame extends JFrame {
                     map.setDiffuseMap(new Image("Images/" + newPlanets.get(i).getName() + ".jpg"));
                     newPlanets.get(i).getSphereFromPlanet().setMaterial(map);
                 }
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        loadingScreen.setVisible(false);
+                    }
+                });
 
-                loadingScreen.setVisible(false);
             }
         });
 
@@ -523,8 +513,8 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * Adds star at randomized positions on the scene
-     *
+     * Adds stars at randomized positions on the scene
+     * Uses different Z values to get a 3d effect
      * @author Albin Ahlbeck
      * @version 1.0
      */
@@ -532,6 +522,7 @@ public class MainFrame extends JFrame {
         Random randomX = new Random();
         Random randomY = new Random();
         Random randomZ = new Random();
+        Random randomColor = new Random();
         int x;
         int y;
         int z;
@@ -540,48 +531,19 @@ public class MainFrame extends JFrame {
         int minY = -HEIGHT;
         int maxY = HEIGHT;
         int minZ = 300;
-        int maxZ = 1000;
+        int maxZ = 800;
         int radius = 1;
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++)
+        {
             x = randomX.nextInt(maxX - minX + 1) + minX;
             y = randomY.nextInt(maxY - minY + 1) + minY;
             z = randomZ.nextInt(maxZ - minZ + 1) + minZ;
-
             Star tempStar = new Star(radius, x, y, z);
             root.getChildren().add(tempStar);
+
         }
 
-    }
-
-    /**
-     * Listens to the changeBackgroundBtn on click it changes the background
-     *
-     * @author Albin Ahlbeck
-     * @author Simon Måtegen
-     * @version 1.0
-     */
-    private class ChangeBackgroundListener implements ActionListener {
-        public void actionPerformed(ActionEvent actionEvent) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-
-                    root.setBackground(new Background(
-                            Collections.singletonList(new BackgroundFill(
-                                    javafx.scene.paint.Color.BLACK, CornerRadii.EMPTY, javafx.geometry.Insets.EMPTY)),
-                            Collections.singletonList(new BackgroundImage(
-                                    new javafx.scene.image.Image("https://i0.wp.com/metro.co.uk/wp-content/uploads/2018/10/sei_36554009-212f." +
-                                            "jpg?quality=90&strip=all&zoom=1&resize=644%2C483&ssl=1",
-                                            WIDTH, HEIGHT, false, true),
-                                    BackgroundRepeat.NO_REPEAT,
-                                    BackgroundRepeat.NO_REPEAT,
-                                    BackgroundPosition.CENTER,
-                                    BackgroundSize.DEFAULT))));
-
-                }
-            });
-        }
     }
 
     /**
@@ -619,6 +581,74 @@ public class MainFrame extends JFrame {
         {
             System.out.println(e);
         }
+
     }
 
+    public Theme[] initThemes()
+    {
+        //TODO: custom fonts for each theme
+        Theme[] tempThemes = new Theme[4];
+        tempThemes[0] = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
+        tempThemes[1] = new Theme("Midnight", Color.BLACK, new Color(0, 0, 128),
+                javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.DARKBLUE);
+        tempThemes[2] = new Theme("Star Wars", Color.BLACK, Color.YELLOW, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.YELLOW);
+        tempThemes[3] = new Theme("Modern", Color.WHITE, Color.GRAY, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.GRAY);
+        return tempThemes;
+    }
+
+    public void setColors(Theme theme)
+    {
+        currentTheme = theme;
+        titleLabel.setForeground(theme.getSecondaryColor());
+        timeSlider.setForeground(theme.getSecondaryColor());
+        overheadPanel.setBackground(theme.getMainColor());
+        titleLabel.setOpaque(true);
+        titleLabel.setBackground(null);
+        timeSlider.setBackground(null);
+        timeSlider.setOpaque(true);
+        lblTheme.setForeground(theme.getMainColor());
+        cbThemes.setForeground(theme.getMainColor());
+        cbThemes.setBackground(theme.getSecondaryColor());
+
+        // Time slider configuration
+        JLabel lbl1 = new JLabel("Real speed");
+        JLabel lbl2 = new JLabel("x100");
+        JLabel lbl3 = new JLabel("x1000");
+        JLabel lbl4 = new JLabel("x10000");
+
+        lbl1.setForeground(theme.getSecondaryColor());
+        lbl2.setForeground(theme.getSecondaryColor());
+        lbl3.setForeground(theme.getSecondaryColor());
+        lbl4.setForeground(theme.getSecondaryColor());
+
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+        labelTable.put(0, lbl1);
+        labelTable.put(10, lbl2);
+        labelTable.put(20, lbl3);
+        labelTable.put(30, lbl4);
+
+        timeSlider.setLabelTable(labelTable);
+Platform.runLater(new Runnable() {
+    @Override
+    public void run()
+    {
+        initFXMedia(mediaPanel);
+        initFxOrbit(orbitPanel);
+    }
+});
+
+
+    }
+
+    private class ComboBoxThemeListener implements ItemListener
+    {
+        @Override
+        public void itemStateChanged(ItemEvent event)
+        {
+            if(event.getStateChange() == ItemEvent.SELECTED)
+            {
+                setColors((Theme)event.getItem());
+            }
+        }
+    }
 }

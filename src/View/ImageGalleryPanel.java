@@ -47,7 +47,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     private JPanel panel;
     private JPanel panelBtn;
 
-    private JLabel lblimage1, lblimage2, lblimage3, lblimage4;
     private JLabel lblImage;
 
     private ArrayList<ImageIcon> imageList;
@@ -94,6 +93,14 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     public void createPanel(Planet planet)
     {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); // makes the ui cross platform
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+
         setLayout(new BorderLayout());
         setBackground (Color.BLACK);
 
@@ -105,6 +112,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panelBtn = new JPanel();
 
         lblImage = new JLabel();
+
 
         previousListener = new PreviousListener();
         nextListener = new NextListener();
@@ -151,7 +159,12 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
             }
         });
     }
-
+    /**
+     * Adds images to each planet
+     * @author Albin Ahlbeck
+     * @author Manna Manojlovic
+     * @version 1.0
+     */
     public void addImages()
     {
         System.out.println("Planet "  + planet.getName());
@@ -371,7 +384,12 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         });
 
     }
-
+    /**
+     * Listens to the next button
+     * Iterates the gallery
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
     private class NextListener implements ActionListener
     {
 
@@ -391,7 +409,12 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
 
     }
-
+    /**
+     * Listens to the previous button
+     * Iterates the gallery
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
     private class PreviousListener implements ActionListener
     {
 
