@@ -4,18 +4,25 @@ import Model.Planet;
 ;
 import javafx.application.Platform;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.embed.swing.JFXPanel;
 
+import javafx.geometry.Orientation;
+import javafx.geometry.VerticalDirection;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
 
+import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 
 import javafx.scene.control.Button;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.media.MediaPlayer;
 
 
@@ -52,8 +59,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
     private ArrayList<ImageIcon> imageList;
 
-    private Button btnSound;
-    private Button btnMute;
     private BasicArrowButton btnNext;
     private BasicArrowButton btnPrevious;
 
@@ -65,6 +70,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     private int picIndex = 0;
 
     private InfoBoxPanel infoPanel;
+
+    private Slider soundSlider;
 
     /**
      * @Author Manna Manojlovic
@@ -102,7 +109,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         this.planet = planet;
 
         panel = new JPanel (new BorderLayout());
-        panelBtn = new JPanel();
+        panelBtn = new JPanel(new BorderLayout());
 
         lblImage = new JLabel();
 
@@ -131,14 +138,14 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panel.setPreferredSize (new Dimension (410,280));
         panel.setBackground (Color.black);
 
-        panelBtn.setPreferredSize(new Dimension(540, 200));
+        panelBtn.setPreferredSize(new Dimension(550, 200));
 
         panel.add(btnNext, BorderLayout.EAST);
         panel.add(btnPrevious, BorderLayout.WEST);
         panel.add(lblImage, BorderLayout.CENTER);
 
-        panelBtn.add(infoPanel);        //information table
-        panelBtn.add(jfx);
+        panelBtn.add(infoPanel, BorderLayout.CENTER);        //information table
+        panelBtn.add(jfx, BorderLayout.WEST);
         panelBtn.setBackground(Color.black);
 
         add(panel, BorderLayout.EAST);
@@ -246,43 +253,51 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     private void initFX(JFXPanel jfxPanel)
     {
-        Image soundOn = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/29_Sound_alt-64.png");
-        Image mute = new Image("https://cdn3.iconfinder.com/data/icons/eightyshades/512/30_Sound_off-64.png");
-
-        ImageView soundIcon = new ImageView(soundOn);
-        ImageView muteIcon = new ImageView(mute);
-
         javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
 
         Group root = new Group();
-
         Scene scene = new Scene(root);
 
-        soundIcon.setFitHeight(17);
-        soundIcon.setFitWidth(17);
-        muteIcon.setFitHeight(17);
-        muteIcon.setFitWidth(17);
+        soundSlider = new Slider();
+        soundSlider.setOrientation(Orientation.VERTICAL);
+        soundSlider.setPrefHeight(80);
+        soundSlider.setMax(100);
+        soundSlider.setValue(20);
+        soundSlider.setLayoutY(40);
 
-        btnSound = new Button("", soundIcon);
-        btnSound.setTooltip(new Tooltip("press to hear the sound of this planet"));
-        btnMute = new Button("", muteIcon);
-        btnMute.setTooltip(new Tooltip("press to mute it :("));
-        btnSound.setMinSize(35, 35);
-        btnMute.setMinSize(35,35);
-        btnSound.setOnAction(event -> planetSounds());
+        Image soundOnImage = new Image("Images/soundOn.png");
+        ImageView soundOn = new ImageView(soundOnImage);
+        soundOn.setFitHeight(20);
+        soundOn.setFitWidth(20);
+        soundOn.setLayoutY(8);
+        soundOn.setCursor(Cursor.HAND);
 
-        root.getChildren().add(btnSound);
-        root.getChildren().add(btnMute);
+        Image soundOffImage = new Image("Images/soundOff.png");
+        ImageView soundOff = new ImageView(soundOffImage);
+        soundOff.setFitHeight(20);
+        soundOff.setFitWidth(20);
+        soundOff.setLayoutY(8);
+        soundOff.setCursor(Cursor.HAND);
 
-        btnSound.setLayoutY(0);
-        btnSound.setLayoutX(10);
-        btnMute.setLayoutY(40);
-        btnMute.setLayoutX(10);
+        soundOff.setOnMouseClicked(event -> {
+            planetSounds();
+            root.getChildren().remove(soundOff);
+            root.getChildren().add(soundOn);
+        });
+
+        soundOn.setOnMouseClicked(event -> {
+            stopMp3();
+            root.getChildren().remove(soundOn);
+            root.getChildren().add(soundOff);
+        });
+
+        root.getChildren().add(soundSlider);
+        root.getChildren().add(soundOff);
 
         scene.setFill(fxColor);
+        jfxPanel.setPreferredSize(new Dimension(40, 200));
         jfxPanel.setBackground(Color.black);
         jfxPanel.setScene(scene);
-
     }
 
     /**
@@ -296,11 +311,11 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     {
         if  (planet.getName().equals("Jupiter"))
         {
-            playWav("sound/Jupiter2001.wav");
+            playMp3("sound/Jupiter2001.mp3");
         }
         else if (planet.getName().equals("Sun"))
         {
-            playWav("sound/sun.wav");
+            playMp3("sound/sun.mp3");
         }
         else if (planet.getName().equals("Saturn"))
         {
@@ -310,43 +325,11 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         {
             playMp3("sound/earth.mp3");
         }
-
-    }
-
-    /**
-     * @Author: Manna Manojlovic
-     * @version 1.0
-     *
-     * When user clicks play button, a thread that calls this method starts.
-     *
-     * Method for playing a .wav-file. Reads the .wav through AudioInputStream an plays it via Clip.
-     * Clip class also has a built in loop for continuously playing the sound until user stops it manually.
-     */
-    public void playWav(String filePath)
-    {
-        try{
-            File file = new File(filePath);
-
-            if(file.exists()){
-                AudioInputStream ais = AudioSystem.getAudioInputStream(file);
-                Clip clip = AudioSystem.getClip();
-                clip.open(ais);
-                clip.start();
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-
-                btnMute.setOnAction(event -> {
-                    clip.getMicrosecondPosition();
-                    clip.stop();
-                });
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
      * @author Manna Manojlovic
+     * @author Lanna Maslo
      * @param filePath takes mp3 as parameter
      *
      *  This method is for the mp3-files that JavaFX can play when user selects a planet which has recordings in mp3.
@@ -356,20 +339,20 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         String bip = filePath;
         Media hit = new Media(new File(bip).toURI().toString());
         mediaPlayer = new MediaPlayer(hit);
-        mediaPlayer.setOnReady(new Runnable()
-        {
-            public void run()
-            {
-                mediaPlayer.play();
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        soundSlider.setValue((int)mediaPlayer.getVolume() * 100);
 
-                btnMute.setOnAction(event -> {
-
-                    mediaPlayer.stop();
-                });
-
+        soundSlider.valueProperty().addListener(new InvalidationListener() {
+            public void invalidated(Observable observable) {
+                mediaPlayer.setVolume(soundSlider.getValue() / 100);
             }
         });
 
+        mediaPlayer.play();
+    }
+
+    public void stopMp3(){
+        mediaPlayer.stop();
     }
 
     private class NextListener implements ActionListener
@@ -388,8 +371,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
             }
             lblImage.setIcon(imageList.get(picIndex));
         }
-
-
     }
 
     private class PreviousListener implements ActionListener
