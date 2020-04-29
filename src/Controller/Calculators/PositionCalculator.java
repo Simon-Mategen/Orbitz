@@ -27,7 +27,7 @@ public class PositionCalculator {
         return d;
     }
 
-    public double getValues(double d, String planet, int xy){
+    public double getValues(double d, String planet){
 
         if (planet.equals("Mercury")) {
             N = 48.3313 + 3.24587E-5 * d;
@@ -124,6 +124,7 @@ public class PositionCalculator {
         if (planet.equals("Earth")){
             xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
             yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
+            return (v + w) + 180;
         }
 
         else {
@@ -131,9 +132,10 @@ public class PositionCalculator {
             yeclip = r * (Math.sin(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) + Math.cos(Math.PI / 180 * N) * Math.sin(Math.PI / 180 * (v + w)) * Math.cos(Math.PI / 180 * i));
             //System.out.println("xeclip = " + xeclip);
             //System.out.println("yeclip = " + yeclip);
+            return v + w;
         }
 
-        if (xy == 1){
+        /*if (xy == 1){
             return 2*(xeclip * 149600000)/25000000;
         }
         else if (xy == 2){
@@ -141,6 +143,9 @@ public class PositionCalculator {
         }
         else
             return -1;
+
+         */
+        //return v + w;
     }
 
 
@@ -150,6 +155,7 @@ public class PositionCalculator {
     }
 
    */
+
 
 
 }
