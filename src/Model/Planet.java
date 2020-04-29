@@ -36,8 +36,6 @@ public class Planet
 
     private PositionCalculator pos = new PositionCalculator();
 
-    //private PlanetInfo planetTableInfo = new PlanetInfo();
-
     private int numOfMoons; // TODO
 
     private int distanceFromSun; // TODO

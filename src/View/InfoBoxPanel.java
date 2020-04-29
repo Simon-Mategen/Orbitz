@@ -52,20 +52,11 @@ public class InfoBoxPanel extends JPanel
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setColumnIdentifiers(cols);
 
-        //rendering the rows so that the data fits the rows - DOES NOT WORK!!
-       /* table.getColumnModel().getColumn(0).setCellRenderer(new CellRenderer());
-        table.getColumnModel().getColumn(1).setCellRenderer(new CellRenderer());
-        table.getColumnModel().getColumn(2).setCellRenderer(new CellRenderer());
-        table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer());
-
-        */
-
         //setting the column width for each column
         table.getColumnModel().getColumn(0).setPreferredWidth(18);
         table.getColumnModel().getColumn(1).setPreferredWidth(32);
         table.getColumnModel().getColumn(2).setPreferredWidth(12);
         table.getColumnModel().getColumn(3).setPreferredWidth(20);
-        //table.getAutoResizeMode();
 
         //hiding gridlines between rows
         table.setShowGrid(false);
@@ -77,24 +68,24 @@ public class InfoBoxPanel extends JPanel
         table.setIntercellSpacing(new Dimension(10, 0));
 
         //setting size for the table
-        table.setPreferredScrollableViewportSize(new Dimension(500,100));
+        table.setPreferredScrollableViewportSize(new Dimension(500,50));
         table.setFillsViewportHeight(true);
 
         //setting colors and fonts to the columns
         table.getTableHeader().setFont(font1);
         table.getTableHeader().setOpaque(false);
         table.getTableHeader().setBackground(Color.black);
-        table.getTableHeader().setForeground(Color.WHITE);
+        table.getTableHeader().setForeground(Color.WHITE);      //text color
 
         //setting fonts and color to the rows
         table.setFont(font2);
         table.setBackground(Color.black);
-        table.setForeground(Color.yellow);
+        table.setForeground(Color.yellow);  //text color
         table.setRowHeight(25);
 
-        addRows();                       //adding the rows to the columns respectively
+        addRows();                         //adding the rows to the columns respectively
 
-        add(s,BorderLayout.CENTER);     //placing the table on the layout
+        add(s,BorderLayout.CENTER);        //placing the table on the layout
     }
 
     /**
@@ -102,6 +93,8 @@ public class InfoBoxPanel extends JPanel
      *
      * Method for adding rows to table under respective column.
      * Hard coded info for each planet.
+     *
+     * LIMIT: The data for the rows can be a MAX of 18 chars long.
      */
     public void addRows()
     {
@@ -127,7 +120,7 @@ public class InfoBoxPanel extends JPanel
         else if (planet.getName().equals("Earth"))
         {
             colArr[0] = "3 days (Moon)";
-            colArr[1] = "2019, Chandrayaan2";
+            colArr[1] = "2019, to moon";
             colArr[2] = "2024, NASA";
             colArr[3] = "Yes";
         }
@@ -155,7 +148,6 @@ public class InfoBoxPanel extends JPanel
             colArr[2] = "2034 to Titan";
             colArr[3] = "Maybe on moons";
         }
-
 
         else if (planet.getName().equals("Uranus"))
         {
