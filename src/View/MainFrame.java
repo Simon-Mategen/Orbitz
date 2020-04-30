@@ -586,12 +586,13 @@ public class MainFrame extends JFrame {
     public Theme[] initThemes()
     {
         //TODO: custom fonts for each theme
-        Theme[] tempThemes = new Theme[4];
+        Theme[] tempThemes = new Theme[5];
         tempThemes[0] = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
         tempThemes[1] = new Theme("Midnight", Color.BLACK, new Color(0, 0, 128),
                 javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.DARKBLUE);
         tempThemes[2] = new Theme("Star Wars", Color.BLACK, Color.YELLOW, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.YELLOW);
         tempThemes[3] = new Theme("Modern", Color.WHITE, Color.GRAY, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.GRAY);
+        tempThemes[4] = new Theme("Stranger Things", Color.BLACK, Color.RED, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.RED);
         return tempThemes;
     }
 
@@ -625,7 +626,14 @@ public class MainFrame extends JFrame {
         labelTable.put(20, lbl3);
         labelTable.put(30, lbl4);
         timeSlider.setLabelTable(labelTable);
+try
+{
+    Thread.sleep(500);
+}
+catch (Exception e)
+{
 
+}
 Platform.runLater(new Runnable() {
     @Override
     public void run()
@@ -645,6 +653,11 @@ Platform.runLater(new Runnable() {
             if (theme.getName().equals("Star Wars"))
             {
                 mediaBar.changeSong(3);
+            }
+
+            if (theme.getName().equals("Stranger Things"))
+            {
+                mediaBar.changeSong(2);
             }
         }
 
