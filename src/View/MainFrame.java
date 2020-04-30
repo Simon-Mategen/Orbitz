@@ -58,6 +58,8 @@ public class MainFrame extends JFrame {
     private JComboBox<Theme> cbThemes;
     private Theme[] themes;
     private JLabel lblTheme;
+    MediaBar mediaBar;
+
     ArrayList<Planet> newPlanets;
 
     private SliderListener sliderListener;
@@ -100,7 +102,7 @@ public class MainFrame extends JFrame {
         lblTheme = new JLabel("Select theme");
         lblTheme.setFont(new Font("Nasalization Rg", Font.PLAIN, 16));
         titleLabel = new JLabel();
-        titleLabel.setPreferredSize(new Dimension(700, 100));
+        titleLabel.setPreferredSize(new Dimension(700, 80));
         titleLabel.setText("Orbitz");
         titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         titleLabel.setOpaque(true);
@@ -151,17 +153,17 @@ public class MainFrame extends JFrame {
 
         timeSlider.setLabelTable(labelTable);
 
-        timeSlider.setPreferredSize(new Dimension(700, 100));
+        timeSlider.setPreferredSize(new Dimension(700, 80));
         timeSlider.setPaintTicks(true);
         timeSlider.setMajorTickSpacing(10);
         timeSlider.setSnapToTicks(true);
         timeSlider.addMouseListener(sliderListener);
 
-        cbThemes.setPreferredSize(new Dimension(300, 50));
+        cbThemes.setPreferredSize(new Dimension(300, 70));
         cbThemes.addItemListener(comboBoxThemeListener);
         cbThemes.setSelectedIndex(0);
-        lblTheme.setPreferredSize(new Dimension(100, 50));
-        mediaPanel.setPreferredSize(new Dimension(1000,50));
+        lblTheme.setPreferredSize(new Dimension(100, 70));
+        mediaPanel.setPreferredSize(new Dimension(1000,70));
         mediaPanel.setBackground(null);
         // Sets up overheadPanel
         overheadPanel.setLayout(new FlowLayout());
@@ -270,7 +272,7 @@ public class MainFrame extends JFrame {
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
         mediaPane.setBackground(Background.EMPTY);
 
-        MediaBar mediaBar = new MediaBar(currentTheme);
+        mediaBar = new MediaBar(currentTheme);
         mediaPane.getChildren().add(mediaBar);
         return scene;
     }
@@ -604,6 +606,7 @@ public class MainFrame extends JFrame {
         timeSlider.setBackground(null);
         timeSlider.setOpaque(true);
         lblTheme.setForeground(theme.getMainColor());
+        overheadPanel.setBorder(BorderFactory.createLineBorder(theme.getSecondaryColor(), 2));
 
         // Time slider configuration
         JLabel lbl1 = new JLabel("Real speed");
@@ -622,6 +625,7 @@ public class MainFrame extends JFrame {
         labelTable.put(20, lbl3);
         labelTable.put(30, lbl4);
         timeSlider.setLabelTable(labelTable);
+
 Platform.runLater(new Runnable() {
     @Override
     public void run()
@@ -635,6 +639,16 @@ Platform.runLater(new Runnable() {
                 newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(theme.getSecondaryPaint());
             }
         }
+        if (mediaBar != null)
+        {
+            mediaBar.addTheme(theme);
+            if (theme.getName().equals("Star Wars"))
+            {
+                mediaBar.changeSong(3);
+            }
+        }
+
+
     }
 });
 
@@ -647,9 +661,9 @@ Platform.runLater(new Runnable() {
         {
             if(event.getStateChange() == ItemEvent.SELECTED)
             {
-                loadingScreen.setVisible(true);
+                //loadingScreen.setVisible(true);
                 setColors((Theme)event.getItem());
-                loadingScreen.setVisible(false);
+                //loadingScreen.setVisible(false);
             }
         }
     }

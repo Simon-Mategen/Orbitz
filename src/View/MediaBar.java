@@ -56,14 +56,7 @@ public class MediaBar extends HBox
             volumeSlider.setMinWidth(30);
             volumeSlider.setValue(100);
             btnPlay.setPrefWidth(30);
-
-            lblVolume.setTextFill(theme.getSecondaryPaint());
-            songComboBox.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
-
-            btnPlay.setTextFill(theme.getMainPaint());
-            btnPlay.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
+           addTheme(theme);
 
 
             getChildren().add(btnPlay);
@@ -130,12 +123,30 @@ public class MediaBar extends HBox
 
         private Song[] initSongs()
         {
-            int songs = 3;
+            int songs = 4;
             Song[] tempSongs = new Song[songs];
             tempSongs[0] = new Song("Emil Rottmayer","Descend", "sound/Emil Rottmayer - Descend.mp3");
             tempSongs[1] = new Song("Mike Noise","Low Earth Orbit", "sound/Mike Noise Low Earth Orbit.mp3");
             tempSongs[2] = new Song("Daniel Rosenfeld","Stranger Things  Theme Songx","sound/Stranger Things Theme Songx.mp3");
+            tempSongs[3] = new Song("John Williams", "Star Wars Main Theme", "sound/starwars.mp3");
             return tempSongs;
+        }
+
+        public void addTheme(Theme theme)
+        {
+            btnPlay.setTextFill(theme.getMainPaint());
+            btnPlay.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+
+            lblVolume.setTextFill(theme.getSecondaryPaint());
+            songComboBox.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+
+        }
+
+        public void changeSong(int index)
+        {
+            songComboBox.getSelectionModel().select(index);
         }
 
     }
