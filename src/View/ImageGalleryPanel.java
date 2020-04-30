@@ -73,7 +73,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     private Slider soundSlider;
 
     /**
-     * @Author Manna Manojlovic
+     * @author Manna Manojlovic
      * @version 1.0
      * 
      * Constructor
@@ -87,7 +87,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     }
 
     /**
-     * @Author: Manna Manojlovic, Lanna Maslo
+     * @author Manna Manojlovic, Lanna Maslo
      * @version 1.0
      *
      * Method for initializing the components and the panel for images
@@ -314,7 +314,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     }
 
     /**
-     * @Author: Manna Manojlovic
+     * @author Manna Manojlovic
+     * @author Lanna Maslo
      * @version 1.0
      *
      * This method reads the sound files depending on which planet is selected by user.
@@ -322,21 +323,41 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      */
     public void planetSounds()
     {
-        if  (planet.getName().equals("Jupiter"))
-        {
-            playMp3("sound/Jupiter2001.mp3");
-        }
-        else if (planet.getName().equals("Sun"))
+        if (planet.getName().equals("Sun"))
         {
             playMp3("sound/sun.mp3");
+        }
+        else if (planet.getName().equals("Mercury"))
+        {
+            playMp3("sound/mercury.mp3");
+        }
+        else if (planet.getName().equals("Venus"))
+        {
+            playMp3("sound/venus.mp3");
+        }
+        else if (planet.getName().equals("Earth"))
+        {
+            playMp3("sound/earth.mp3");
+        }
+        else if (planet.getName().equals("Mars"))
+        {
+            playMp3("sound/mars.mp3");
+        }
+        else if (planet.getName().equals("Jupiter"))
+        {
+            playMp3("sound/jupiter.mp3");
         }
         else if (planet.getName().equals("Saturn"))
         {
             playMp3("sound/saturn.mp3");
         }
-        else if (planet.getName().equals("Earth"))
+        else if (planet.getName().equals("Uranus"))
         {
-            playMp3("sound/earth.mp3");
+            playMp3("sound/uranus.mp3");
+        }
+        else if (planet.getName().equals("Neptune"))
+        {
+            playMp3("sound/neptune.mp3");
         }
     }
 
