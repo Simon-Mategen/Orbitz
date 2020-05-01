@@ -58,6 +58,9 @@ public class MainFrame extends JFrame {
     private JComboBox<Theme> cbThemes;
     private Theme[] themes;
     private JLabel lblTheme;
+    MediaBar mediaBar;
+
+    ArrayList<Planet> newPlanets;
 
     private SliderListener sliderListener;
     private ComboBoxThemeListener comboBoxThemeListener;
@@ -99,24 +102,11 @@ public class MainFrame extends JFrame {
         lblTheme = new JLabel("Select theme");
         lblTheme.setFont(new Font("Nasalization Rg", Font.PLAIN, 16));
         titleLabel = new JLabel();
-        titleLabel.setPreferredSize(new Dimension(700, 100));
+        titleLabel.setPreferredSize(new Dimension(700, 80));
         titleLabel.setText("Orbitz");
         titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         titleLabel.setOpaque(true);
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                initFxOrbit(orbitPanel); // starts on the Java FX thread
-            }
-        });
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                initFXMedia(mediaPanel); // starts on the Java FX thread
-            }
-        });
         // Sets up the JFrame
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -163,17 +153,17 @@ public class MainFrame extends JFrame {
 
         timeSlider.setLabelTable(labelTable);
 
-        timeSlider.setPreferredSize(new Dimension(700, 100));
+        timeSlider.setPreferredSize(new Dimension(700, 80));
         timeSlider.setPaintTicks(true);
         timeSlider.setMajorTickSpacing(10);
         timeSlider.setSnapToTicks(true);
         timeSlider.addMouseListener(sliderListener);
 
-        cbThemes.setPreferredSize(new Dimension(300, 50));
+        cbThemes.setPreferredSize(new Dimension(300, 70));
         cbThemes.addItemListener(comboBoxThemeListener);
         cbThemes.setSelectedIndex(0);
-        lblTheme.setPreferredSize(new Dimension(100, 50));
-        mediaPanel.setPreferredSize(new Dimension(1000,50));
+        lblTheme.setPreferredSize(new Dimension(100, 70));
+        mediaPanel.setPreferredSize(new Dimension(1000,70));
         mediaPanel.setBackground(null);
         // Sets up overheadPanel
         overheadPanel.setLayout(new FlowLayout());
@@ -197,6 +187,15 @@ public class MainFrame extends JFrame {
 
         currentTheme = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
         setColors(currentTheme);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run()
+            {
+                initFXMedia(mediaPanel);
+                initFxOrbit(orbitPanel);
+            }
+        });
         setVisible(true);
     }
 
@@ -273,7 +272,7 @@ public class MainFrame extends JFrame {
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
         mediaPane.setBackground(Background.EMPTY);
 
-        MediaBar mediaBar = new MediaBar(currentTheme);
+        mediaBar = new MediaBar(currentTheme);
         mediaPane.getChildren().add(mediaBar);
         return scene;
     }
@@ -326,6 +325,7 @@ public class MainFrame extends JFrame {
             planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(currentTheme.getSecondaryPaint()); // Paint ellipse based on theme
             StackPane.setMargin(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
                     new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord() * 2));
+            System.out.println(currentTheme.toString());
         }
     }
 
@@ -446,7 +446,7 @@ public class MainFrame extends JFrame {
 
 
                 //Planets that move 10 times slower for every click on the button
-                ArrayList<Planet> newPlanets = controller.createPlanetArray(inDurationModifier);
+                newPlanets = controller.createPlanetArray(inDurationModifier);
                 orbitPanel.setScene(createScene(newPlanets));
 
                 for (int i = 0; i < newPlanets.size(); i++) {
@@ -522,7 +522,6 @@ public class MainFrame extends JFrame {
         Random randomX = new Random();
         Random randomY = new Random();
         Random randomZ = new Random();
-        Random randomColor = new Random();
         int x;
         int y;
         int z;
@@ -587,12 +586,13 @@ public class MainFrame extends JFrame {
     public Theme[] initThemes()
     {
         //TODO: custom fonts for each theme
-        Theme[] tempThemes = new Theme[4];
+        Theme[] tempThemes = new Theme[5];
         tempThemes[0] = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
         tempThemes[1] = new Theme("Midnight", Color.BLACK, new Color(0, 0, 128),
                 javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.DARKBLUE);
         tempThemes[2] = new Theme("Star Wars", Color.BLACK, Color.YELLOW, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.YELLOW);
         tempThemes[3] = new Theme("Modern", Color.WHITE, Color.GRAY, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.GRAY);
+        tempThemes[4] = new Theme("Stranger Things", Color.BLACK, Color.RED, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.RED);
         return tempThemes;
     }
 
@@ -607,8 +607,7 @@ public class MainFrame extends JFrame {
         timeSlider.setBackground(null);
         timeSlider.setOpaque(true);
         lblTheme.setForeground(theme.getMainColor());
-        cbThemes.setForeground(theme.getMainColor());
-        cbThemes.setBackground(theme.getSecondaryColor());
+        overheadPanel.setBorder(BorderFactory.createLineBorder(theme.getSecondaryColor(), 2));
 
         // Time slider configuration
         JLabel lbl1 = new JLabel("Real speed");
@@ -626,17 +625,45 @@ public class MainFrame extends JFrame {
         labelTable.put(10, lbl2);
         labelTable.put(20, lbl3);
         labelTable.put(30, lbl4);
-
         timeSlider.setLabelTable(labelTable);
+try
+{
+    Thread.sleep(500);
+}
+catch (Exception e)
+{
+
+}
 Platform.runLater(new Runnable() {
     @Override
     public void run()
     {
-        initFXMedia(mediaPanel);
-        initFxOrbit(orbitPanel);
+
+        for (int i = 0; i < guiPlanetList.size() ; i++)
+        {
+            guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(theme.getSecondaryPaint());
+            if (newPlanets != null) // if the scene never have been changed newPlanets will throw nullpointer
+            {
+                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(theme.getSecondaryPaint());
+            }
+        }
+        if (mediaBar != null)
+        {
+            mediaBar.addTheme(theme);
+            if (theme.getName().equals("Star Wars"))
+            {
+                mediaBar.changeSong(3);
+            }
+
+            if (theme.getName().equals("Stranger Things"))
+            {
+                mediaBar.changeSong(2);
+            }
+        }
+
+
     }
 });
-
 
     }
 
@@ -647,7 +674,9 @@ Platform.runLater(new Runnable() {
         {
             if(event.getStateChange() == ItemEvent.SELECTED)
             {
+                //loadingScreen.setVisible(true);
                 setColors((Theme)event.getItem());
+                //loadingScreen.setVisible(false);
             }
         }
     }

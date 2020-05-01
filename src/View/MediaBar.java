@@ -17,9 +17,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
 
 import java.io.File;
+
 
 /**
  * A Media Bar that contains the ability to play music, pause it and change the volume
@@ -45,6 +47,7 @@ public class MediaBar extends HBox
             String path = songs[0].getPath();
             song = new Media(new File(path).toURI().toString());
             player = new MediaPlayer(song);
+            player.play();
             setAlignment(Pos.CENTER);
             setPadding(new Insets(5, 10, 5, 10));
             setSpacing(8);
@@ -53,14 +56,7 @@ public class MediaBar extends HBox
             volumeSlider.setMinWidth(30);
             volumeSlider.setValue(100);
             btnPlay.setPrefWidth(30);
-
-            lblVolume.setTextFill(theme.getSecondaryPaint());
-            songComboBox.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
-
-            btnPlay.setTextFill(theme.getMainPaint());
-            btnPlay.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
+           addTheme(theme);
 
 
             getChildren().add(btnPlay);
@@ -73,7 +69,11 @@ public class MediaBar extends HBox
                     new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent e)
                         {
-                            player.pause();
+                            System.out.println("Pausing");
+                            if (player.getStatus() == Status.PLAYING) {
+                                player.pause();
+                            }
+                            btnPlay.setText("||");
                             song = new Media(new File(songComboBox.getSelectionModel().getSelectedItem().getPath()).toURI().toString()); // scary code
                             player = new MediaPlayer(song);
                             player.play();
@@ -85,24 +85,26 @@ public class MediaBar extends HBox
             btnPlay.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent e)
                 {
-                    MediaPlayer.Status status = player.getStatus();
-                    if (status == MediaPlayer.Status.PLAYING) {
+                    Status status = player.getStatus(); // To get the status of Player
+                    if (status == status.PLAYING) {
 
+                        // If the status is Video playing
                         if (player.getCurrentTime().greaterThanOrEqualTo(player.getTotalDuration())) {
 
-                            player.seek(player.getStartTime());
+                            // If the player is at the end of video
+                            player.seek(player.getStartTime()); // Restart the video
                             player.play();
                         }
                         else {
-
+                            // Pausing the player
                             player.pause();
 
                             btnPlay.setText(">");
                         }
-                    }
-                    if (status == MediaPlayer.Status.HALTED || status == MediaPlayer.Status.STOPPED || status == MediaPlayer.Status.PAUSED) {
-                        player.play();
-                        btnPlay.setText("||");
+                    } // If the video is stopped, halted or paused
+                    if (status == Status.HALTED || status == Status.STOPPED || status == Status.PAUSED) {
+                        player.play(); // Start the video
+                       btnPlay.setText("||");
                     }
                 }
             });
@@ -117,17 +119,36 @@ public class MediaBar extends HBox
                     }
                 }
             });
-            player.play();
         }
 
         private Song[] initSongs()
         {
-            int songs = 3;
+            int songs = 4;
             Song[] tempSongs = new Song[songs];
             tempSongs[0] = new Song("Emil Rottmayer","Descend", "sound/Emil Rottmayer - Descend.mp3");
             tempSongs[1] = new Song("Mike Noise","Low Earth Orbit", "sound/Mike Noise Low Earth Orbit.mp3");
             tempSongs[2] = new Song("Daniel Rosenfeld","Stranger Things  Theme Songx","sound/Stranger Things Theme Songx.mp3");
+            tempSongs[3] = new Song("John Williams", "Star Wars Main Theme", "sound/starwars.mp3");
             return tempSongs;
+        }
+
+        public void addTheme(Theme theme)
+        {
+            btnPlay.setTextFill(theme.getMainPaint());
+            btnPlay.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+
+            lblVolume.setTextFill(theme.getSecondaryPaint());
+            /*songComboBox.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+                    
+             */
+
+        }
+
+        public void changeSong(int index)
+        {
+            songComboBox.getSelectionModel().select(index);
         }
 
     }
