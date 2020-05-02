@@ -299,7 +299,7 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         });
 
         soundOn.setOnMouseClicked(event -> {
-            stopMp3();
+            mediaPlayer.stop();
             root.getChildren().remove(soundOn);
             root.getChildren().add(soundOff);
         });
@@ -361,6 +361,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         }
     }
 
+    public void stopMp3(){
+        mediaPlayer.stop();
+    }
+
     /**
      * @author Manna Manojlovic
      * @author Lanna Maslo
@@ -385,9 +389,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         mediaPlayer.play();
     }
 
-    public void stopMp3(){
-        mediaPlayer.stop();
-    }
     /**
      * Listens to the next button
      * Iterates the gallery

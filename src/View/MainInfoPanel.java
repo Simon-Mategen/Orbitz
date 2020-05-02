@@ -235,4 +235,8 @@ public class MainInfoPanel extends JPanel
             map.setDiffuseMap(new Image("Images/" + planet.getName() + ".jpg"));
             planetSphere.setMaterial(map);
     }
+
+    public void stopMp3(){
+        imgPanel.stopMp3();
+    }
 }
