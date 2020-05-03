@@ -261,7 +261,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
      *
      * @param jfxPanel The JavaFX panel to be created
      * @author Lanna Maslo
-     * @author Manna Manojlovic
      * @version 1.0
      */
     private void initFX(JFXPanel jfxPanel)
@@ -292,14 +291,17 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         soundOff.setLayoutY(8);
         soundOff.setCursor(Cursor.HAND);
 
-        soundOff.setOnMouseClicked(event -> {
+        soundOff.setOnMouseClicked(event ->
+        {
             planetSounds();
             root.getChildren().remove(soundOff);
             root.getChildren().add(soundOn);
         });
 
-        soundOn.setOnMouseClicked(event -> {
+        soundOn.setOnMouseClicked(event ->
+        {
             mediaPlayer.stop();
+            stopMp3();
             root.getChildren().remove(soundOn);
             root.getChildren().add(soundOff);
         });
@@ -380,7 +382,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         soundSlider.setValue((int)mediaPlayer.getVolume() * 100);
 
-        soundSlider.valueProperty().addListener(new InvalidationListener() {
+        soundSlider.valueProperty().addListener(new InvalidationListener()
+        {
             public void invalidated(Observable observable) {
                 mediaPlayer.setVolume(soundSlider.getValue() / 100);
             }

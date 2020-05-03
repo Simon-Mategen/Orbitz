@@ -53,6 +53,7 @@ public class MainInfoFrame extends JFrame {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 panel.stopMp3();
+
             }
         });
     }
