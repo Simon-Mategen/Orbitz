@@ -364,7 +364,9 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
     }
 
     public void stopMp3(){
-        mediaPlayer.stop();
+        if(mediaPlayer != null){
+            mediaPlayer.stop();
+        }
     }
 
     /**
