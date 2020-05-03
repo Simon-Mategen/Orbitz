@@ -9,7 +9,7 @@ import javafx.scene.shape.Ellipse;
 
 public class Orbit
 {
-    private static final long SCALE_VALUE = 25000000; //the scale from the orbits' real values
+    private static final long SCALE_VALUE = 125000; //the scale from the orbits' real values
 
     private double width;
     private double height;
@@ -26,7 +26,8 @@ public class Orbit
         this.xCord = inXCord;
         this.yCord = inYCord;
 
-        ellipse = new Ellipse(getXCord(), getYCord(), getWidth(), getHeight()); 
+        ellipse = new Ellipse(getXCord(), getYCord(), getWidth(), getHeight());
+        ellipse.setStrokeWidth(10);
         ellipse.setStroke(Color.GRAY);
         ellipse.setFill(Color.TRANSPARENT);
     }
@@ -64,5 +65,10 @@ public class Orbit
     public Ellipse getEllipseFromOrbit()
     {
         return ellipse;
+    }
+
+    public void setEllipseStrokeWidth(double value)
+    {
+        ellipse.setStrokeWidth(value);
     }
 }

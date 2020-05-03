@@ -17,7 +17,7 @@ import java.awt.*;
  */
 public class Planet
 {
-    private double SCALE_RADIUS_VALUE = 2500000;
+    private double SCALE_RADIUS_VALUE = 25000;
 
     private long semiMajorAxis;
     private double perihelion;
