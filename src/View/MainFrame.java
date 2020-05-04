@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Transform;
@@ -366,9 +367,54 @@ public class MainFrame extends JFrame
             double delta = event.getDeltaY()*20;
             camera.setTranslateZ(camera.getTranslateZ()+delta);
 
-            zoomEllipseChange(camera);
-
             System.out.println(camera.getTranslateZ());
+
+            Platform.runLater(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    if (newPlanets == null)
+                    {
+                        for (int i = 0; i < guiPlanetList.size(); i++)
+                        {
+                            if (camera.getTranslateZ() <= -12600)
+                            {
+                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(10);
+                                System.out.println(10);
+                            }
+                            else if (camera.getTranslateZ() <= -53000)
+                            {
+                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(40);
+                                System.out.println(40);
+                            }
+                            else if (camera.getTranslateZ() <= -247800)
+                            {
+                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(180);
+                                System.out.println(180);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < newPlanets.size(); i++)
+                        {
+                            if (camera.getTranslateZ() <= 12600)
+                            {
+                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(10);
+                            }
+                            else if (camera.getTranslateZ() > 12600 && camera.getTranslateZ() <= 53000)
+                            {
+                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(40);
+                            }
+                            else if (camera.getTranslateZ() > 53000 && camera.getTranslateZ() <= 247800)
+                            {
+                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(180);
+                            }
+                        }
+                    }
+                }
+            });
 
         });
 
@@ -385,31 +431,6 @@ public class MainFrame extends JFrame
                     break;
             }
         });
-    }
-
-    private void zoomEllipseChange(PerspectiveCamera inCamera)//Work in progress
-    {
-        if (inCamera.getTranslateZ() <= 12600)
-        {
-            for (int i = 0; i < guiPlanetList.size(); i++)
-            {
-                guiPlanetList.get(i).getPlanetOrbit().setEllipseStrokeWidth(10);
-            }
-        }
-        else if (inCamera.getTranslateZ() > 12600 && inCamera.getTranslateZ() <= 53000)
-        {
-            for (int i = 0; i < guiPlanetList.size(); i++)
-            {
-                guiPlanetList.get(i).getPlanetOrbit().setEllipseStrokeWidth(40);
-            }
-        }
-        else if (inCamera.getTranslateZ() > 53000 && inCamera.getTranslateZ() <= 247800)
-        {
-            for (int i = 0; i < guiPlanetList.size(); i++)
-            {
-                guiPlanetList.get(i).getPlanetOrbit().setEllipseStrokeWidth(180);
-            }
-        }
     }
 
 

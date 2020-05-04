@@ -138,8 +138,6 @@ public class PositionCalculator {
             yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
             return (v + w) + 90;
         }
-
-
         else {
             xeclip = r * (Math.cos(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) - Math.sin(Math.PI / 180 * N) * Math.sin(Math.PI / 180 * (v + w)) * Math.cos(Math.PI / 180 * i));
             yeclip = r * (Math.sin(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) + Math.cos(Math.PI / 180 * N) * Math.sin(Math.PI / 180 * (v + w)) * Math.cos(Math.PI / 180 * i));

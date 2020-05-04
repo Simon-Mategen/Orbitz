@@ -17,7 +17,7 @@ import java.awt.*;
  */
 public class Planet
 {
-    private double SCALE_RADIUS_VALUE = 25000;
+    private double SCALE_RADIUS_VALUE = 12500;
 
     private long semiMajorAxis;
     private double perihelion;
@@ -200,7 +200,7 @@ public class Planet
     public void createPathTransition()
     {
         pathTransition = new PathTransition();
-        double d = pos.setDay(2020, 5, 1);
+        double d = pos.setDay(2020, 5, 4);
 
         planetOrbit.getEllipseFromOrbit().setRotate(-pos.getValues(d, getName()));
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
