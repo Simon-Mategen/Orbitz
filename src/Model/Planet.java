@@ -5,6 +5,7 @@ import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Tooltip;
 import javafx.scene.shape.*;
 import javafx.scene.transform.Translate;
 import javafx.util.Duration;
@@ -232,10 +233,20 @@ public class Planet
     }
 
     /**
+     * Set a tooltip which informs the planets name
      * @author Albin Ahlbeck
-     * Checks if there is an intersection on a point
-     * @param point the point to check for intersection
-
+     * @version 1.0
      */
+   public void setTooltip()
+   {
+       Tooltip tooltip = new Tooltip(getName());
+       tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
+       tooltip.setShowDelay(Duration.millis(250));               //sets time before text appears after hovering over image
+
+       sphere.setPickOnBounds(true);
+       Tooltip.install(sphere, tooltip);
+   }
+
+
 
 }
