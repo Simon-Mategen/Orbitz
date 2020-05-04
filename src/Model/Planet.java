@@ -202,7 +202,7 @@ public class Planet
         pathTransition = new PathTransition();
         double d = pos.setDay(2020, 5, 1);
 
-        planetOrbit.getEllipseFromOrbit().setRotate(pos.getValues(d, getName()));
+        planetOrbit.getEllipseFromOrbit().setRotate(-pos.getValues(d, getName()));
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
         //sphere.getTransforms().addAll(new Translate(0, planetOrbit.getWidth()-planetOrbit.getXCord()));
         //sphere.getTransforms().addAll(new Translate(pos.getValues(d, getName(), 1), pos.getValues(d, getName(), 2)));
