@@ -249,7 +249,9 @@ public class MainFrame extends JFrame
         scene.setFill(javafx.scene.paint.Color.BLACK);
         setupCamera(scene);
         handleMouse(root);
-        addStars();
+        addStars(4000);
+        System.out.println("Scene: Width: " + scene.getWidth() + "Height: " + scene.getHeight());
+        System.out.println("Root: Width: " + root.getWidth() + "Height: " + root.getHeight());
         placePlanets(root, planetArrayList);
         paintPlanets();
         startOrbits(planetArrayList);
@@ -364,11 +366,10 @@ public class MainFrame extends JFrame
 
         scene.addEventHandler(ScrollEvent.SCROLL, event ->
         {
-            double delta = event.getDeltaY()*20;
+            double delta = event.getDeltaY()*50;
             camera.setTranslateZ(camera.getTranslateZ()+delta);
 
             System.out.println(camera.getTranslateZ());
-
             Platform.runLater(new Runnable()
             {
                 @Override
@@ -376,24 +377,35 @@ public class MainFrame extends JFrame
                 {
                     if (newPlanets == null)
                     {
-                        for (int i = 0; i < guiPlanetList.size(); i++)
-                        {
-                            if (camera.getTranslateZ() <= -12600)
+                            if (camera.getTranslateZ() >= -12600)
                             {
-                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(10);
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(10);
+                                }
+
                                 System.out.println(10);
                             }
-                            else if (camera.getTranslateZ() <= -53000)
+                            else if (camera.getTranslateZ() >= -103000)
                             {
-                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(40);
+                                for (int i = 0; i < guiPlanetList.size() ; i++)
+                                {
+                                        guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(40);
+                                }
+
+
                                 System.out.println(40);
                             }
-                            else if (camera.getTranslateZ() <= -247800)
+                            else if (camera.getTranslateZ() >= -247800)
                             {
-                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(180);
+                                for (int i = 0; i < guiPlanetList.size() ; i++)
+                                {
+                                        guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(180);
+
+                                }
+
                                 System.out.println(180);
                             }
-                        }
                     }
                     else
                     {
@@ -581,23 +593,24 @@ public class MainFrame extends JFrame
      * @author Albin Ahlbeck
      * @version 1.0
      */
-    public void addStars()
+    public void addStars(int amountStars)
     {
+        int tempNumber = 100000;
         Random randomX = new Random();
         Random randomY = new Random();
         Random randomZ = new Random();
         int x;
         int y;
         int z;
-        int minX = -WIDTH;
-        int maxX = WIDTH;
-        int minY = -HEIGHT;
-        int maxY = HEIGHT;
-        int minZ = 300;
-        int maxZ = 800;
+        int minX = -tempNumber;
+        int maxX = tempNumber;
+        int minY = -tempNumber;
+        int maxY = tempNumber;
+        int minZ = 0;
+        int maxZ = 1;
         int radius = 1;
 
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < amountStars; i++)
         {
             x = randomX.nextInt(maxX - minX + 1) + minX;
             y = randomY.nextInt(maxY - minY + 1) + minY;
