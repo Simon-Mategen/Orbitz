@@ -36,7 +36,7 @@ public class Controller
 
         planetArrayList = createPlanetArray(1); //No duration modifier should be added here.
 
-        mainframe = new MainFrame(this);
+        mainframe = new MainFrame(this, this.sun);
         
     }
 

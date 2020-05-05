@@ -9,7 +9,7 @@ import javafx.scene.shape.Ellipse;
 
 public class Orbit
 {
-    private static final long SCALE_VALUE = 75000; //the scale from the orbits' real values
+    private static final long SCALE_VALUE = 37500; //the scale from the orbits' real values
 
     private double width;
     private double height;

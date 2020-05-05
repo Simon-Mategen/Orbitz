@@ -12,6 +12,9 @@ public class Sun
 
     private int xCord;
     private int yCord;
+    private int radius = 2000;
+
+    private Sphere sunSphere;
 
     public Sun(JSONObject object)
     {
@@ -50,7 +53,7 @@ public class Sun
 
     public Sphere getSphereFromSun()
     {
-        return new Sphere();
+        return sunSphere = new Sphere(radius);
     }
 
     @Override

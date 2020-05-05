@@ -2,6 +2,7 @@ package View;
 
 import Controller.Controller;
 import Model.Planet;
+import Model.Sun;
 import Model.Theme;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -70,6 +71,7 @@ public class MainFrame extends JFrame
 
     private Controller controller;
 
+    private Sun sun;
 
     private double startDragX;
     private double startDragY;
@@ -87,9 +89,10 @@ public class MainFrame extends JFrame
      * @author Simon Måtegen
      * @version 1.0
      */
-    public MainFrame(Controller inController)
+    public MainFrame(Controller inController, Sun inSun)
     {
         this.controller = inController;
+        this.sun = inSun;
 
         initFonts();
         guiPlanetList = controller.getPlanetArrayList(); // copy the planet list from controller
@@ -320,6 +323,10 @@ public class MainFrame extends JFrame
             map.setDiffuseMap(new Image("Images/" + guiPlanetList.get(i).getName() + ".jpg"));
             guiPlanetList.get(i).getSphereFromPlanet().setMaterial(map);
         }
+
+        PhongMaterial sunMap = new PhongMaterial();
+        sunMap.setDiffuseMap(new Image("Images/2k_sun.jpg"));
+        sun.getSphereFromSun().setMaterial(sunMap);
     }
 
     /**
@@ -344,6 +351,8 @@ public class MainFrame extends JFrame
                     new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord() * 2));
             System.out.println(currentTheme.toString());
         }
+
+        root.getChildren().add(sun.getSphereFromSun());
     }
 
     /**
