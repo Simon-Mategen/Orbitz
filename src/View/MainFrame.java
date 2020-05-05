@@ -11,9 +11,11 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Sphere;
@@ -250,6 +252,7 @@ public class MainFrame extends JFrame
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         root.setBackground(null);
         scene.setFill(javafx.scene.paint.Color.BLACK);
+        //scene.setFill(new ImagePattern(new Image("Images/Stars.jpg")));
         setupCamera(scene);
         handleMouse(root);
         addStars(4000);
@@ -323,10 +326,6 @@ public class MainFrame extends JFrame
             map.setDiffuseMap(new Image("Images/" + guiPlanetList.get(i).getName() + ".jpg"));
             guiPlanetList.get(i).getSphereFromPlanet().setMaterial(map);
         }
-
-        PhongMaterial sunMap = new PhongMaterial();
-        sunMap.setDiffuseMap(new Image("Images/2k_sun.jpg"));
-        sun.getSphereFromSun().setMaterial(sunMap);
     }
 
     /**
