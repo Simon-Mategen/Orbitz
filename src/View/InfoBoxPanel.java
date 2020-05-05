@@ -27,7 +27,7 @@ public class InfoBoxPanel extends JPanel implements ActionListener
 
     private JButton lunarTest;
 
-    private LunarInfoPanel lunarInfoPanel;
+    private MainLunarFrame mainLunarFrame;
 
     /**
      * @author Manna Manojlovic
@@ -38,7 +38,7 @@ public class InfoBoxPanel extends JPanel implements ActionListener
     {
         this.planet = planet;
         setupTable();
-        lunarInfoPanel = new LunarInfoPanel();
+        mainLunarFrame = new MainLunarFrame();
     }
 
     /**
@@ -186,7 +186,7 @@ public class InfoBoxPanel extends JPanel implements ActionListener
         if(e.getSource() == lunarTest)
         {
             System.out.println("testar lunarknappen");
-            lunarInfoPanel.setVisible(true);
+            mainLunarFrame.setVisible(true);
         }
     }
 }

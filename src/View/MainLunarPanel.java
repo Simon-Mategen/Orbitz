@@ -1,5 +1,7 @@
 package View;
 
+import Model.Planet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +13,8 @@ public class MainLunarPanel extends JPanel implements ActionListener
     private JButton returnBtn = new JButton("< Previous");
 
     private MainInfoFrame mainInfoFrame;
-    // private Planet planet;
+
+//    private Planet planet;
 
     public MainLunarPanel()
     {
@@ -21,19 +24,28 @@ public class MainLunarPanel extends JPanel implements ActionListener
 
     public void setupPanel()
     {
-        JLabel label = new JLabel();
-        label.setIcon(new ImageIcon("funfacts/moonLanding.gif"));
-
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         setBackground(Color.black);
 
-        returnBtn.setPreferredSize(new Dimension(75,25));
+        FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
+        flowLayout.setHgap(70);
 
-        setBackground(Color.black);
+        JPanel btnPanel = new JPanel(flowLayout);
+        btnPanel.setBackground(Color.black);
+
+        JLabel headline = new JLabel("THE MOON");
+        headline.setFont(new Font("Earth Orbiter", Font.BOLD, 55));
+        headline.setForeground(Color.YELLOW);
+
+        JLabel gifLabel = new JLabel();
+        gifLabel.setIcon(new ImageIcon("funfacts/moonLanding.gif"));
+
+        returnBtn.setPreferredSize(new Dimension(120,25));
 
         btnPanel.add(returnBtn);
+        btnPanel.add(headline);
+
         add(btnPanel,BorderLayout.NORTH);
-        add(label,BorderLayout.CENTER);
+        add(gifLabel,BorderLayout.CENTER);
 
     }
 
