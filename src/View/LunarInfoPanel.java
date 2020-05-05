@@ -1,7 +1,11 @@
 package View;
 
+import Model.Planet;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class will show the moons of a planet in more detail and show more info about the planet history etc
@@ -17,24 +21,21 @@ import java.awt.*;
 
 public class LunarInfoPanel extends JFrame
 {
-    private JPanel panel = new JPanel();
+    private MainLunarPanel panel;
 
-    private JLabel moon = new JLabel("Här ska månar och extra vara! Ska fungera som LoadingScreen.java! ");
 
     public LunarInfoPanel ()
 
     {
+        panel = new MainLunarPanel();
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(500, 500));
         setLocation(100,120);
         setResizable(false);
-
-        moon.setPreferredSize(new Dimension(400,50));
-        moon.setForeground(Color.yellow);
-
-        panel.add(moon,BorderLayout.CENTER);
-        panel.setBackground(Color.black);
-
         add(panel);
+
+
     }
+
 }

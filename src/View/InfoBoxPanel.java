@@ -5,6 +5,8 @@ import Model.Planet;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @Author Manna Manojlovic
@@ -13,7 +15,7 @@ import java.awt.*;
  * Shows information about travel time from earth, last visit, next visit and possibility of life
  * for each planet in the solar system
  */
-public class InfoBoxPanel extends JPanel
+public class InfoBoxPanel extends JPanel implements ActionListener
 {
     private final Font font1 = new Font ("Nasalization Rg", Font.BOLD,14);
     private final Font font2 = new Font ("Nasalization Rg", Font.PLAIN,11);
@@ -22,6 +24,10 @@ public class InfoBoxPanel extends JPanel
     private Object[] cols;
 
     private Planet planet;
+
+    private JButton lunarTest;
+
+    private LunarInfoPanel lunarInfoPanel;
 
     /**
      * @author Manna Manojlovic
@@ -32,6 +38,7 @@ public class InfoBoxPanel extends JPanel
     {
         this.planet = planet;
         setupTable();
+        lunarInfoPanel = new LunarInfoPanel();
     }
 
     /**
@@ -41,6 +48,10 @@ public class InfoBoxPanel extends JPanel
      */
     public void setupTable()
     {
+        lunarTest = new JButton("Test");
+        lunarTest.setPreferredSize(new Dimension(75,25));
+        lunarTest.addActionListener(this);
+
         setBackground(Color.black);     //background to panel
 
         table = new JTable();
@@ -86,6 +97,7 @@ public class InfoBoxPanel extends JPanel
         addRows();                         //adding the rows to the columns respectively
 
         add(s,BorderLayout.CENTER);        //placing the table on the layout
+        add(lunarTest,BorderLayout.SOUTH);//placing the lunar button on the layout
     }
 
     /**
@@ -166,5 +178,15 @@ public class InfoBoxPanel extends JPanel
         }
 
         model.addRow(colArr);       //add the rows above to the table model
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == lunarTest)
+        {
+            System.out.println("testar lunarknappen");
+            lunarInfoPanel.setVisible(true);
+        }
     }
 }
