@@ -1,5 +1,7 @@
 package Model;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import netscape.javascript.JSObject;
 import org.json.simple.JSONObject;
@@ -53,7 +55,11 @@ public class Sun
 
     public Sphere getSphereFromSun()
     {
-        return sunSphere = new Sphere(radius);
+        sunSphere = new Sphere(radius);
+        PhongMaterial sunMap = new PhongMaterial();
+        sunMap.setDiffuseMap(new Image("Images/Sun.jpg"));
+        sunSphere.setMaterial(sunMap);
+        return sunSphere;
     }
 
     @Override
