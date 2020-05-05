@@ -21,6 +21,8 @@ public class MainLunarPanel extends JPanel implements ActionListener
 
     public void setupPanel()
     {
+        JLabel label = new JLabel();
+        label.setIcon(new ImageIcon("funfacts/moonLanding.gif"));
 
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         setBackground(Color.black);
@@ -31,6 +33,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
 
         btnPanel.add(returnBtn);
         add(btnPanel,BorderLayout.NORTH);
+        add(label,BorderLayout.CENTER);
 
     }
 
