@@ -1,5 +1,8 @@
 package Model;
 
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -59,6 +62,7 @@ public class Sun
         PhongMaterial sunMap = new PhongMaterial();
         sunMap.setDiffuseMap(new Image("Images/Sun.jpg"));
         sunSphere.setMaterial(sunMap);
+
         return sunSphere;
     }
 

@@ -364,9 +364,9 @@ public class MainFrame extends JFrame
     public void setupCamera(Scene scene)
     {
         PerspectiveCamera camera = new PerspectiveCamera(true);
-        camera.setTranslateZ(-12600);
+        camera.setTranslateZ(-40600);
         camera.setNearClip(0.001);
-        camera.setFarClip(200000);
+        camera.setFarClip(2000000000);
         camera.setFieldOfView(35);
         camera.setTranslateX((float) orbitPanel.getSize().width / 2);
         camera.setTranslateY((float) orbitPanel.getSize().height / 2);
@@ -374,7 +374,7 @@ public class MainFrame extends JFrame
 
         scene.addEventHandler(ScrollEvent.SCROLL, event ->
         {
-            double delta = event.getDeltaY()*50;
+            double delta = event.getDeltaY()*100;
             camera.setTranslateZ(camera.getTranslateZ()+delta);
 
             System.out.println(camera.getTranslateZ());
@@ -414,6 +414,16 @@ public class MainFrame extends JFrame
 
                                 System.out.println(180);
                             }
+                            else if (camera.getTranslateZ() >= -600000)
+                            {
+                                for (int i = 0; i < guiPlanetList.size() ; i++)
+                                {
+                                        guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(600);
+
+                                }
+
+                                System.out.println(180);
+                            }
                     }
                     else
                     {
@@ -439,18 +449,18 @@ public class MainFrame extends JFrame
         });
 
 
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, event ->
+/*        scene.addEventHandler(KeyEvent.KEY_PRESSED, event ->
+    {
+        switch (event.getCode())
         {
-            switch (event.getCode())
-            {
-                case W:
-                    root.translateZProperty().set(root.getTranslateZ() + 10);
-                    break;
-                case S:
-                    root.translateZProperty().set(root.getTranslateZ() - 10);
-                    break;
-            }
-        });
+            case W:
+                root.translateZProperty().set(root.getTranslateZ() + 10);
+                break;
+            case S:
+                root.translateZProperty().set(root.getTranslateZ() - 10);
+                break;
+        }
+    });*/
     }
 
 
@@ -473,8 +483,8 @@ public class MainFrame extends JFrame
 
         root.setOnMouseDragged(event ->
         {
-            double offsetX = event.getSceneX() - startDragX;
-            double offsetY = event.getSceneY() - startDragY;
+            double offsetX = (event.getSceneX() - startDragX)*50;
+            double offsetY = (event.getSceneY() - startDragY)*50;
 
             double newTransX = orgTransX + offsetX;
             double newTransY = orgTransY + offsetY;

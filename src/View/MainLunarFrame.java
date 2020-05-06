@@ -16,7 +16,6 @@ public class MainLunarFrame extends JFrame
     {
         panel = new MainLunarPanel();
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(1000, 500));
         setLocation(100,120);
         setResizable(false);

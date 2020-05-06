@@ -27,7 +27,7 @@ public class Orbit
         this.yCord = inYCord;
 
         ellipse = new Ellipse(getXCord(), getYCord(), getWidth(), getHeight());
-        ellipse.setStrokeWidth(10);
+        ellipse.setStrokeWidth(40);
         ellipse.setStroke(Color.GRAY);
         ellipse.setFill(Color.TRANSPARENT);
     }
