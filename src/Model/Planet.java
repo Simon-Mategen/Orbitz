@@ -201,7 +201,7 @@ public class Planet
     public void createPathTransition()
     {
         pathTransition = new PathTransition();
-        double d = pos.setDay(2020, 5, 4);
+        double d = pos.setDay(2020, 5, 5);
 
         planetOrbit.getEllipseFromOrbit().setRotate(-pos.getValues(d, getName()));
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
