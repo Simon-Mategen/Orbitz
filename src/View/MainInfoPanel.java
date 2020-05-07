@@ -105,8 +105,6 @@ public class MainInfoPanel extends JPanel
         setBorder (new CompoundBorder (border, margin));
         planetaryPanel.setPreferredSize(new Dimension(600, 200));
 
-
-
         add (imgPanel, BorderLayout.NORTH);
         add (swenPanel, BorderLayout.EAST);
         add (planetaryPanel, BorderLayout.WEST);
