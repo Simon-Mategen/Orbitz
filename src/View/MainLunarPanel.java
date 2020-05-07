@@ -1,16 +1,19 @@
 package View;
 
 import Model.Planet;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class MainLunarPanel extends JPanel implements ActionListener
 {
-
     private JButton returnBtn = new JButton("< Previous");
+    private JPanel btnPanel;
 
     private MainInfoFrame mainInfoFrame;
 
@@ -29,7 +32,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
         FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
         flowLayout.setHgap(70);
 
-        JPanel btnPanel = new JPanel(flowLayout);
+        btnPanel = new JPanel(flowLayout);
         btnPanel.setBackground(Color.black);
 
         JLabel headline = new JLabel("THE MOON");

@@ -187,6 +187,7 @@ public class InfoBoxPanel extends JPanel implements ActionListener
         {
             System.out.println("testar lunarknappen");
             mainLunarFrame.setVisible(true);
+            mainLunarFrame.playSound("sound/oneSmallStep.mp3");
         }
     }
 }
