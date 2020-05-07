@@ -1,8 +1,15 @@
 package View;
 
 import Model.Planet;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Sphere;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +21,9 @@ public class MainLunarPanel extends JPanel implements ActionListener
 {
     private JButton returnBtn = new JButton("< Previous");
     private JPanel btnPanel;
+    private JFXPanel lunarModel = new JFXPanel();
+    private MediaPlayer player;
+    private Sphere moon = new Sphere();
 
     private MainInfoFrame mainInfoFrame;
 
@@ -47,17 +57,59 @@ public class MainLunarPanel extends JPanel implements ActionListener
         btnPanel.add(returnBtn);
         btnPanel.add(headline);
 
+        lunarModel.setPreferredSize(new Dimension(70, 70));
+
         add(btnPanel,BorderLayout.NORTH);
         add(gifLabel,BorderLayout.CENTER);
+        add(lunarModel,BorderLayout.WEST);
+
+        Platform.runLater(new Runnable()
+        {
+            public void run(){
+                initFX(lunarModel);
+            }
+        });
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == returnBtn)
-        {
+        if (e.getSource() == returnBtn) {
             mainInfoFrame.setVisible(true);
         }
+    }
+
+    public void playSound(String filePath) {
+        String file = filePath;
+        Media media = new Media(new File(file).toURI().toString());
+        player = new MediaPlayer(media);
+        player.setCycleCount(1);
+        player.play();
+    }
+
+    /*public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == moon) {
+            playSound("sound/earthMoon.mp3");
+        }else if(e.getSource() == deimos) {
+            playSound("sound/marsDeimos.mp3");
+        }else if(e.getSource() == phobos) {
+            playSound("sound/marsPhobos.mp3");
+        }
+    }*/
+
+    public void initFX(JFXPanel lunarModel){
+        Group moonRoot = new Group();
+        Scene moonScene = new Scene(moonRoot);
+        moonScene.setFill(javafx.scene.paint.Color.BLACK);
+        moon.setTranslateX(35);
+        moon.setTranslateY(35);
+        moon.setRadius(40);
+        PhongMaterial moonMaterial = new PhongMaterial();
+        moonMaterial.setDiffuseMap(new Image("Images/moon.jpg"));
+        moon.setMaterial(moonMaterial);
+        moonRoot.getChildren().add(moon);
+        lunarModel.setScene(moonScene);
     }
 }
