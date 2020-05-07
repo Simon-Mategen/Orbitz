@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class MainLunarPanel extends JPanel implements ActionListener
 {
 
-    private JButton returnBtn = new JButton("< Previous");
+    private JButton returnBtn;
 
     private MainInfoFrame mainInfoFrame;
 
@@ -24,6 +24,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
 
     public void setupPanel()
     {
+        returnBtn = new JButton("< Previous");  //sets window to MainInfoPanel and MainInfoFrame
         setBackground(Color.black);
 
         FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
@@ -49,12 +50,19 @@ public class MainLunarPanel extends JPanel implements ActionListener
 
     }
 
+    public void playGiantLeap()
+    {
+        //TODO LÄGG LJUDFILEN HÄR LANNNAAAAAAA
+
+        //LANNNNAAAAAA
+    }
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == returnBtn)
         {
-            mainInfoFrame.setVisible(true);
+            mainInfoFrame.setVisible(true);     //doesn't work right nau
         }
     }
 }

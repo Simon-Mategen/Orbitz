@@ -6,27 +6,23 @@ import javafx.application.Platform;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+
 import javafx.embed.swing.JFXPanel;
 
 import javafx.geometry.Orientation;
-import javafx.geometry.VerticalDirection;
+
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
 
 import javafx.scene.control.Slider;
-import javafx.scene.control.Tooltip;
-
-import javafx.scene.control.Button;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundFill;
+
 import javafx.scene.media.MediaPlayer;
 
-
-import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 
@@ -119,7 +115,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panelBtn = new JPanel(new BorderLayout());
 
         lblImage = new JLabel();
-
 
         previousListener = new PreviousListener();
         nextListener = new NextListener();
@@ -363,8 +358,10 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         }
     }
 
-    public void stopMp3(){
-        if(mediaPlayer != null){
+    public void stopMp3()
+    {
+        if(mediaPlayer != null)
+        {
             mediaPlayer.stop();
         }
     }
@@ -386,7 +383,8 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
 
         soundSlider.valueProperty().addListener(new InvalidationListener()
         {
-            public void invalidated(Observable observable) {
+            public void invalidated(Observable observable)
+            {
                 mediaPlayer.setVolume(soundSlider.getValue() / 100);
             }
         });
