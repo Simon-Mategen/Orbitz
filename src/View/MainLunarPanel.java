@@ -57,7 +57,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
         btnPanel.add(returnBtn);
         btnPanel.add(headline);
 
-        lunarModel.setPreferredSize(new Dimension(70, 70));
+        lunarModel.setPreferredSize(new Dimension(80, 80));
 
         add(btnPanel,BorderLayout.NORTH);
         add(gifLabel,BorderLayout.CENTER);
@@ -103,8 +103,8 @@ public class MainLunarPanel extends JPanel implements ActionListener
         Group moonRoot = new Group();
         Scene moonScene = new Scene(moonRoot);
         moonScene.setFill(javafx.scene.paint.Color.BLACK);
-        moon.setTranslateX(35);
-        moon.setTranslateY(35);
+        moon.setTranslateX(40);
+        moon.setTranslateY(40);
         moon.setRadius(40);
         PhongMaterial moonMaterial = new PhongMaterial();
         moonMaterial.setDiffuseMap(new Image("Images/moon.jpg"));
