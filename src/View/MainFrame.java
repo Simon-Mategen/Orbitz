@@ -80,6 +80,9 @@ public class MainFrame extends JFrame
     private double orgTransX;
     private double orgTransY;
 
+    private int moveSpeed = 20;
+    private int zoomSpeed = 10;
+
     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
 
@@ -374,7 +377,7 @@ public class MainFrame extends JFrame
 
         scene.addEventHandler(ScrollEvent.SCROLL, event ->
         {
-            double delta = event.getDeltaY()*100;
+            double delta = event.getDeltaY() * zoomSpeed;
             camera.setTranslateZ(camera.getTranslateZ()+delta);
 
             System.out.println(camera.getTranslateZ());
@@ -391,6 +394,8 @@ public class MainFrame extends JFrame
                                 {
                                     guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(10);
                                 }
+                                zoomSpeed = 10;
+                                moveSpeed = 10;
 
                                 System.out.println(10);
                             }
@@ -400,6 +405,8 @@ public class MainFrame extends JFrame
                                 {
                                         guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(40);
                                 }
+                                zoomSpeed = 50;
+                                moveSpeed = 40;
 
 
                                 System.out.println(40);
@@ -409,8 +416,9 @@ public class MainFrame extends JFrame
                                 for (int i = 0; i < guiPlanetList.size() ; i++)
                                 {
                                         guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(180);
-
                                 }
+                                zoomSpeed = 80;
+                                moveSpeed = 150;
 
                                 System.out.println(180);
                             }
@@ -419,10 +427,21 @@ public class MainFrame extends JFrame
                                 for (int i = 0; i < guiPlanetList.size() ; i++)
                                 {
                                         guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(600);
-
                                 }
+                                zoomSpeed = 120;
+                                moveSpeed = 200;
 
                                 System.out.println(180);
+                            }
+                            if(camera.getTranslateZ() < -795322)
+                            {
+                                camera.setTranslateZ(-795322);
+                            }
+
+                            if(camera.getTranslateZ() >= -8000)
+                            {
+                                camera.setTranslateZ(-8000);
+                                System.out.println("Sun");
                             }
                     }
                     else
@@ -483,8 +502,8 @@ public class MainFrame extends JFrame
 
         root.setOnMouseDragged(event ->
         {
-            double offsetX = (event.getSceneX() - startDragX)*50;
-            double offsetY = (event.getSceneY() - startDragY)*50;
+            double offsetX = (event.getSceneX() - startDragX)*moveSpeed;
+            double offsetY = (event.getSceneY() - startDragY)*moveSpeed;
 
             double newTransX = orgTransX + offsetX;
             double newTransY = orgTransY + offsetY;
