@@ -26,6 +26,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
     private Sphere moon = new Sphere();
 
     private MainInfoFrame mainInfoFrame;
+    private LunarTextPanel lunarTextPanel;
 
 //    private Planet planet;
 
@@ -37,6 +38,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
 
     public void setupPanel()
     {
+        lunarTextPanel = new LunarTextPanel();
         setBackground(Color.black);
 
         FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
@@ -62,6 +64,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
         add(btnPanel,BorderLayout.NORTH);
         add(gifLabel,BorderLayout.CENTER);
         add(lunarModel,BorderLayout.WEST);
+        add(lunarTextPanel,BorderLayout.EAST);
 
         Platform.runLater(new Runnable()
         {
