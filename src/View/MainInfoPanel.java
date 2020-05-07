@@ -103,7 +103,9 @@ public class MainInfoPanel extends JPanel
         setBackground (Color.black);
         setPreferredSize (new Dimension (width, height));
         setBorder (new CompoundBorder (border, margin));
-        planetaryPanel.setPreferredSize(new Dimension(500, 300));
+        planetaryPanel.setPreferredSize(new Dimension(600, 200));
+
+
 
         add (imgPanel, BorderLayout.NORTH);
         add (swenPanel, BorderLayout.EAST);
@@ -115,7 +117,6 @@ public class MainInfoPanel extends JPanel
         rotate = new Rotate();
         rotate.setPivotX(planetSphere.getRadius());
         rotate.setPivotY(planetSphere.getRadius());
-
     }
 
     /**

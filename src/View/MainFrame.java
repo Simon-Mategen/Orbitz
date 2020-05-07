@@ -351,6 +351,7 @@ public class MainFrame extends JFrame
             planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(currentTheme.getSecondaryPaint()); // Paint ellipse based on theme
             StackPane.setMargin(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
                     new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord() * 2));
+            planetArrayList.get(i).setTooltip();
             System.out.println(currentTheme.toString());
         }
 
@@ -429,7 +430,7 @@ public class MainFrame extends JFrame
                                         guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(600);
                                 }
                                 zoomSpeed = 120;
-                                moveSpeed = 200;
+                                moveSpeed = 220;
 
                                 System.out.println(180);
                             }
@@ -668,7 +669,7 @@ public class MainFrame extends JFrame
      */
     public void openInfoWindow(Planet planet)
     {
-        mainInfoFrame = new MainInfoFrame(planet);
+        mainInfoFrame = new MainInfoFrame(planet, currentTheme);
     }
 
 
