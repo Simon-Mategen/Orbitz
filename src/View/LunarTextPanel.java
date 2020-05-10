@@ -2,6 +2,9 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * @Author Manna Manojlovic
@@ -51,5 +54,64 @@ public class LunarTextPanel extends JPanel
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         add(scrollPane);
+    }
+
+    /**
+     * @Author Manna Manojlovic
+     * This method passes a filepath to readFile(String filePath)
+     * depending on which planet is selected different text will be set about the moons
+     * to the textArea.
+     */
+   /* public void setTextToTextArea()
+    {
+
+        if (planet.getName().equals("Earth"))
+        {
+            readFile("lunarFacts/test.txt");
+        }
+        else if (planet.getName().equals("Mars"))
+        {
+            readFile("lunarFacts/test.txt");
+        }
+        else if (planet.getName().equals("Jupiter"))
+        {
+            readFile("lunarFacts/test.txt");
+        }
+        else if (planet.getName().equals("Saturn"))
+        {
+            readFile("lunarFacts/test.txt");
+        }
+        else if(planet.getName().equals("Uranus"))
+        {
+            readFile("lunarFacts/test.txt");
+        }
+        else if (planet.getName().equals("Neptune"))
+        {
+            readFile("lunarFacts/test.txt");
+        }
+    }
+    
+    */
+
+    /**
+     * @Author Manna Manojlovic
+     * @param filePath takes a filepath as parameter from setTextToTextArea
+     *                 the filepath is to a textfile which has info about the moons
+     */
+    public void readFile(String filePath)
+    {
+        try (BufferedReader in = new BufferedReader(new FileReader(filePath)))
+        {
+            String line;
+
+            while ((line = in.readLine()) != null)
+            {
+                textArea.setText(line);
+            }
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
