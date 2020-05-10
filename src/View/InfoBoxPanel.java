@@ -38,7 +38,7 @@ public class InfoBoxPanel extends JPanel implements ActionListener
     {
         this.planet = planet;
         setupTable();
-        mainLunarFrame = new MainLunarFrame();
+        mainLunarFrame = new MainLunarFrame(planet);
     }
 
     /**

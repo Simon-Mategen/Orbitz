@@ -34,6 +34,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
     private LunarTextPanel lunarTextPanel;
     private LunarGalleryPanel lunarGalleryPanel;
     private MainLunarFrame lunarFrame;
+    private Planet planet;
 
     private double startDragX;
     private double startDragY;
@@ -42,8 +43,9 @@ public class MainLunarPanel extends JPanel implements ActionListener
 
 //    private Planet planet;
 
-    public MainLunarPanel()
+    public MainLunarPanel(Planet planet)
     {
+        this.planet = planet;
         setupPanel();
 
     }
@@ -51,7 +53,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
     public void setupPanel()
     {
         setLayout(new BorderLayout());
-        lunarTextPanel = new LunarTextPanel();
+        lunarTextPanel = new LunarTextPanel(planet);
         lunarGalleryPanel = new LunarGalleryPanel();
         setBackground(Color.black);
 

@@ -1,10 +1,12 @@
 package View;
 
+import Model.Planet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @Author Manna Manojlovic
@@ -18,13 +20,17 @@ public class LunarTextPanel extends JPanel
     private JTextArea textArea;
     private JScrollPane scrollPane;
 
+    private Planet planet;
+
+
     /**
      * @Author Manna Manojlovic
      *
      * Constructor, calls setupPanel()
      */
-    public LunarTextPanel()
+    public LunarTextPanel(Planet planet)
     {
+        this.planet = planet;
        setupPanel();
     }
 
@@ -53,6 +59,8 @@ public class LunarTextPanel extends JPanel
         scrollPane.setPreferredSize(new Dimension(320, 229));
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
+        setTextToTextArea();
+
         add(scrollPane);
     }
 
@@ -62,16 +70,16 @@ public class LunarTextPanel extends JPanel
      * depending on which planet is selected different text will be set about the moons
      * to the textArea.
      */
-   /* public void setTextToTextArea()
+    public void setTextToTextArea()
     {
 
         if (planet.getName().equals("Earth"))
         {
-            readFile("lunarFacts/test.txt");
+            readFile("lunarFacts/earth_moon.txt");
         }
         else if (planet.getName().equals("Mars"))
         {
-            readFile("lunarFacts/test.txt");
+            readFile("lunarFacts/mars_moons.txt");
         }
         else if (planet.getName().equals("Jupiter"))
         {
@@ -89,10 +97,9 @@ public class LunarTextPanel extends JPanel
         {
             readFile("lunarFacts/test.txt");
         }
+
     }
     
-    */
-
     /**
      * @Author Manna Manojlovic
      * @param filePath takes a filepath as parameter from setTextToTextArea
@@ -100,14 +107,11 @@ public class LunarTextPanel extends JPanel
      */
     public void readFile(String filePath)
     {
-        try (BufferedReader in = new BufferedReader(new FileReader(filePath)))
+        String content;
+        try
         {
-            String line;
-
-            while ((line = in.readLine()) != null)
-            {
-                textArea.setText(line);
-            }
+            content = new String(Files.readAllBytes(Paths.get(filePath)));
+            textArea.setText(content);
 
         } catch (IOException e)
         {

@@ -1,5 +1,7 @@
 package View;
 
+import Model.Planet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -15,6 +17,7 @@ import java.awt.event.WindowEvent;
 public class MainLunarFrame extends JFrame
 {
     private MainLunarPanel panel;
+    private Planet planet;
 
     /**
      * @Author Manna Manojlovic
@@ -22,8 +25,9 @@ public class MainLunarFrame extends JFrame
      * Constructor
      * Calls setupFrame() which has everything needed for creating the basic frame
      */
-    public MainLunarFrame()
+    public MainLunarFrame(Planet planet)
     {
+        this.planet = planet;
         setupFrame();
     }
 
@@ -36,7 +40,7 @@ public class MainLunarFrame extends JFrame
      */
     public void setupFrame()
     {
-        panel = new MainLunarPanel();
+        panel = new MainLunarPanel(planet);
 
         setSize(new Dimension(1000, 500));
         setLocation(100,120);
