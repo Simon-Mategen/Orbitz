@@ -1,23 +1,39 @@
 package View;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 
+/**
+ * @Author Manna Manojlovic
+ *
+ * This class is the main frame for the Lunar panel. It extens JFrame and creates the frame.
+ * MainLunarPanel is the contentpane for this
+ * This class also has a listener for the closing of the window: when closed, sound stops playing.
+ */
 public class MainLunarFrame extends JFrame
 {
     private MainLunarPanel panel;
-    
+
+    /**
+     * @Author Manna Manojlovic
+     *
+     * Constructor
+     * Calls setupFrame() which has everything needed for creating the basic frame
+     */
     public MainLunarFrame()
     {
         setupFrame();
     }
 
+    /**
+     * @Author Manna Manojlovic
+     *
+     * Sets up the frame with size, location and adds MainLunarPanel as conent.
+     * Calls addListeners() for the window closing event,
+     * which stops playing the sound when window is closed
+     */
     public void setupFrame()
     {
         panel = new MainLunarPanel();
@@ -27,6 +43,15 @@ public class MainLunarFrame extends JFrame
         setResizable(false);
         add(panel);
 
+        addListeners();
+
+    }
+
+    /**
+     * @Author Lanna
+     */
+    public void addListeners()
+    {
         addWindowListener(new WindowAdapter()
         {
             public void windowClosing(WindowEvent e)
@@ -36,7 +61,12 @@ public class MainLunarFrame extends JFrame
         });
     }
 
-    public void playSound(String filePath) {
+    /**
+     * @Author Lanna
+     * @param filePath
+     */
+    public void playSound(String filePath)
+    {
         panel.playSound(filePath);
     }
 }
