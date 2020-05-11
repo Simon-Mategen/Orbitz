@@ -157,13 +157,15 @@ public class MainFrame extends JFrame
         timeSlider.setMaximum(MAX_SLIDER_VALUE);
         timeSlider.setPaintLabels(true);
 
-        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+       /* Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
         labelTable.put(0, new JLabel("Real speed"));
-        labelTable.put(10, new JLabel("100"));
-        labelTable.put(20, new JLabel("1000"));
-        labelTable.put(30, new JLabel("10000"));
+        labelTable.put(10, new JLabel("1000"));
+        labelTable.put(20, new JLabel("100 000"));
+        labelTable.put(30, new JLabel("100 000 00"));
 
         timeSlider.setLabelTable(labelTable);
+
+        */
 
         timeSlider.setPreferredSize(new Dimension(700, 80));
         timeSlider.setPaintTicks(true);
@@ -603,15 +605,16 @@ public class MainFrame extends JFrame
             if (timeSlider.getValue() == 0)
             {
                 speedChangeScene(1);
-            } else if (timeSlider.getValue() == 10)
-            {
-                speedChangeScene(100);
-            } else if (timeSlider.getValue() == 20)
-            {
-                speedChangeScene(1000);
-            } else if (timeSlider.getValue() == 30)
+            }
+            else if (timeSlider.getValue() == 10)
             {
                 speedChangeScene(10000);
+            } else if (timeSlider.getValue() == 20)
+            {
+                speedChangeScene(1000000);
+            } else if (timeSlider.getValue() == 30)
+            {
+                speedChangeScene(10000000);
             }
         }
 
@@ -732,9 +735,9 @@ public class MainFrame extends JFrame
 
         // Time slider configuration
         JLabel lbl1 = new JLabel("Real speed");
-        JLabel lbl2 = new JLabel("x100");
-        JLabel lbl3 = new JLabel("x1000");
-        JLabel lbl4 = new JLabel("x10000");
+        JLabel lbl2 = new JLabel("x10000");
+        JLabel lbl3 = new JLabel("x1000000");
+        JLabel lbl4 = new JLabel("x10000000");
 
         lbl1.setForeground(theme.getSecondaryColor());
         lbl2.setForeground(theme.getSecondaryColor());

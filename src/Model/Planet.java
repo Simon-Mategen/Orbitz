@@ -19,7 +19,7 @@ import java.awt.*;
  */
 public class Planet
 {
-    private double SCALE_RADIUS_VALUE = 12500;
+    private double SCALE_RADIUS_VALUE = 6250; // 12500 ORGINAL VALUE 6250
 
     private long semiMajorAxis;
     private double perihelion;
@@ -52,7 +52,7 @@ public class Planet
         this.planetInfo = object;
         this.perihelion = (long)planetInfo.get("perihelion");
         this.aphelion = (long)planetInfo.get("aphelion");
-        this.sphere = new Sphere((double)planetInfo.get("meanRadius")*2000/SCALE_RADIUS_VALUE);
+        this.sphere = new Sphere((double)planetInfo.get("meanRadius")*1000/SCALE_RADIUS_VALUE);
         this.sphere.setId(getName());  // set ID so sphere's planet can be found
         //this.planetTableInfo = new PlanetInfo(getMass(), getMeanRadius(), 0, );
     }
