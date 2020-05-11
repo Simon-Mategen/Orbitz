@@ -11,16 +11,11 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
-import javafx.scene.transform.Transform;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,7 +37,9 @@ import java.util.*;
 public class MainFrame extends JFrame
 {
 
-    private JLabel titleLabel;
+    private JLabel lblTitle;
+
+    private JButton btnHelp;
 
     private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -109,13 +106,18 @@ public class MainFrame extends JFrame
         timeSlider = new JSlider();
         musicSlider = new JSlider();
         cbThemes = new JComboBox<Theme>(themes);
+
         lblTheme = new JLabel("Select theme");
         lblTheme.setFont(new Font("Nasalization Rg", Font.PLAIN, 16));
-        titleLabel = new JLabel();
-        titleLabel.setPreferredSize(new Dimension(700, 80));
-        titleLabel.setText("Orbitz");
-        titleLabel.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
-        titleLabel.setOpaque(true);
+
+        lblTitle = new JLabel();
+        lblTitle.setPreferredSize(new Dimension(700, 80));
+        lblTitle.setText("Orbitz");
+        lblTitle.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
+        lblTitle.setOpaque(true);
+
+        btnHelp = new JButton("Help!");
+        btnHelp.setPreferredSize(new Dimension(100, 50));
 
         // Sets up the JFrame
         setLayout(new BorderLayout());
@@ -181,19 +183,21 @@ public class MainFrame extends JFrame
         overheadPanel.setOpaque(true);
         timeSlider.setOpaque(true);
 
-        titleLabel.setOpaque(false);
+        lblTitle.setOpaque(false);
         mediaPanel.setOpaque(true);
 
         overheadPanel.setPreferredSize(new Dimension(1400, 150));
-        overheadPanel.add(titleLabel);
+        overheadPanel.add(lblTitle);
         overheadPanel.add(timeSlider);
         overheadPanel.add(mediaPanel);
         overheadPanel.add(lblTheme);
         overheadPanel.add(cbThemes);
+        overheadPanel.add(btnHelp);
 
         add(orbitPanel, BorderLayout.CENTER);
 
         add(overheadPanel, BorderLayout.NORTH);
+
 
         currentTheme = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
         setColors(currentTheme);
@@ -716,11 +720,11 @@ public class MainFrame extends JFrame
     public void setColors(Theme theme)
     {
         currentTheme = theme;
-        titleLabel.setForeground(theme.getSecondaryColor());
+        lblTitle.setForeground(theme.getSecondaryColor());
         timeSlider.setForeground(theme.getSecondaryColor());
         overheadPanel.setBackground(theme.getMainColor());
-        titleLabel.setOpaque(true);
-        titleLabel.setBackground(null);
+        lblTitle.setOpaque(true);
+        lblTitle.setBackground(null);
         timeSlider.setBackground(null);
         timeSlider.setOpaque(true);
         lblTheme.setForeground(theme.getMainColor());
