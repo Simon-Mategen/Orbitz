@@ -6,14 +6,14 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Point3D;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Sphere;
+import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -22,7 +22,6 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.io.IOException;
-import java.util.Random;
 
 /**
  * @Author: Manna Manojlovic
@@ -40,6 +39,7 @@ public class MainInfoPanel extends JPanel
     private ImageGalleryPanel imgPanel;
     private SwenTheAlien swenPanel;
     private JFXPanel planetaryPanel;
+    private Cylinder planetRings;
 
     private Planet planet;
 
@@ -138,7 +138,7 @@ public class MainInfoPanel extends JPanel
     private Scene createScene()
     {
         root = new StackPane();
-        Scene scene = new Scene(root, planetaryPanel.getWidth(), planetaryPanel.getHeight());
+        Scene scene = new Scene(root, planetaryPanel.getWidth(), planetaryPanel.getHeight(), true);
         scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(null);
         root.getChildren().add(planetSphere);
@@ -199,6 +199,7 @@ public class MainInfoPanel extends JPanel
             double newTransX = orgTransX + offsetX;
             double newTransY = orgTransY + offsetY;
             matrixRotateNode(planetSphere, 0,  -newTransY / 100, newTransX / 100);
+            matrixRotateNode(planetRings, 0, -newTransY / 100, newTransX / 100);
         });
     }
 
@@ -234,9 +235,26 @@ public class MainInfoPanel extends JPanel
             PhongMaterial map = new PhongMaterial();
             map.setDiffuseMap(new Image("Images/" + planet.getName() + ".jpg"));
             planetSphere.setMaterial(map);
+
+            if(planet.getName().equals("Saturn")){
+                planetRings();
+            }
     }
 
     public void stopMp3(){
         imgPanel.stopMp3();
+    }
+
+    /**
+     * Adds rings to the 3D model of Saturn
+     * @author Lanna Maslo
+     * @version 1.0
+     */
+    public void planetRings(){
+        planetRings = new Cylinder(180,5);
+        PhongMaterial rings = new PhongMaterial();
+        rings.setDiffuseMap(new Image("Images/saturnRings.png"));
+        planetRings.setMaterial(rings);
+        root.getChildren().add(planetRings);
     }
 }
