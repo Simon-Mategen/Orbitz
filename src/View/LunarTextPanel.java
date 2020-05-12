@@ -83,19 +83,19 @@ public class LunarTextPanel extends JPanel
         }
         else if (planet.getName().equals("Jupiter"))
         {
-            readFile("lunarFacts/test.txt");
+            readFile("lunarFacts/jupiter_moons.txt");
         }
         else if (planet.getName().equals("Saturn"))
         {
-            readFile("lunarFacts/test.txt");
+            readFile("lunarFacts/saturn_moons.txt");
         }
         else if(planet.getName().equals("Uranus"))
         {
-            readFile("lunarFacts/test.txt");
+            readFile("lunarFacts/uranus_moons.txt");
         }
         else if (planet.getName().equals("Neptune"))
         {
-            readFile("lunarFacts/test.txt");
+            readFile("lunarFacts/neptune_moons.txt");
         }
 
     }
