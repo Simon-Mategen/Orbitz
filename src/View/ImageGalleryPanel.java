@@ -44,11 +44,8 @@ import javafx.scene.media.Media;
  * @Author: Manna Manojlovic
  * @version: 1.0
  * Panel for the gallery of images.
- * 4 images of the planet and/or its' moon/moons.
- * 1 enlarged image shows up when user clicks one of the small images.
- *
  */
-public class ImageGalleryPanel extends JPanel //implements ActionListener
+public class ImageGalleryPanel extends JPanel
 {
     private Planet planet;
     private JPanel panel;
@@ -119,7 +116,6 @@ public class ImageGalleryPanel extends JPanel //implements ActionListener
         panelBtn = new JPanel(new BorderLayout());
 
         lblImage = new JLabel();
-
 
         previousListener = new PreviousListener();
         nextListener = new NextListener();

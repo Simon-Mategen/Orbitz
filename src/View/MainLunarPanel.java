@@ -54,7 +54,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
     {
         setLayout(new BorderLayout());
         lunarTextPanel = new LunarTextPanel(planet);
-        lunarGalleryPanel = new LunarGalleryPanel();
+        lunarGalleryPanel = new LunarGalleryPanel(planet);
         setBackground(Color.black);
 
         FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);

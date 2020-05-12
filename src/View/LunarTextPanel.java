@@ -97,7 +97,6 @@ public class LunarTextPanel extends JPanel
         {
             readFile("lunarFacts/neptune_moons.txt");
         }
-
     }
     
     /**
@@ -118,4 +117,5 @@ public class LunarTextPanel extends JPanel
             e.printStackTrace();
         }
     }
+
 }
