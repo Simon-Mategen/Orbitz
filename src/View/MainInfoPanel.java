@@ -6,7 +6,6 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Point3D;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
@@ -15,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import javafx.util.Duration;
 
 import javax.swing.*;
@@ -142,6 +142,7 @@ public class MainInfoPanel extends JPanel
         scene.setFill(javafx.scene.paint.Color.BLACK);
         root.setBackground(null);
         root.getChildren().add(planetSphere);
+        root.setTranslateY(20);
 
         Tooltip tooltip = new Tooltip("Rotate me!");
         tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
@@ -256,5 +257,10 @@ public class MainInfoPanel extends JPanel
         rings.setDiffuseMap(new Image("Images/saturnRings.png"));
         planetRings.setMaterial(rings);
         root.getChildren().add(planetRings);
+
+        Transform tilt = new Rotate(30, new Point3D(50, 120, 40));
+        root.getTransforms().add(tilt);
+        root.setTranslateY(-20);
+        root.setTranslateX(40);
     }
 }
