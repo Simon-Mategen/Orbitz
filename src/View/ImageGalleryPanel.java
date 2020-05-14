@@ -41,8 +41,8 @@ import java.util.ArrayList;
 import javafx.scene.media.Media;
 
 /**
- * @Author: Manna Manojlovic
- * @version: 1.0
+ * @author Manna Manojlovic
+ * @version 1.0
  * Panel for the gallery of images.
  */
 public class ImageGalleryPanel extends JPanel

@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * @Author Manna Manojlovic
+ * @author Manna Manojlovic
  *
  * This class is the main frame for the Lunar panel. It extens JFrame and creates the frame.
  * MainLunarPanel is the contentpane for this
@@ -20,7 +20,7 @@ public class MainLunarFrame extends JFrame
     private Planet planet;
 
     /**
-     * @Author Manna Manojlovic
+     * @author Manna Manojlovic
      *
      * Constructor
      * Calls setupFrame() which has everything needed for creating the basic frame
@@ -32,7 +32,7 @@ public class MainLunarFrame extends JFrame
     }
 
     /**
-     * @Author Manna Manojlovic
+     * @author Manna Manojlovic
      *
      * Sets up the frame with size, location and adds MainLunarPanel as conent.
      * Calls addListeners() for the window closing event,
@@ -52,7 +52,7 @@ public class MainLunarFrame extends JFrame
     }
 
     /**
-     * @Author Lanna
+     * @author Lanna
      */
     public void addListeners()
     {
@@ -66,7 +66,7 @@ public class MainLunarFrame extends JFrame
     }
 
     /**
-     * @Author Lanna
+     * @author Lanna
      * @param filePath
      */
     public void playSound(String filePath)

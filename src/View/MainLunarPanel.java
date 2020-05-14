@@ -96,7 +96,6 @@ public class MainLunarPanel extends JPanel implements ActionListener
 
     }
 
-    @Override
     public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == returnBtn) {
@@ -130,6 +129,12 @@ public class MainLunarPanel extends JPanel implements ActionListener
         }
     }*/
 
+    /**
+     * Creates a JFXPanel that contains a 3D model of the moon
+     * @author Lanna Maslo
+     * @version 1.0
+     */
+
     public void initFX(JFXPanel lunarModel){
         Scene moonScene = new Scene(moonRoot);
         moonScene.setFill(javafx.scene.paint.Color.BLACK);
@@ -145,6 +150,12 @@ public class MainLunarPanel extends JPanel implements ActionListener
         rotate.setPivotX(moon.getRadius());
         rotate.setPivotY(moon.getRadius());
     }
+
+    /**
+     * Enables rotation by mouse
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
 
     public void handleMouse()
     {
@@ -167,6 +178,12 @@ public class MainLunarPanel extends JPanel implements ActionListener
             matrixRotateNode(moon, 0,  -newTransY / 100, newTransX / 100);
         });
     }
+
+    /**
+     * Sets rotation values
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
 
     private void matrixRotateNode(Node n, double alf, double bet, double gam) {
         double A11 = Math.cos(alf) * Math.cos(gam);

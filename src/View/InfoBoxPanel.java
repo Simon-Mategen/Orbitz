@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * @Author Manna Manojlovic
+ * @author Manna Manojlovic
  *
  * This class is the table with information about the selected planet.
  * Shows information about travel time from earth, last visit, next visit and possibility of life

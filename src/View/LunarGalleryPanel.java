@@ -7,8 +7,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * @Author Manna Manojlovic
- * @Author VEM MER LOL???
+ * @author Manna Manojlovic
+ * @author Lanna Maslo
  *
  * This class is the image gallery class for moon pictures
  * It's called by MainLunarPanel.java and placed on the east side of BorderLayout

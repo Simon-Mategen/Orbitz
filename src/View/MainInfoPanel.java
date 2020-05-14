@@ -24,7 +24,7 @@ import java.awt.*;
 import java.io.IOException;
 
 /**
- * @Author: Manna Manojlovic
+ * @author: Manna Manojlovic
  *
 * upper left corner: JavaFX-panel with lunar orbits around planets, in miniature
 * bottom left corner: textarea with general facts about the planet
@@ -57,8 +57,8 @@ public class MainInfoPanel extends JPanel
     private AnimationTimer timer = null;
 
     /**
-     * @Author: Manna Manojlovic
-     * version 1.0
+     * @author: Manna Manojlovic
+     * @version: 1.0
      *
      * Constructor
      * Initializes the instances, calls method setupPanel()
@@ -81,7 +81,7 @@ public class MainInfoPanel extends JPanel
     }
 
     /**
-     * @Author: Manna Manojlovic
+     * @author: Manna Manojlovic
      * @version: 1.0
      *
      * This method initializes a BorderLayout and places the panels from other classes on it.
