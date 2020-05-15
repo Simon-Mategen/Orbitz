@@ -34,6 +34,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
     private LunarTextPanel lunarTextPanel;
     private LunarGalleryPanel lunarGalleryPanel;
     private MainLunarFrame lunarFrame;
+    private LunarPanelSouth lunarPanelSouth;
     private Planet planet;
 
     private double startDragX;
@@ -53,6 +54,9 @@ public class MainLunarPanel extends JPanel implements ActionListener
     public void setupPanel()
     {
         setLayout(new BorderLayout());
+
+        lunarPanelSouth = new LunarPanelSouth(planet);
+
         lunarTextPanel = new LunarTextPanel(planet);
         lunarGalleryPanel = new LunarGalleryPanel(planet);
         setBackground(Color.black);
@@ -85,14 +89,20 @@ public class MainLunarPanel extends JPanel implements ActionListener
         add(lunarGalleryPanel,BorderLayout.EAST);
         add(gifLabel,BorderLayout.CENTER);
         add(lunarTextPanel,BorderLayout.WEST);
-        add(lunarModel,BorderLayout.SOUTH);
 
-        Platform.runLater(new Runnable()
+        if(!planet.getName().equals("Earth"))
         {
-            public void run(){
-                initFX(lunarModel);
-            }
-        });
+            add(lunarPanelSouth,BorderLayout.SOUTH);
+        }
+        else
+            add(lunarModel,BorderLayout.SOUTH);
+
+            Platform.runLater(new Runnable()
+            {
+                public void run(){
+                    initFX(lunarModel);
+                }
+            });
 
     }
 

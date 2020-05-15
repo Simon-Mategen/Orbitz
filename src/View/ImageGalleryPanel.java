@@ -9,24 +9,18 @@ import javafx.beans.Observable;
 import javafx.embed.swing.JFXPanel;
 
 import javafx.geometry.Orientation;
-import javafx.geometry.VerticalDirection;
+
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
-
 import javafx.scene.control.Slider;
-import javafx.scene.control.Tooltip;
-
-import javafx.scene.control.Button;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundFill;
+
 import javafx.scene.media.MediaPlayer;
 
-
-import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicArrowButton;
 
@@ -42,8 +36,11 @@ import javafx.scene.media.Media;
 
 /**
  * @author Manna Manojlovic
+ * @author Lanna Maslo
+ * @author Albin Ahlbeck
  * @version 1.0
- * Panel for the gallery of images.
+ *
+ * Panel for the gallery of images and sounds for planets.
  */
 public class ImageGalleryPanel extends JPanel
 {
@@ -359,8 +356,10 @@ public class ImageGalleryPanel extends JPanel
         }
     }
 
-    public void stopMp3(){
-        if(mediaPlayer != null){
+    public void stopMp3()
+    {
+        if(mediaPlayer != null)
+        {
             mediaPlayer.stop();
         }
     }
@@ -398,7 +397,6 @@ public class ImageGalleryPanel extends JPanel
      */
     private class NextListener implements ActionListener
     {
-
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
@@ -421,7 +419,6 @@ public class ImageGalleryPanel extends JPanel
      */
     private class PreviousListener implements ActionListener
     {
-
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
@@ -435,7 +432,5 @@ public class ImageGalleryPanel extends JPanel
             }
             lblImage.setIcon(imageList.get(picIndex));
         }
-
-
     }
 }
