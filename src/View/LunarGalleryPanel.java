@@ -53,13 +53,16 @@ public class LunarGalleryPanel extends JPanel
     public LunarGalleryPanel(Planet planet)
     {
         this.planet = planet;
+
         createPanel(planet);
+
         addImages();
     }
 
     public void createPanel(Planet planet)
     {
-        try {
+        try
+        {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); // makes the ui cross platform
         }
         catch(Exception e)
@@ -152,6 +155,7 @@ public class LunarGalleryPanel extends JPanel
             readImages("src/Images/moon2.jpg");
             readImages("src/Images/moon3.jpg");
             readImages("src/Images/moon4.jpg");
+            readImages("src/Images/moon5.jpg");
         }
         else if (planet.getName().equals("Mars"))
         {
@@ -178,6 +182,8 @@ public class LunarGalleryPanel extends JPanel
             readImages("src/Images/titan2.jpg");
             readImages("src/Images/titan3.jpeg");
             readImages("src/Images/dione1.jpg");
+            readImages("src/Images/enceladus1.jpg");
+            readImages("src/Images/enceladus2.jpg");
         }
         else if (planet.getName().equals("Uranus"))
         {

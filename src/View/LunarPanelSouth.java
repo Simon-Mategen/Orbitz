@@ -12,11 +12,16 @@ public class LunarPanelSouth extends JPanel
     public LunarPanelSouth(Planet planet)
     {
         this.planet = planet;
+
         setBackground(Color.black);
 
         JLabel lblMoons = new JLabel();
 
-        if(planet.getName().equals("Saturn"))
+        if (planet.getName().equals("Mars"))
+        {
+            lblMoons.setIcon(new ImageIcon("src/Images/mars_moons.jpg"));
+        }
+        else if(planet.getName().equals("Saturn"))
         {
             lblMoons.setIcon(new ImageIcon("src/Images/titan4.jpg"));
         }

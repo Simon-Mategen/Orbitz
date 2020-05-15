@@ -22,8 +22,11 @@ import java.io.File;
 
 public class MainLunarPanel extends JPanel implements ActionListener
 {
-    private JButton returnBtn = new JButton("< Previous");
+    private JButton returnBtn = new JButton("Stop sound");
+
     private JPanel btnPanel;
+    private JLabel headline;
+
     private JFXPanel lunarModel = new JFXPanel();
     private MediaPlayer player;
     private Sphere moon = new Sphere();
@@ -42,42 +45,38 @@ public class MainLunarPanel extends JPanel implements ActionListener
     private double orgTransY;
     private double orgTransX;
 
-//    private Planet planet;
 
     public MainLunarPanel(Planet planet)
     {
         this.planet = planet;
-        setupPanel();
 
+        lunarPanelSouth = new LunarPanelSouth(planet);
+        lunarTextPanel = new LunarTextPanel(planet);
+        lunarGalleryPanel = new LunarGalleryPanel(planet);
+
+        setupPanel();
     }
 
     public void setupPanel()
     {
-        setLayout(new BorderLayout());
-
-        lunarPanelSouth = new LunarPanelSouth(planet);
-
-        lunarTextPanel = new LunarTextPanel(planet);
-        lunarGalleryPanel = new LunarGalleryPanel(planet);
-        setBackground(Color.black);
+        setLayout(new BorderLayout());      //sets layout to JPanel which is extendedd
+        setBackground(Color.black);         //sets background color to JPanel which is extended
 
         FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
         flowLayout.setHgap(70);
+
+        JLabel gifLabel = new JLabel();     //for those moons that have gifs
+        gifLabel.setSize(300, 229);
+        gifLabel.setIcon(new ImageIcon("funfacts/moonLanding.gif"));
 
         btnPanel = new JPanel(flowLayout);
         btnPanel.setPreferredSize(new Dimension(1000, 100));
         btnPanel.setBackground(Color.black);
 
-        JLabel headline = new JLabel("THE MOON");
-        headline.setFont(new Font("Earth Orbiter", Font.BOLD, 55));
-        headline.setForeground(Color.YELLOW);
-
-        JLabel gifLabel = new JLabel();
-        gifLabel.setSize(300, 229);
-        gifLabel.setIcon(new ImageIcon("funfacts/moonLanding.gif"));
-
         returnBtn.setPreferredSize(new Dimension(120,25));
         returnBtn.addActionListener(this);
+
+        initializeHeadLine();
 
         btnPanel.add(returnBtn);
         btnPanel.add(headline);
@@ -90,12 +89,12 @@ public class MainLunarPanel extends JPanel implements ActionListener
         add(gifLabel,BorderLayout.CENTER);
         add(lunarTextPanel,BorderLayout.WEST);
 
-        if(!planet.getName().equals("Earth"))
+        if(!planet.getName().equals("Earth"))           //earth moon has 3D model, the others do not
         {
-            add(lunarPanelSouth,BorderLayout.SOUTH);
+            add(lunarPanelSouth,BorderLayout.SOUTH);    //add all the other planets' moons images to south
         }
         else
-            add(lunarModel,BorderLayout.SOUTH);
+            add(lunarModel,BorderLayout.SOUTH);         //if planet is earth, add earth's moon mondel to south
 
             Platform.runLater(new Runnable()
             {
@@ -103,18 +102,55 @@ public class MainLunarPanel extends JPanel implements ActionListener
                     initFX(lunarModel);
                 }
             });
+    }
 
+    /**
+     * @author Manna Manojlovic
+     *
+     * This is the headline title for each of the moon windows
+     */
+    public void initializeHeadLine()
+    {
+        headline = new JLabel();
+        headline.setFont(new Font("Earth Orbiter", Font.BOLD, 55));
+        headline.setForeground(Color.YELLOW);
+
+        if (planet.getName().equals("Earth"))
+        {
+            headline.setText("THE MOON");
+        }
+        else if (planet.getName().equals("Mars"))
+        {
+           headline.setText("PHOBOS & DEIMOS");
+        }
+        else if(planet.getName().equals("Jupiter"))
+        {
+            headline.setText("JUPITER'S MOONS");
+        }
+        else if(planet.getName().equals("Saturn"))
+        {
+            headline.setText("SATURN'S MOONS");
+        }
+        else if(planet.getName().equals("Uranus"))
+        {
+            headline.setText("URANUS'S MOONS");
+        }
+        else if(planet.getName().equals("Neptune"))
+        {
+            headline.setText("NEPTUNE'S MOONS");
+        }
     }
 
     public void actionPerformed(ActionEvent e)
     {
-        if (e.getSource() == returnBtn) {
-            //mainInfoFrame.setVisible(true);
+        if (e.getSource() == returnBtn)
+        {
             player.stop();
         }
     }
 
-    public void playSound(String filePath) {
+    public void playSound(String filePath)
+    {
         String file = filePath;
         Media media = new Media(new File(file).toURI().toString());
         player = new MediaPlayer(media);
@@ -144,7 +180,6 @@ public class MainLunarPanel extends JPanel implements ActionListener
      * @author Lanna Maslo
      * @version 1.0
      */
-
     public void initFX(JFXPanel lunarModel){
         Scene moonScene = new Scene(moonRoot);
         moonScene.setFill(javafx.scene.paint.Color.BLACK);
@@ -166,7 +201,6 @@ public class MainLunarPanel extends JPanel implements ActionListener
      * @author Albin Ahlbeck
      * @version 1.0
      */
-
     public void handleMouse()
     {
         moonRoot.setOnMousePressed(event ->
@@ -194,8 +228,8 @@ public class MainLunarPanel extends JPanel implements ActionListener
      * @author Albin Ahlbeck
      * @version 1.0
      */
-
-    private void matrixRotateNode(Node n, double alf, double bet, double gam) {
+    private void matrixRotateNode(Node n, double alf, double bet, double gam)
+    {
         double A11 = Math.cos(alf) * Math.cos(gam);
         double A12 = Math.cos(bet) * Math.sin(alf) + Math.cos(alf) * Math.sin(bet) * Math.sin(gam);
         double A13 = Math.sin(alf) * Math.sin(bet) - Math.cos(alf) * Math.cos(bet) * Math.sin(gam);

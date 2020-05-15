@@ -144,8 +144,8 @@ public class MainInfoPanel extends JPanel
         root.getChildren().add(planetSphere);
         root.setTranslateY(20);
 
-        Tooltip tooltip = new Tooltip("Rotate me!");
-        tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
+        Tooltip tooltip = new Tooltip("Spin me right round, baby, right round!");
+        tooltip.setStyle("-fx-font-size: 18");                   //CSS stylesheet, Oracle doc.
         tooltip.setShowDelay(Duration.millis(1));               //sets time before text appears after hovering over image
 
         planetSphere.setPickOnBounds(true);
