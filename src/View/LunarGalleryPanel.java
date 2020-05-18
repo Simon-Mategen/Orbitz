@@ -200,7 +200,7 @@ public class LunarGalleryPanel extends JPanel
             readImages("src/Images/triton2.jpg");
         }
 
-        lblImage.setIcon(imageList.get(0));
+        //lblImage.setIcon(imageList.get(0));
     }
 
     public void readImages(String filePath)

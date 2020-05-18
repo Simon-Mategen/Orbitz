@@ -48,7 +48,7 @@ public class InfoBoxPanel extends JPanel implements ActionListener
      */
     public void setupTable()
     {
-        lunarTest = new JButton("Test");
+        lunarTest = new JButton("Moons");
         lunarTest.setPreferredSize(new Dimension(75,25));
         lunarTest.addActionListener(this);
 
