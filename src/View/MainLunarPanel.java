@@ -4,10 +4,13 @@ import Model.Planet;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Point3D;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.PhongMaterial;
@@ -28,8 +31,11 @@ public class MainLunarPanel extends JPanel implements ActionListener
     private JLabel headline;
 
     private JFXPanel lunarModel = new JFXPanel();
+    private JFXPanel centerPanel = new JFXPanel();
     private MediaPlayer player;
-    private Sphere moon = new Sphere();
+    private Sphere moon;
+    private ImageView phobos;
+    private ImageView deimos;
     private Group moonRoot = new Group();
     private Rotate rotate;
 
@@ -66,7 +72,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
         flowLayout.setHgap(70);
 
         JLabel gifLabel = new JLabel();     //for those moons that have gifs
-        gifLabel.setSize(300, 229);
+        gifLabel.setSize(200, 153);
         gifLabel.setIcon(new ImageIcon("funfacts/moonLanding.gif"));
 
         btnPanel = new JPanel(flowLayout);
@@ -81,20 +87,20 @@ public class MainLunarPanel extends JPanel implements ActionListener
         btnPanel.add(returnBtn);
         btnPanel.add(headline);
 
-        lunarModel.setPreferredSize(new Dimension(1000, 120));
+        lunarModel.setPreferredSize(new Dimension(270, 390));
         handleMouse();
 
         add(btnPanel,BorderLayout.NORTH);
         add(lunarGalleryPanel,BorderLayout.EAST);
-        add(gifLabel,BorderLayout.CENTER);
+        //add(gifLabel,BorderLayout.CENTER);
         add(lunarTextPanel,BorderLayout.WEST);
 
-        if(!planet.getName().equals("Earth"))           //earth moon has 3D model, the others do not
+        if(!planet.getName().equals("Earth") && !planet.getName().equals("Mars"))       //earth and mars have 3D models, the other moons do not
         {
             add(lunarPanelSouth,BorderLayout.SOUTH);    //add all the other planets' moons images to south
         }
         else
-            add(lunarModel,BorderLayout.SOUTH);         //if planet is earth, add earth's moon mondel to south
+            add(lunarModel,BorderLayout.CENTER); //if planet is earth or mars, add earth's and mars' moon models to south
 
             Platform.runLater(new Runnable()
             {
@@ -145,7 +151,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
     {
         if (e.getSource() == returnBtn)
         {
-            player.stop();
+            stopSound();
         }
     }
 
@@ -164,32 +170,66 @@ public class MainLunarPanel extends JPanel implements ActionListener
         }
     }
 
-    /*public void actionPerformed(ActionEvent e)
-    {
-        if(e.getSource() == moon) {
-            playSound("sound/earthMoon.mp3");
-        }else if(e.getSource() == deimos) {
-            playSound("sound/marsDeimos.mp3");
-        }else if(e.getSource() == phobos) {
-            playSound("sound/marsPhobos.mp3");
-        }
-    }*/
-
     /**
-     * Creates a JFXPanel that contains a 3D model of the moon
+     * Creates a JFXPanel that contains a 3D model of the moon and realistic illustrations of the moons of Mars
      * @author Lanna Maslo
      * @version 1.0
      */
     public void initFX(JFXPanel lunarModel){
         Scene moonScene = new Scene(moonRoot);
         moonScene.setFill(javafx.scene.paint.Color.BLACK);
-        moon.setTranslateX(500);
-        moon.setTranslateY(50);
-        moon.setRadius(50);
+        moon = new Sphere();
+        moon.setTranslateX(143);
+        moon.setTranslateY(70);
+        moon.setRadius(70);
+
         PhongMaterial moonMaterial = new PhongMaterial();
         moonMaterial.setDiffuseMap(new Image("Images/moon.jpg"));
+
         moon.setMaterial(moonMaterial);
-        moonRoot.getChildren().add(moon);
+        moon.setOnMouseClicked(event -> playSound("sound/earthMoon.mp3"));
+        moon.setCursor(Cursor.HAND);
+
+        Image phobosImg = new Image("Images/phobos.png");
+        Image deimosImg = new Image("Images/deimos.png");
+        phobos = new ImageView(phobosImg);
+        deimos = new ImageView(deimosImg);
+
+        phobos.setPreserveRatio(true);
+        phobos.setFitWidth(130);
+        deimos.setPreserveRatio(true);
+        deimos.setFitWidth(130);
+        phobos.setTranslateX(70);
+        phobos.setTranslateY(40);
+        deimos.setTranslateX(70);
+        deimos.setTranslateY(200);
+
+        phobos.setOnMouseClicked(event -> playSound("sound/marsPhobos.mp3"));
+        deimos.setOnMouseClicked(event -> playSound("sound/marsDeimos.mp3"));
+
+        phobos.setCursor(Cursor.HAND);
+        deimos.setCursor(Cursor.HAND);
+
+        Tooltip phobosT = new Tooltip("Phobos");
+        Tooltip deimosT = new Tooltip("Deimos");
+        Tooltip.install(phobos, phobosT);
+        Tooltip.install(deimos, deimosT);
+
+        Image moonGIF = new Image("https://data.whicdn.com/images/293111167/original.gif");
+        ImageView moonLanding = new ImageView(moonGIF);
+        moonLanding.setFitWidth(210);
+        moonLanding.setPreserveRatio(true);
+        moonLanding.setTranslateY(170);
+        moonLanding.setTranslateX(40);
+
+        if(planet.getName().equals("Earth")){
+            moonRoot.getChildren().add(moon);
+            moonRoot.getChildren().add(moonLanding);
+        }else if(planet.getName().equals("Mars")){
+            moonRoot.getChildren().add(phobos);
+            moonRoot.getChildren().add(deimos);
+        }
+
         lunarModel.setScene(moonScene);
         rotate = new Rotate();
         rotate.setPivotX(moon.getRadius());

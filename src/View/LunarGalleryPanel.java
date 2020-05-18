@@ -104,7 +104,7 @@ public class LunarGalleryPanel extends JPanel
 
         imageList = new ArrayList<>();
 
-        panel.setPreferredSize (new Dimension (410,280));
+        panel.setPreferredSize (new Dimension (350,280));
         panel.setBackground (Color.black);
 
         panelBtn.setPreferredSize(new Dimension(550, 200));
@@ -113,11 +113,13 @@ public class LunarGalleryPanel extends JPanel
         panel.add(btnPrevious, BorderLayout.WEST);
         panel.add(lblImage, BorderLayout.CENTER);
 
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 30, 10));
+
         panelBtn.add(jfx, BorderLayout.WEST);
         panelBtn.setBackground(Color.black);
 
-        add(panel, BorderLayout.EAST);
-        add(panelBtn, BorderLayout.WEST);
+        add(panel);
+        //add(panelBtn, BorderLayout.WEST);
 
         Platform.runLater(new Runnable()
         {

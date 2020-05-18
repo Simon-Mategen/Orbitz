@@ -56,7 +56,7 @@ public class LunarTextPanel extends JPanel
         textArea.setEditable(false);
 
         scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(320, 229));
+        scrollPane.setPreferredSize(new Dimension(330, 330));
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         setTextToTextArea();
