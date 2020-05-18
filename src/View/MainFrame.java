@@ -54,6 +54,8 @@ public class MainFrame extends JFrame
     private JPanel overheadPanel;
     private MainInfoFrame mainInfoFrame;
     private LoadingScreen loadingScreen = new LoadingScreen();
+    private HelpPanel helpPanel;
+    private ColorPicker colorPicker;
 
     private StackPane root;
     private JSlider timeSlider;
@@ -61,12 +63,15 @@ public class MainFrame extends JFrame
     private JComboBox<Theme> cbThemes;
     private Theme[] themes;
     private JLabel lblTheme;
-    MediaBar mediaBar;
+    private MediaBar mediaBar;
+    private JButton btnCreateTheme;
 
     ArrayList<Planet> newPlanets;
 
     private SliderListener sliderListener;
     private ComboBoxThemeListener comboBoxThemeListener;
+    private HelpListener helpListener;
+    private CreateThemeListener createThemeListener;
 
     private Controller controller;
 
@@ -95,7 +100,6 @@ public class MainFrame extends JFrame
     {
         this.controller = inController;
         this.sun = inSun;
-
         initFonts();
         guiPlanetList = controller.getPlanetArrayList(); // copy the planet list from controller
         orbitPanel = new JFXPanel();
@@ -106,7 +110,11 @@ public class MainFrame extends JFrame
         timeSlider = new JSlider();
         musicSlider = new JSlider();
         cbThemes = new JComboBox<Theme>(themes);
+        helpListener = new HelpListener();
+        createThemeListener = new CreateThemeListener();
 
+        btnCreateTheme = new JButton("Create theme");
+        btnCreateTheme.addActionListener(createThemeListener);
         lblTheme = new JLabel("Select theme");
         lblTheme.setFont(new Font("Nasalization Rg", Font.PLAIN, 16));
 
@@ -117,7 +125,8 @@ public class MainFrame extends JFrame
         lblTitle.setOpaque(true);
 
         btnHelp = new JButton("Help!");
-        btnHelp.setPreferredSize(new Dimension(100, 50));
+        btnHelp.setPreferredSize(new Dimension(70, 35));
+        btnHelp.addActionListener(helpListener);
 
         // Sets up the JFrame
         setLayout(new BorderLayout());
@@ -128,7 +137,7 @@ public class MainFrame extends JFrame
         ImageIcon solarSystem = new ImageIcon("src/Images/orbitz.png");
         setIconImage(solarSystem.getImage());
 
-        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 150));
+        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 140));
 
         Font f = new Font("Arial", Font.BOLD, 8);
         JLabel labelMin = new JLabel("MIN");
@@ -157,17 +166,7 @@ public class MainFrame extends JFrame
         timeSlider.setMaximum(MAX_SLIDER_VALUE);
         timeSlider.setPaintLabels(true);
 
-       /* Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
-        labelTable.put(0, new JLabel("Real speed"));
-        labelTable.put(10, new JLabel("1000"));
-        labelTable.put(20, new JLabel("100 000"));
-        labelTable.put(30, new JLabel("100 000 00"));
-
-        timeSlider.setLabelTable(labelTable);
-
-        */
-
-        timeSlider.setPreferredSize(new Dimension(700, 80));
+        timeSlider.setPreferredSize(new Dimension(700, 70));
         timeSlider.setPaintTicks(true);
         timeSlider.setMajorTickSpacing(10);
         timeSlider.setSnapToTicks(true);
@@ -177,7 +176,8 @@ public class MainFrame extends JFrame
         cbThemes.addItemListener(comboBoxThemeListener);
         cbThemes.setSelectedIndex(0);
         lblTheme.setPreferredSize(new Dimension(100, 70));
-        mediaPanel.setPreferredSize(new Dimension(1000, 70));
+        mediaPanel.setPreferredSize(new Dimension(800, 70));
+        btnCreateTheme.setPreferredSize(new Dimension(140, 35));
         mediaPanel.setBackground(null);
         // Sets up overheadPanel
         overheadPanel.setLayout(new FlowLayout());
@@ -188,13 +188,14 @@ public class MainFrame extends JFrame
         lblTitle.setOpaque(false);
         mediaPanel.setOpaque(true);
 
-        overheadPanel.setPreferredSize(new Dimension(1400, 150));
+        overheadPanel.setPreferredSize(new Dimension(1400, 140));
         overheadPanel.add(lblTitle);
         overheadPanel.add(timeSlider);
+        overheadPanel.add(btnHelp);
         overheadPanel.add(mediaPanel);
         overheadPanel.add(lblTheme);
         overheadPanel.add(cbThemes);
-        overheadPanel.add(btnHelp);
+        overheadPanel.add(btnCreateTheme);
 
         add(orbitPanel, BorderLayout.CENTER);
 
@@ -710,13 +711,14 @@ public class MainFrame extends JFrame
     public Theme[] initThemes()
     {
         //TODO: custom fonts for each theme
-        Theme[] tempThemes = new Theme[5];
+        Theme[] tempThemes = new Theme[6];
         tempThemes[0] = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
         tempThemes[1] = new Theme("Midnight", Color.BLACK, new Color(0, 0, 128),
                 javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.DARKBLUE);
         tempThemes[2] = new Theme("Star Wars", Color.BLACK, Color.YELLOW, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.YELLOW);
         tempThemes[3] = new Theme("Modern", Color.WHITE, Color.GRAY, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.GRAY);
         tempThemes[4] = new Theme("Stranger Things", Color.BLACK, Color.RED, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.RED);
+        tempThemes[5] = new Theme("Night Vision", Color.BLACK, Color.GREEN, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.GREEN);
         return tempThemes;
     }
 
@@ -802,6 +804,25 @@ public class MainFrame extends JFrame
                 setColors((Theme) event.getItem());
                 //loadingScreen.setVisible(false);
             }
+        }
+    }
+
+    private class HelpListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            // create help panel
+        }
+    }
+
+    private class CreateThemeListener implements ActionListener
+    {
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            System.out.println("Click");
+            colorPicker = new ColorPicker();
         }
     }
 }

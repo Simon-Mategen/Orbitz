@@ -40,7 +40,6 @@ public class MediaBar extends HBox
 
         public MediaBar(Theme theme)
         {
-            System.out.println(theme.getName());
             songs = initSongs();
             songComboBox = new ComboBox<Song>(FXCollections.observableArrayList(songs));
             songComboBox.getSelectionModel().select(0);
