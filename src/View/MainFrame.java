@@ -1,23 +1,27 @@
 package View;
 
 import Controller.Controller;
+
 import Model.Planet;
 import Model.Sun;
 import Model.Theme;
+
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.input.ScrollEvent;
+
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-import javafx.scene.image.Image;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -36,41 +40,50 @@ import java.util.*;
  */
 public class MainFrame extends JFrame
 {
-
-    private JLabel lblTitle;
-
-    private JButton btnHelp;
-
     private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     private final int MAX_SLIDER_VALUE = 30;
 
+    private JLabel lblTitle;
+    private JLabel lblTheme;
+
+    private JButton btnHelp;
+
     private ArrayList<Planet> guiPlanetList;
+    private ArrayList<Planet> newPlanets;
 
     private Theme currentTheme;
 
     private JFXPanel orbitPanel;
     private JFXPanel mediaPanel;
+
     private JPanel overheadPanel;
+
     private MainInfoFrame mainInfoFrame;
+
     private LoadingScreen loadingScreen = new LoadingScreen();
-    private HelpPanel helpPanel;
+
     private ColorPicker colorPicker;
 
     private StackPane root;
+
     private JSlider timeSlider;
     private JSlider musicSlider;
+
     private JComboBox<Theme> cbThemes;
+
     private Theme[] themes;
-    private JLabel lblTheme;
+
     private MediaBar mediaBar;
+
     private JButton btnCreateTheme;
 
-    ArrayList<Planet> newPlanets;
-
     private SliderListener sliderListener;
+
     private ComboBoxThemeListener comboBoxThemeListener;
+
     private HelpListener helpListener;
+
     private CreateThemeListener createThemeListener;
 
     private Controller controller;
@@ -85,7 +98,7 @@ public class MainFrame extends JFrame
     private int moveSpeed = 20;
     private int zoomSpeed = 10;
 
-    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    private GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
 
     /**
@@ -202,7 +215,8 @@ public class MainFrame extends JFrame
         add(overheadPanel, BorderLayout.NORTH);
 
 
-        currentTheme = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
+        currentTheme = new Theme("Black and White", Color.BLACK, Color.WHITE,
+                javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
         setColors(currentTheme);
 
         Platform.runLater(new Runnable()
@@ -262,7 +276,6 @@ public class MainFrame extends JFrame
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         root.setBackground(null);
         scene.setFill(javafx.scene.paint.Color.BLACK);
-        //scene.setFill(new ImagePattern(new Image("Images/Stars.jpg")));
         setupCamera(scene);
         handleMouse(root);
         addStars(4000);
@@ -271,15 +284,16 @@ public class MainFrame extends JFrame
         placePlanets(root, planetArrayList);
         paintPlanets();
         startOrbits(planetArrayList);
-        EventHandler<javafx.scene.input.MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>()
-        {
-            @Override
-            public void handle(javafx.scene.input.MouseEvent mouseEvent)
-            {
-                openInfoWindow(determinePlanet((Sphere) mouseEvent.getSource()));
-            }
+        EventHandler<javafx.scene.input.MouseEvent> eventHandler =
+                new EventHandler<javafx.scene.input.MouseEvent>()
+                {
+                    @Override
+                    public void handle(javafx.scene.input.MouseEvent mouseEvent)
+                    {
+                        openInfoWindow(determinePlanet((Sphere) mouseEvent.getSource()));
+                    }
 
-        };
+                };
 
         for (int i = 0; i < planetArrayList.size(); i++)
         {
@@ -291,6 +305,10 @@ public class MainFrame extends JFrame
         return scene;
     }
 
+    /**
+     *
+     * @return A FX Scene
+     */
     public Scene createMedia()
     {
         StackPane mediaPane = new StackPane();
@@ -355,9 +373,11 @@ public class MainFrame extends JFrame
             root.getChildren().add(planetArrayList.get(i).getSphereFromPlanet()); //Adds planets
             root.getChildren().add(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit());//Add orbits
             planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().toBack();//Moves orbits behind planets
-            planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStroke(currentTheme.getSecondaryPaint()); // Paint ellipse based on theme
+            planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                    setStroke(currentTheme.getSecondaryPaint()); // Paint ellipse based on theme
             StackPane.setMargin(planetArrayList.get(i).getPlanetOrbit().getEllipseFromOrbit(),
-                    new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).getPlanetOrbit().getXCord() * 2));
+                    new javafx.geometry.Insets(0, 0, 0, planetArrayList.get(i).
+                            getPlanetOrbit().getXCord() * 2));
             planetArrayList.get(i).setTooltip();
             System.out.println(currentTheme.toString());
         }
@@ -386,7 +406,7 @@ public class MainFrame extends JFrame
         scene.addEventHandler(ScrollEvent.SCROLL, event ->
         {
             double delta = event.getDeltaY() * zoomSpeed;
-            camera.setTranslateZ(camera.getTranslateZ()+delta);
+            camera.setTranslateZ(camera.getTranslateZ() + delta);
 
             System.out.println(camera.getTranslateZ());
             Platform.runLater(new Runnable()
@@ -396,98 +416,126 @@ public class MainFrame extends JFrame
                 {
                     if (newPlanets == null)
                     {
-                            if (camera.getTranslateZ() >= -12600)
+                        if (camera.getTranslateZ() >= -12600)
+                        {
+                            for (int i = 0; i < 4; i++)
                             {
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(10);
-                                }
-                                zoomSpeed = 10;
-                                moveSpeed = 10;
-
-                                System.out.println(10);
+                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                                        setStrokeWidth(10);
                             }
-                            else if (camera.getTranslateZ() >= -103000)
+                            zoomSpeed = 10;
+                            moveSpeed = 10;
+
+                            System.out.println(10);
+                        } else if (camera.getTranslateZ() >= -103000)
+                        {
+                            for (int i = 0; i < guiPlanetList.size(); i++)
                             {
-                                for (int i = 0; i < guiPlanetList.size() ; i++)
-                                {
-                                        guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(40);
-                                }
-                                zoomSpeed = 50;
-                                moveSpeed = 40;
-
-
-                                System.out.println(40);
+                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                                        setStrokeWidth(40);
                             }
-                            else if (camera.getTranslateZ() >= -247800)
+                            zoomSpeed = 50;
+                            moveSpeed = 40;
+
+
+                            System.out.println(40);
+                        } else if (camera.getTranslateZ() >= -247800)
+                        {
+                            for (int i = 0; i < guiPlanetList.size(); i++)
                             {
-                                for (int i = 0; i < guiPlanetList.size() ; i++)
-                                {
-                                        guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(180);
-                                }
-                                zoomSpeed = 80;
-                                moveSpeed = 150;
+                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                                        setStrokeWidth(180);
+                            }
+                            zoomSpeed = 80;
+                            moveSpeed = 150;
 
-                                System.out.println(180);
-                            }
-                            else if (camera.getTranslateZ() >= -600000)
+                            System.out.println(180);
+                        } else if (camera.getTranslateZ() >= -600000)
+                        {
+                            for (int i = 0; i < guiPlanetList.size(); i++)
                             {
-                                for (int i = 0; i < guiPlanetList.size() ; i++)
-                                {
-                                        guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(600);
-                                }
-                                zoomSpeed = 120;
-                                moveSpeed = 220;
+                                guiPlanetList.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                                        setStrokeWidth(600);
+                            }
+                            zoomSpeed = 120;
+                            moveSpeed = 220;
 
-                                System.out.println(180);
-                            }
-                            if(camera.getTranslateZ() < -795322)
-                            {
-                                camera.setTranslateZ(-795322);
-                            }
+                            System.out.println(180);
+                        }
+                        if (camera.getTranslateZ() < -795322)
+                        {
+                            camera.setTranslateZ(-795322);
+                        }
 
-                            if(camera.getTranslateZ() >= -8000)
-                            {
-                                camera.setTranslateZ(-8000);
-                                System.out.println("Sun");
-                            }
+                        if (camera.getTranslateZ() >= -8000)
+                        {
+                            camera.setTranslateZ(-8000);
+                            System.out.println("Sun");
+                        }
                     }
                     else
                     {
-                        for (int i = 0; i < newPlanets.size(); i++)
+                        if (camera.getTranslateZ() >= -12600)
                         {
-                            if (camera.getTranslateZ() <= 12600)
+                            for (int i = 0; i < 4; i++)
                             {
-                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(10);
+                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                                        setStrokeWidth(10);
                             }
-                            else if (camera.getTranslateZ() > 12600 && camera.getTranslateZ() <= 53000)
+                            zoomSpeed = 10;
+                            moveSpeed = 10;
+
+                            System.out.println(10);
+                        } else if (camera.getTranslateZ() >= -103000)
+                        {
+                            for (int i = 0; i < newPlanets.size(); i++)
                             {
-                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(40);
+                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                                        setStrokeWidth(40);
                             }
-                            else if (camera.getTranslateZ() > 53000 && camera.getTranslateZ() <= 247800)
+                            zoomSpeed = 50;
+                            moveSpeed = 40;
+
+
+                            System.out.println(40);
+                        } else if (camera.getTranslateZ() >= -247800)
+                        {
+                            for (int i = 0; i < newPlanets.size(); i++)
                             {
-                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().setStrokeWidth(180);
+                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                                        setStrokeWidth(180);
                             }
+                            zoomSpeed = 80;
+                            moveSpeed = 150;
+
+                            System.out.println(180);
+                        } else if (camera.getTranslateZ() >= -600000)
+                        {
+                            for (int i = 0; i < newPlanets.size(); i++)
+                            {
+                                newPlanets.get(i).getPlanetOrbit().getEllipseFromOrbit().
+                                        setStrokeWidth(600);
+                            }
+                            zoomSpeed = 120;
+                            moveSpeed = 220;
+
+                            System.out.println(180);
+                        }
+                        //Cap the zoom at minimum in zoom distance and maximum out distance
+                        if (camera.getTranslateZ() < -795322)
+                        {
+                            camera.setTranslateZ(-795322);
+                        }
+
+                        if (camera.getTranslateZ() >= -8000)
+                        {
+                            camera.setTranslateZ(-8000);
                         }
                     }
                 }
             });
 
         });
-
-
-/*        scene.addEventHandler(KeyEvent.KEY_PRESSED, event ->
-    {
-        switch (event.getCode())
-        {
-            case W:
-                root.translateZProperty().set(root.getTranslateZ() + 10);
-                break;
-            case S:
-                root.translateZProperty().set(root.getTranslateZ() - 10);
-                break;
-        }
-    });*/
     }
 
 
@@ -510,8 +558,8 @@ public class MainFrame extends JFrame
 
         root.setOnMouseDragged(event ->
         {
-            double offsetX = (event.getSceneX() - startDragX)*moveSpeed;
-            double offsetY = (event.getSceneY() - startDragY)*moveSpeed;
+            double offsetX = (event.getSceneX() - startDragX) * moveSpeed;
+            double offsetY = (event.getSceneY() - startDragY) * moveSpeed;
 
             double newTransX = orgTransX + offsetX;
             double newTransY = orgTransY + offsetY;
@@ -535,7 +583,10 @@ public class MainFrame extends JFrame
         }
     }
 
-    private void speedChangeScene(double inDurationModifier) //Denna funkar inte än
+    /**
+     * @param inDurationModifier The value that determine the amount of
+     */
+    private void speedChangeScene(double inDurationModifier)
     {
         Platform.runLater(new Runnable()
         {
@@ -573,10 +624,7 @@ public class MainFrame extends JFrame
 
             }
         });
-
-
     }
-
 
     /**
      * Listens to change in timeSlider and then changes the text in timeLabel
@@ -606,8 +654,7 @@ public class MainFrame extends JFrame
             if (timeSlider.getValue() == 0)
             {
                 speedChangeScene(1);
-            }
-            else if (timeSlider.getValue() == 10)
+            } else if (timeSlider.getValue() == 10)
             {
                 speedChangeScene(10000);
             } else if (timeSlider.getValue() == 20)
@@ -800,9 +847,7 @@ public class MainFrame extends JFrame
         {
             if (event.getStateChange() == ItemEvent.SELECTED)
             {
-                //loadingScreen.setVisible(true);
                 setColors((Theme) event.getItem());
-                //loadingScreen.setVisible(false);
             }
         }
     }
