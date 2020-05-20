@@ -1,25 +1,26 @@
 package Model;
 
 import Controller.Calculators.PositionCalculator;
+
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
-import javafx.application.Platform;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Tooltip;
 import javafx.scene.shape.*;
-import javafx.scene.transform.Translate;
 import javafx.util.Duration;
-import org.json.simple.JSONObject;
 
-import java.awt.*;
+import org.json.simple.JSONObject;
 
 /**
  * Class that represents a planet
+ * @author Marcus Svensson
+ * @author Simon Måtegen
+ * @author Albin Ahlbeck
+ * @version 1.0
  */
 public class Planet
 {
-    private double SCALE_RADIUS_VALUE = 6250; // 12500 ORGINAL VALUE 6250
+    private double SCALE_RADIUS_VALUE = 6250;
 
     private long semiMajorAxis;
     private double perihelion;
@@ -38,13 +39,10 @@ public class Planet
 
     private PositionCalculator pos = new PositionCalculator();
 
-    private int numOfMoons; // TODO
-
-    private int distanceFromSun; // TODO
-
     /**
      * Constructor that, when created, creates a planet-object by getting specific values
      * for a specific planet from an API.
+     * @author Albin Ah
      * @param object JSONObject that holds the API information for the specific planets
      */
     public Planet(JSONObject object)
@@ -54,7 +52,6 @@ public class Planet
         this.aphelion = (long)planetInfo.get("aphelion");
         this.sphere = new Sphere((double)planetInfo.get("meanRadius")*1000/SCALE_RADIUS_VALUE);
         this.sphere.setId(getName());  // set ID so sphere's planet can be found
-        //this.planetTableInfo = new PlanetInfo(getMass(), getMeanRadius(), 0, );
     }
     /**
      * Default constructor
@@ -206,8 +203,6 @@ public class Planet
 
         planetOrbit.getEllipseFromOrbit().setRotate(-pos.getValues(d, getName()));
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
-        //sphere.getTransforms().addAll(new Translate(0, planetOrbit.getWidth()-planetOrbit.getXCord()));
-        //sphere.getTransforms().addAll(new Translate(pos.getValues(d, getName(), 1), pos.getValues(d, getName(), 2)));
         pathTransition.setNode(sphere);
         pathTransition.setDuration(duration);
         pathTransition.setCycleCount(Animation.INDEFINITE);
@@ -238,16 +233,13 @@ public class Planet
      * @author Albin Ahlbeck
      * @version 1.0
      */
-   public void setTooltip()
-   {
-       Tooltip tooltip = new Tooltip(getName());
-       tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
-       tooltip.setShowDelay(Duration.millis(0));               //sets time before text appears after hovering over image
+    public void setTooltip()
+    {
+        Tooltip tooltip = new Tooltip(getName());
+        tooltip.setStyle("-fx-font-size: 20");                   //CSS stylesheet, Oracle doc.
+        tooltip.setShowDelay(Duration.millis(0));               //sets time before text appears after hovering over image
 
-       sphere.setPickOnBounds(true);
-       Tooltip.install(sphere, tooltip);
-   }
-
-
-
+        sphere.setPickOnBounds(true);
+        Tooltip.install(sphere, tooltip);
+    }
 }

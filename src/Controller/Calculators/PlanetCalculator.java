@@ -13,7 +13,6 @@ import Model.Sun;
 public class PlanetCalculator
 {
     private final double G = 6.67430E-11; //the general gravitational constant
-    private final double SCALE_VALUE = 10000000; //Used to make the planets move faster, is going to dissepare later.
 
     /**
      *Calculates the orbit time for the given planet.

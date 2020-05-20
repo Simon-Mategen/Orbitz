@@ -1,8 +1,15 @@
 package View;
 
 import javax.swing.*;
+
 import java.awt.*;
 
+/**
+ * Loading screen that appears when the program is buffering
+ *
+ * @author Simon Måtegen
+ * @version 1.0
+ */
 public class LoadingScreen extends JFrame
 {
     private JPanel panel = new JPanel();
@@ -28,10 +35,5 @@ public class LoadingScreen extends JFrame
         panel.add(label, gbc);
 
         add(panel);
-    }
-
-    public static void main(String[] args)
-    {
-        LoadingScreen screen = new LoadingScreen();
     }
 }

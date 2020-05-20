@@ -1,7 +1,7 @@
 package View;
 
-import Controller.Controller;
 import Model.Planet;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -20,25 +20,27 @@ import javafx.util.Duration;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
+
 import java.awt.*;
-import java.io.IOException;
 
 /**
- * @author: Manna Manojlovic
+ * @author Manna Manojlovic
+ * upper left corner: JavaFX-panel with lunar orbits around planets, in miniature
+ * bottom left corner: textarea with general facts about the planet
  *
-* upper left corner: JavaFX-panel with lunar orbits around planets, in miniature
-* bottom left corner: textarea with general facts about the planet
-*
-* upper right corner: image gallery with 4 images in miniature. Underneath is one big picture which changes after a small is clicked
-* bottom right corner: SWEN THE ALIEN AND HIS FUN FACTS!!!
-*/
-
+ * upper right corner: image gallery with 4 images in miniature. Underneath is one big picture which changes after a small is clicked
+ * bottom right corner: SWEN THE ALIEN AND HIS FUN FACTS!!!
+ */
 public class MainInfoPanel extends JPanel
 {
     private BorderLayout layout;
+
     private ImageGalleryPanel imgPanel;
+
     private SwenTheAlien swenPanel;
+
     private JFXPanel planetaryPanel;
+
     private Cylinder planetRings;
 
     private Planet planet;
@@ -57,15 +59,14 @@ public class MainInfoPanel extends JPanel
     private AnimationTimer timer = null;
 
     /**
-     * @author: Manna Manojlovic
-     * @version: 1.0
+     * @author Manna Manojlovic
+     * @version 1.0
      *
      * Constructor
      * Initializes the instances, calls method setupPanel()
      */
     public MainInfoPanel (Planet planet)
     {
-
         imgPanel = new ImageGalleryPanel (planet);
         swenPanel = new SwenTheAlien (planet);
         planetaryPanel = new JFXPanel();
@@ -81,8 +82,8 @@ public class MainInfoPanel extends JPanel
     }
 
     /**
-     * @author: Manna Manojlovic
-     * @version: 1.0
+     * @author Manna Manojlovic
+     * @version 1.0
      *
      * This method initializes a BorderLayout and places the panels from other classes on it.
      * this is the main panel for the Information-GUI
@@ -155,32 +156,12 @@ public class MainInfoPanel extends JPanel
         return scene;
     }
 
-    public void prepareAnimationX(double spinvalue)
-    {
-        planetSphere.setRotationAxis(Rotate.X_AXIS);
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long l)
-            {
-                planetSphere.rotateProperty().set(planetSphere.getRotate() + spinvalue);
-            }
-        };
-        timer.start();
-    }
-
-    public void prepareAnimationY(double spinvalue)
-    {
-        planetSphere.setRotationAxis(Rotate.Y_AXIS);
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long l)
-            {
-                planetSphere.rotateProperty().set(planetSphere.getRotate() + spinvalue * l);
-            }
-        };
-        timer.start();
-    }
-
+    /**
+     * Enables moving the node with mouse presses and mouse drags
+     * @author Lanna Maslo
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
     public void handleMouse()
     {
         root.setOnMousePressed(event ->
@@ -199,12 +180,23 @@ public class MainInfoPanel extends JPanel
 
             double newTransX = orgTransX + offsetX;
             double newTransY = orgTransY + offsetY;
+
             matrixRotateNode(planetSphere, 0,  -newTransY / 100, newTransX / 100);
             matrixRotateNode(planetRings, 0, -newTransY / 100, newTransX / 100);
         });
     }
 
-    private void matrixRotateNode(Node n, double alf, double bet, double gam){
+    /**
+     * A calculation method that allows rotation of a sphere's axis
+     * @param n the node that is rotated
+     * @param alf roll rotation (front-to-back)
+     * @param bet pitch rotation (side-to-side)
+     * @param gam yaw rotation (vertical axis)
+     * @author Albin Ahlbeck
+     * @version 1.0
+     */
+    private void matrixRotateNode(Node n, double alf, double bet, double gam)
+    {
         double A11=Math.cos(alf)*Math.cos(gam);
         double A12=Math.cos(bet)*Math.sin(alf)+Math.cos(alf)*Math.sin(bet)*Math.sin(gam);
         double A13=Math.sin(alf)*Math.sin(bet)-Math.cos(alf)*Math.cos(bet)*Math.sin(gam);
@@ -216,7 +208,8 @@ public class MainInfoPanel extends JPanel
         double A33=Math.cos(bet)*Math.cos(gam);
 
         double d = Math.acos((A11+A22+A33-1d)/2d);
-        if(d!=0d){
+        if(d!=0d)
+        {
             double den=2d*Math.sin(d);
             Point3D p= new Point3D((A32-A23)/den,(A13-A31)/den,(A21-A12)/den);
             n.setRotationAxis(p);
@@ -230,19 +223,25 @@ public class MainInfoPanel extends JPanel
      * @author Albin Ahlbeck
      * @version 1.0
      */
-
     public void paintPlanet()
     {
-            PhongMaterial map = new PhongMaterial();
-            map.setDiffuseMap(new Image("Images/" + planet.getName() + ".jpg"));
-            planetSphere.setMaterial(map);
+        PhongMaterial map = new PhongMaterial();
+        map.setDiffuseMap(new Image("Images/" + planet.getName() + ".jpg"));
+        planetSphere.setMaterial(map);
 
-            if(planet.getName().equals("Saturn")){
-                planetRings();
-            }
+        if(planet.getName().equals("Saturn"))
+        {
+            planetRings();
+        }
     }
 
-    public void stopMp3(){
+    /**
+     * Calls the method stopMp3() in ImageGalleryPanel, which stops the mediaplayer
+     * @author Lanna Maslo
+     * @version 1.0
+     */
+    public void stopMp3()
+    {
         imgPanel.stopMp3();
     }
 
@@ -251,7 +250,8 @@ public class MainInfoPanel extends JPanel
      * @author Lanna Maslo
      * @version 1.0
      */
-    public void planetRings(){
+    public void planetRings()
+    {
         planetRings = new Cylinder(180,5);
         PhongMaterial rings = new PhongMaterial();
         rings.setDiffuseMap(new Image("Images/saturnRings.png"));
