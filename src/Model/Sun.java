@@ -1,16 +1,15 @@
 package Model;
 
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-import netscape.javascript.JSObject;
 import org.json.simple.JSONObject;
 
-import java.io.ObjectInputStream;
-
+/**
+ @author Simon Måtegen
+ @author Marcus Svensson
+ * An object that contains information about the sun
+ */
 public class Sun
 {
     private JSONObject sunInfo;
@@ -21,26 +20,53 @@ public class Sun
 
     private Sphere sunSphere;
 
+    /**
+     @author Simon Måtegen
+     @author Marcus Svensson
+     * Constructs the sun
+     @param object a JSONObject that contains the information from the api
+     */
     public Sun(JSONObject object)
     {
         this.sunInfo = object;
     }
 
+    /**
+     @author Simon Måtegen
+     @author Marcus Svensson
+     @return returns an integer of the x position
+     */
     public int getXCord()
     {
         return xCord;
     }
 
+    /**
+     @author Simon Måtegen
+     @author Marcus Svensson
+     * Sets the value of the x cord
+     @param xCord an int of the X cord to be set
+     */
     public void setXCord(int xCord)
     {
         this.xCord = xCord;
     }
-
+    /**
+     @author Simon Måtegen
+     @author Marcus Svensson
+     @return an integer of the Y cord
+     */
     public int getYCord()
     {
         return yCord;
     }
 
+    /**
+     @author Simon Måtegen
+     @author Marcus Svensson
+     * Sets the Y Cord
+     @param 
+     */
     public void setYCord(int yCord)
     {
         this.yCord = yCord;

@@ -24,19 +24,15 @@ import java.io.File;
 import java.util.*;
 
 /**
- * MainFrame is the main window which contains various  graphical components
- *
- * @author Albin Ahlbeck
- * @author Simon Måtegen
- * @author Lanna Maslo
- * @author Manna Manojlovic
- * @author Marcus Svensson
- * @version 1.0
- * @
+ @author Albin Ahlbeck
+ @author Simon Måtegen
+ @author Lanna Maslo
+ @author Manna Manojlovic
+ @author Marcus Svensson
+ * MainFrame is the main window which contains various graphical components
  */
 public class MainFrame extends JFrame
 {
-
     private JLabel lblTitle;
 
     private JButton btnHelp;
@@ -89,12 +85,11 @@ public class MainFrame extends JFrame
 
 
     /**
+     @author Albin Ahlbeck
+     @author Simon Måtegen
      * Constructs the GUI components and starts the Java-FX window.
      *
      * @param inController gains a reference to controller in order to fetch the planet list
-     * @author Albin Ahlbeck
-     * @author Simon Måtegen
-     * @version 1.0
      */
     public MainFrame(Controller inController, Sun inSun)
     {
@@ -218,12 +213,11 @@ public class MainFrame extends JFrame
     }
 
     /**
+     @author Albin Ahlbeck
+     @author Lanna Maslo
      * Creates a new scene from createScene and adds it to the Java FX window
      * Sets background music
-     *
      * @param fxPanel The JavaFX panel to be created
-     * @author Albin Ahlbeck
-     * @author Lanna Maslo
      * @version 1.0
      */
     private void initFxOrbit(JFXPanel fxPanel)
@@ -234,12 +228,10 @@ public class MainFrame extends JFrame
     }
 
     /**
+     @author Albin Ahlbeck
      * Creates a new scene from createScene and adds it to the Java FX window
      * Sets background music
-     *
      * @param fxPanel The JavaFX panel to be created
-     * @author Albin Ahlbeck
-     * @version 1.0
      */
     private void initFXMedia(JFXPanel fxPanel)
     {
@@ -249,12 +241,10 @@ public class MainFrame extends JFrame
     }
 
     /**
+     @author Albin Ahlbeck
+     @author Lanna Maslo
+     @author Manna Manojlovic
      * Creates the Java-FX scene
-     *
-     * @author Albin Ahlbeck
-     * @author Lanna Maslo
-     * @author Manna Manojlovic
-     * @version 1.0
      */
     private Scene createScene(ArrayList<Planet> planetArrayList)
     {
@@ -262,10 +252,9 @@ public class MainFrame extends JFrame
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         root.setBackground(null);
         scene.setFill(javafx.scene.paint.Color.BLACK);
-        //scene.setFill(new ImagePattern(new Image("Images/Stars.jpg")));
         setupCamera(scene);
         handleMouse(root);
-        addStars(4000);
+
         System.out.println("Scene: Width: " + scene.getWidth() + "Height: " + scene.getHeight());
         System.out.println("Root: Width: " + root.getWidth() + "Height: " + root.getHeight());
         placePlanets(root, planetArrayList);
@@ -366,11 +355,9 @@ public class MainFrame extends JFrame
     }
 
     /**
+     @author Lanna Maslo
+     @author Simon Måtegen
      * Sets the viewing perspective and enables a zoom-function
-     *
-     * @author Lanna Maslo
-     * @author Simon Måtegen
-     * @version 1.0
      */
     public void setupCamera(Scene scene)
     {
@@ -474,28 +461,12 @@ public class MainFrame extends JFrame
             });
 
         });
-
-
-/*        scene.addEventHandler(KeyEvent.KEY_PRESSED, event ->
-    {
-        switch (event.getCode())
-        {
-            case W:
-                root.translateZProperty().set(root.getTranslateZ() + 10);
-                break;
-            case S:
-                root.translateZProperty().set(root.getTranslateZ() - 10);
-                break;
-        }
-    });*/
     }
 
 
     /**
+     @author Lanna Maslo
      * Allows the user to move the solar system by dragging it
-     *
-     * @author Lanna Maslo
-     * @version 1.0
      */
     public void handleMouse(Node root)
     {
@@ -522,10 +493,8 @@ public class MainFrame extends JFrame
     }
 
     /**
+     @author Albin Ahlbeck
      * Starts the the planets movement
-     *
-     * @author Albin Ahlbeck
-     * @version 1.0
      */
     public void startOrbits(ArrayList<Planet> planetArrayList)
     {
@@ -535,15 +504,30 @@ public class MainFrame extends JFrame
         }
     }
 
-    private void speedChangeScene(double inDurationModifier) //Denna funkar inte än
+    /**
+     @author Albin Ahlbeck
+     @author Simon Måtegen
+      * Changes speed of planets
+     */
+    private void speedChangeScene(double inDurationModifier)
     {
         Platform.runLater(new Runnable()
         {
+            /**
+             @author Albin Ahlbeck
+             @author Simon Måtegen
+              * Runs on the Java FX thread
+             */
             @Override
             public void run()
             {
                 SwingUtilities.invokeLater(new Runnable()
                 {
+                    /**
+                     @author Albin Ahlbeck
+                     @author Simon Måtegen
+                      * Runs on Swing thread
+                     */
                     @Override
                     public void run()
                     {
@@ -564,6 +548,11 @@ public class MainFrame extends JFrame
                 }
                 SwingUtilities.invokeLater(new Runnable()
                 {
+                    /**
+                     @author Albin Ahlbeck
+                     @author Simon Måtegen
+                      * Runs on the Swing Thread
+                     */
                     @Override
                     public void run()
                     {
@@ -591,15 +580,21 @@ public class MainFrame extends JFrame
         @Override
         public void mouseClicked(MouseEvent mouseEvent)
         {
-
+            // not used
         }
+
 
         @Override
         public void mousePressed(MouseEvent mouseEvent)
         {
-
+            // not used
         }
 
+        /**
+         @author Albin Ahlbeck
+         @author Simon Måtegen
+          * Sets the values after the mouse is released from the slider
+         */
         @Override
         public void mouseReleased(MouseEvent mouseEvent)
         {
@@ -622,58 +617,21 @@ public class MainFrame extends JFrame
         @Override
         public void mouseEntered(MouseEvent mouseEvent)
         {
-
+            // not used
         }
 
         @Override
         public void mouseExited(MouseEvent mouseEvent)
         {
-
+            // not used
         }
     }
 
-    /**
-     * Adds stars at randomized positions on the scene
-     * Uses different Z values to get a 3d effect
-     *
-     * @author Albin Ahlbeck
-     * @version 1.0
-     */
-    public void addStars(int amountStars)
-    {
-        int tempNumber = 100000;
-        Random randomX = new Random();
-        Random randomY = new Random();
-        Random randomZ = new Random();
-        int x;
-        int y;
-        int z;
-        int minX = -tempNumber;
-        int maxX = tempNumber;
-        int minY = -tempNumber;
-        int maxY = tempNumber;
-        int minZ = 0;
-        int maxZ = 1;
-        int radius = 1;
-
-        for (int i = 0; i < amountStars; i++)
-        {
-            x = randomX.nextInt(maxX - minX + 1) + minX;
-            y = randomY.nextInt(maxY - minY + 1) + minY;
-            z = randomZ.nextInt(maxZ - minZ + 1) + minZ;
-            Star tempStar = new Star(radius, x, y, z);
-            root.getChildren().add(tempStar);
-
-        }
-
-    }
 
     /**
+     @author Albin Ahlbeck
      * Opens an information window
-     *
      * @param planet The planet to showcase
-     * @author Albin Ahlbeck
-     * @version 1.0
      */
     public void openInfoWindow(Planet planet)
     {
@@ -682,16 +640,13 @@ public class MainFrame extends JFrame
 
 
     /**
+     @author Albin Ahlbeck
      * Adds fonts to the GraphicsEnviroment for later use
-     *
-     * @author Albin Ahlbeck
-     * @version 1.0
      */
     public void initFonts()
     {
         try
         {
-            // register fonts here
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/earth_orbiter/earthorbiter.ttf")));
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/earth_orbiter/earthorbiterbold.ttf")));
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/earth_orbiter/earthorbitertitleital.ttf")));
@@ -710,8 +665,7 @@ public class MainFrame extends JFrame
 
     public Theme[] initThemes()
     {
-        //TODO: custom fonts for each theme
-        Theme[] tempThemes = new Theme[6];
+        Theme[] tempThemes = new Theme[7];
         tempThemes[0] = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
         tempThemes[1] = new Theme("Midnight", Color.BLACK, new Color(0, 0, 128),
                 javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.DARKBLUE);
@@ -719,9 +673,15 @@ public class MainFrame extends JFrame
         tempThemes[3] = new Theme("Modern", Color.WHITE, Color.GRAY, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.GRAY);
         tempThemes[4] = new Theme("Stranger Things", Color.BLACK, Color.RED, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.RED);
         tempThemes[5] = new Theme("Night Vision", Color.BLACK, Color.GREEN, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.GREEN);
+        tempThemes[6] = new Theme("Nasa", Color.BLUE, Color.WHITE, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.RED);
         return tempThemes;
     }
 
+    /**
+     @author Albin Ahlbeck
+      * Set the colors on graphical componenets from the theme
+     @param theme the Theme to be used for selection of colors
+     */
     public void setColors(Theme theme)
     {
         currentTheme = theme;
@@ -752,15 +712,13 @@ public class MainFrame extends JFrame
         labelTable.put(20, lbl3);
         labelTable.put(30, lbl4);
         timeSlider.setLabelTable(labelTable);
-        try
-        {
-            Thread.sleep(500);
-        } catch (Exception e)
-        {
 
-        }
         Platform.runLater(new Runnable()
         {
+            /**
+             @author Albin Ahlbeck
+              * Runs on the Java FX thread, changes the color on of the orbit ellipses and changes color of the mediabar.
+             */
             @Override
             public void run()
             {
@@ -776,12 +734,12 @@ public class MainFrame extends JFrame
                 if (mediaBar != null)
                 {
                     mediaBar.addTheme(theme);
-                    if (theme.getName().equals("Star Wars"))
+                    if (theme.toString().equals("Star Wars"))
                     {
                         mediaBar.changeSong(3);
                     }
 
-                    if (theme.getName().equals("Stranger Things"))
+                    if (theme.toString().equals("Stranger Things"))
                     {
                         mediaBar.changeSong(2);
                     }
@@ -793,8 +751,16 @@ public class MainFrame extends JFrame
 
     }
 
+    /**
+     @author Albin Ahlbeck
+      * Listens to the combo box for selection of songs
+     */
     private class ComboBoxThemeListener implements ItemListener
     {
+        /**
+         @author Albin Ahlbeck
+          * If an item is selected setColors is called
+         */
         @Override
         public void itemStateChanged(ItemEvent event)
         {
@@ -806,9 +772,16 @@ public class MainFrame extends JFrame
             }
         }
     }
-
+    /**
+     @author Albin Ahlbeck
+      * Listens to the HelpButton for a mouse click
+     */
     private class HelpListener implements ActionListener
     {
+        /**
+         @author Albin Ahlbeck
+          * If the button is pressed then a help window is created
+         */
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
@@ -816,8 +789,16 @@ public class MainFrame extends JFrame
         }
     }
 
+    /**
+     @author Albin Ahlbeck
+      * Listens to the Create Theme button
+     */
     private class CreateThemeListener implements ActionListener
     {
+        /**
+         @author Albin Ahlbeck
+          * If the button is clicked a new ColorPicker is created
+         */
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {

@@ -6,7 +6,6 @@ import Model.Sun;
 
 /**
  * Calculator used to calculate orbits.
- *
  * @author Simon Måtegen
  * @author Marcus Svensson
  * @version 1
@@ -20,7 +19,6 @@ public class OrbitCalculator
 
     /**
      * Creates an orbit object based on the planet given.
-     *
      * @param sun    Sun object the planet is orbiting around
      * @param planet Planet object to calculate orbit for.
      * @return Orbit object.
@@ -56,7 +54,10 @@ public class OrbitCalculator
 
         return planetOrbit;
     }
-
+    /**
+     * Calculates the planets orbit
+     * @param planet Planet object to calculate orbit for.
+     */
     private void calculateOrbit(Planet planet)
     {
         orbitWidth = (long)(planet.getSemiMajorAxis()) * 2;

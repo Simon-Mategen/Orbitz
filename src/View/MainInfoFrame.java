@@ -3,7 +3,6 @@ package View;
 import Model.Planet;
 import Model.Theme;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -11,7 +10,7 @@ import java.awt.event.WindowEvent;
 
 
 /**
- * @Author: Manna Manojlovic, Albin Ahlbeck
+ * @author: Manna Manojlovic, Albin Ahlbeck
  * @version: 1.0
  *
  * This is the main frame for the planetary information GUI.
@@ -21,23 +20,28 @@ import java.awt.event.WindowEvent;
 public class MainInfoFrame extends JFrame
 {
     private MainInfoPanel panel;
-    private Planet planet;
     private JPanel pnlTitle;
+
     private JLabel lblTitle;
 
-    //Controller controller;
+    private Planet planet;
 
     /**
      * Adds a planet to be displayed when creating a MainInfoFrame
      **/
     public MainInfoFrame(Planet planet, Theme theme)
     {
-        // this.controller = controller;
         this.planet = planet;
         frame(planet, theme);
 
     }
 
+    /**
+     * @author Manna Manolojvic
+     * @author Lanna Maslo
+     * @author Albin Ahlbeck
+     * Sets up the frame and adds all the componenets
+     **/
     public void frame(Planet planet, Theme theme)
     {
         setLayout(new BorderLayout());
@@ -67,6 +71,10 @@ public class MainInfoFrame extends JFrame
 
         addWindowListener(new WindowAdapter()
         {
+            /**
+             * @author Lanna Maslo
+             * Stop the sound when the window is closing
+             **/
             public void windowClosing(WindowEvent e)
             {
                 panel.stopMp3();

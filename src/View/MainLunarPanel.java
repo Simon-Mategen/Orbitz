@@ -111,8 +111,7 @@ public class MainLunarPanel extends JPanel implements ActionListener
     }
 
     /**
-     * @author Manna Manojlovic
-     *
+     @author Manna Manojlovic
      * This is the headline title for each of the moon windows
      */
     public void initializeHeadLine()
@@ -171,9 +170,8 @@ public class MainLunarPanel extends JPanel implements ActionListener
     }
 
     /**
-     * Creates a JFXPanel that contains a 3D model of the moon and realistic illustrations of the moons of Mars
-     * @author Lanna Maslo
-     * @version 1.0
+      @author Lanna Maslo
+      * Creates a JFXPanel that contains a 3D model of the moon and realistic illustrations of the moons of Mars
      */
     public void initFX(JFXPanel lunarModel){
         Scene moonScene = new Scene(moonRoot);
@@ -237,9 +235,8 @@ public class MainLunarPanel extends JPanel implements ActionListener
     }
 
     /**
+     @author Albin Ahlbeck
      * Enables rotation by mouse
-     * @author Albin Ahlbeck
-     * @version 1.0
      */
     public void handleMouse()
     {
@@ -264,9 +261,8 @@ public class MainLunarPanel extends JPanel implements ActionListener
     }
 
     /**
-     * Sets rotation values
-     * @author Albin Ahlbeck
-     * @version 1.0
+      @author Albin Ahlbeck
+      * Sets rotation values
      */
     private void matrixRotateNode(Node n, double alf, double bet, double gam)
     {

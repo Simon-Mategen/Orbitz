@@ -2,7 +2,7 @@ package View;
 
 import Model.Song;
 import Model.Theme;
-import javafx.application.Platform;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -18,26 +18,35 @@ import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.paint.Color;
 
 import java.io.File;
 
 
 /**
+ @author Albin Ahlbeck
+ *
  * A Media Bar that contains the ability to play music, pause it and change the volume
  * Also features a Combo Box for selection of tracks.
- * @author Albin Ahlbeck
  */
 public class MediaBar extends HBox
     {
         private Slider volumeSlider = new Slider(); // Slider for volume
         private Button btnPlay = new Button("||"); // For pausing the player
         private Label lblVolume = new Label("Volume: ");
+
         private MediaPlayer player;
+
         private ComboBox<Song> songComboBox;
+
         private Media song;
+
         private Song[] songs;
 
+        /**
+         @author Albin Ahlbeck
+          * Constructs the MediaBar by seting sizes and adding componenets
+         @param theme The theme to use to get the colors
+         */
         public MediaBar(Theme theme)
         {
             songs = initSongs();
@@ -55,8 +64,7 @@ public class MediaBar extends HBox
             volumeSlider.setMinWidth(30);
             volumeSlider.setValue(100);
             btnPlay.setPrefWidth(30);
-           addTheme(theme);
-
+            addTheme(theme);
 
             getChildren().add(btnPlay);
             getChildren().add(lblVolume);
@@ -65,15 +73,23 @@ public class MediaBar extends HBox
             setBackground(Background.EMPTY);
 
             EventHandler<ActionEvent> event =
-                    new EventHandler<ActionEvent>() {
+                    new EventHandler<ActionEvent>()
+                    {
+                        /**
+                         @author Albin Ahlbeck
+                          * Controls the play button
+                         @param e ActionEvent
+                         */
                         public void handle(ActionEvent e)
                         {
                             System.out.println("Pausing");
-                            if (player.getStatus() == Status.PLAYING) {
+                            if (player.getStatus() == Status.PLAYING)
+                            {
                                 player.pause();
                             }
                             btnPlay.setText("||");
-                            song = new Media(new File(songComboBox.getSelectionModel().getSelectedItem().getPath()).toURI().toString()); // scary code
+                            song = new Media(new File(songComboBox.getSelectionModel().
+                                    getSelectedItem().getPath()).toURI().toString());
                             player = new MediaPlayer(song);
                             player.play();
                         }
@@ -81,27 +97,39 @@ public class MediaBar extends HBox
 
             songComboBox.setOnAction(event);
 
-            btnPlay.setOnAction(new EventHandler<ActionEvent>() {
+            btnPlay.setOnAction(new EventHandler<ActionEvent>()
+            {
+                /**
+                 @author Albin Ahlbeck
+                  * Checks the status on the player and acts acordingly
+                 @param e ActionEvent
+                 */
                 public void handle(ActionEvent e)
                 {
                     Status status = player.getStatus(); // To get the status of Player
-                    if (status == status.PLAYING) {
+                    if (status == status.PLAYING)
+                    {
 
                         // If the status is Video playing
-                        if (player.getCurrentTime().greaterThanOrEqualTo(player.getTotalDuration())) {
+                        if (player.getCurrentTime().greaterThanOrEqualTo(player.getTotalDuration()))
+                        {
 
                             // If the player is at the end of video
                             player.seek(player.getStartTime()); // Restart the video
                             player.play();
                         }
-                        else {
+                        else
+                        {
                             // Pausing the player
                             player.pause();
 
                             btnPlay.setText(">");
                         }
-                    } // If the video is stopped, halted or paused
-                    if (status == Status.HALTED || status == Status.STOPPED || status == Status.PAUSED) {
+
+                    }
+                    // If the video is stopped, halted or paused
+                    if (status == Status.HALTED || status == Status.STOPPED || status == Status.PAUSED)
+                    {
                         player.play(); // Start the video
                        btnPlay.setText("||");
                     }
@@ -109,7 +137,13 @@ public class MediaBar extends HBox
             });
 
             // volume control
-            volumeSlider.valueProperty().addListener(new InvalidationListener() {
+            volumeSlider.valueProperty().addListener(new InvalidationListener()
+            {
+                /**
+                 @author Albin Ahlbeck
+                  * Allows the user to press the volume slider to change the value (without dragging)
+                 @param ov The object that is being observed
+                 */
                 public void invalidated(Observable ov)
                 {
                     if (volumeSlider.isPressed()) {
@@ -119,7 +153,11 @@ public class MediaBar extends HBox
                 }
             });
         }
-
+        /**
+         @author Albin Ahlbeck
+          * Creates new songs and adds them to an array
+         @return Song[] The list of songs can was created
+         */
         private Song[] initSongs()
         {
             int songs = 4;
@@ -131,6 +169,11 @@ public class MediaBar extends HBox
             return tempSongs;
         }
 
+        /**
+         @author Albin Ahlbeck
+          * Changes the colour on components
+         @param theme The theme to use to color the components
+         */
         public void addTheme(Theme theme)
         {
             btnPlay.setTextFill(theme.getMainPaint());
@@ -138,13 +181,12 @@ public class MediaBar extends HBox
                     CornerRadii.EMPTY, Insets.EMPTY)));
 
             lblVolume.setTextFill(theme.getSecondaryPaint());
-            /*songComboBox.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
-                    
-             */
-
         }
-
+        /**
+         @author Albin Ahlbeck
+          * Changes the song without the use of the combobox
+         @param index The position of the song that is going to be played
+         */
         public void changeSong(int index)
         {
             songComboBox.getSelectionModel().select(index);

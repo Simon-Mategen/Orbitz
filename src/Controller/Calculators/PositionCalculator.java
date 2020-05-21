@@ -1,6 +1,12 @@
 package Controller.Calculators;
 
-public class PositionCalculator {
+/**
+ * @author Marcus Svensson
+ * @author Simon Måtegen
+ * Calculates a position for the planets
+ */
+public class PositionCalculator
+{
     private double d;
 
     private double N;
@@ -21,15 +27,28 @@ public class PositionCalculator {
     private double yeclip;
 
 
-
-    public double setDay(double year, double month, double day){
+    /**
+     * Sets the day
+     * @param year the year
+     * @param day the day
+     * @param month the month
+     * @return double
+     */
+    public double setDay(double year, double month, double day)
+    {
         d = 367*year-(7*(year+((month+9)/12)))/4+((275+month)/9)+day-730530;
         return d;
     }
+    /**
+     * Sets values for each planet
+     * @param d a scale factor
+     * @param planet Planet object to check which planet it is
+     */
+    public double getValues(double d, String planet)
+    {
 
-    public double getValues(double d, String planet){
-
-        if (planet.equals("Mercury")) {
+        if (planet.equals("Mercury"))
+        {
             N = 48.3313 + 3.24587E-5 * d;
             i = 7.0047 + 5.00E-8 * d;
             w = 29.1241 + 1.01444E-5 * d;
@@ -38,7 +57,8 @@ public class PositionCalculator {
             M = 168.6562 + 4.0923344368 * d;
         }
 
-        if (planet.equals("Venus")) {
+        if (planet.equals("Venus"))
+        {
             N = 76.6799 + 2.46590E-5 * d;
             i = 3.3946 + 2.75E-8 * d;
             w = 54.8910 + 1.38374E-5 * d;
@@ -47,14 +67,16 @@ public class PositionCalculator {
             M = 48.0052 + 1.6021302244 * d;
         }
 
-        if (planet.equals("Earth")){
+        if (planet.equals("Earth"))
+        {
             w = 282.9404  + 4.70935E-5 * d;
             a = 1.000000;
             e = 0.016709 - 1.151E-9 * d;
             M = 356.0470 + 0.9856002585 * d;
         }
 
-        if (planet.equals("Mars")) {
+        if (planet.equals("Mars"))
+        {
             N = 49.5574 + 2.11081E-5 * d;
             i = 1.8497 - 1.78E-8 * d;
             w = 286.5016 + 2.92961E-5 * d;
@@ -63,7 +85,8 @@ public class PositionCalculator {
             M = 18.6021 + 0.5240207766 * d;
         }
 
-        if (planet.equals("Jupiter")) {
+        if (planet.equals("Jupiter"))
+        {
             N = 100.4542 + 2.76854E-5 * d;
             i = 1.3030 - 1.557E-7 * d;
             w = 273.8777 + 1.64505E-5 * d;
@@ -72,7 +95,8 @@ public class PositionCalculator {
             M = 19.8950 + 0.0830853001 * d;
         }
 
-        if (planet.equals("Saturn")) {
+        if (planet.equals("Saturn"))
+        {
             N = 113.6634 + 2.38980E-5 * d;
             i = 2.4886 - 1.081E-7 * d;
             w = 339.3939 + 2.97661E-5 * d;
@@ -81,7 +105,8 @@ public class PositionCalculator {
             M = 316.9670 + 0.0334442282 * d;
         }
 
-        if (planet.equals("Uranus")) {
+        if (planet.equals("Uranus"))
+        {
             N = 74.0005 + 1.3978E-5 * d;
             i = 0.7733 + 1.9E-8 * d;
             w = 96.6612 + 3.0565E-5 * d;
@@ -90,7 +115,8 @@ public class PositionCalculator {
             M = 142.5905 + 0.011725806 * d;
         }
 
-        if (planet.equals("Neptune")) {
+        if (planet.equals("Neptune"))
+        {
             N = 131.7806 + 3.0173E-5 * d;
             i = 1.7700 - 2.55E-7 * d;
             w = 272.8461 - 6.027E-6 * d;
@@ -99,75 +125,50 @@ public class PositionCalculator {
             M = 260.2471 + 0.005995147 * d;
         }
 
-       /* System.out.println("d = " + d + "\n" + "N = "
-                +  N + "\n" + "i = " + i + "\n" + "w = "
-                + w + "\n" + "a = " + a + "\n" + "e = "
-                +  e + "\n" + "M = " +  M);
+        E0 = M + (180/Math.PI)*e*Math.sin(Math.PI/180*M)
+                *(1+(e*Math.cos(Math.PI/180*M)));
 
-        */
-
-        E0 = M + (180/Math.PI)*e*Math.sin(Math.PI/180*M)*(1+(e*Math.cos(Math.PI/180*M)));
-        E1 = E0 - (E0-(180/Math.PI) * e * Math.sin(Math.PI/180*E0)-M)/(1-e*Math.cos(Math.PI/180*E0));
-
-        //System.out.println("E1 = " + E1);
+        E1 = E0 - (E0-(180/Math.PI) * e * Math.sin(Math.PI/180*E0)-M)/
+                (1-e*Math.cos(Math.PI/180*E0));
 
         x = a * (Math.cos(Math.PI/180*E1)-e);
         y = a * (Math.sqrt(1-(e*e)))*Math.sin(Math.PI/180*E1);
-        //System.out.println("x = " + x);
-        //System.out.println("y = " + y);
 
         r = Math.sqrt((x*x)+(y*y));
         v = Math.toDegrees(Math.atan2(y, x));
-        //System.out.println("r = " + r);
-        //System.out.println("v = " + v);
 
-        if (planet.equals("Earth")){
+        if (planet.equals("Earth"))
+        {
             xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
             yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
             return (v + w) + 180;
         }
 
-        else if (planet.equals("Venus")){
+        else if (planet.equals("Venus"))
+        {
             xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
             yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
             return (v + w) + 180;
         }
 
-        if (planet.equals("Mercury")) {
+        if (planet.equals("Mercury"))
+        {
             xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
             yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
             return (v + w) + 90;
         }
-        else {
-            xeclip = r * (Math.cos(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) - Math.sin(Math.PI / 180 * N) * Math.sin(Math.PI / 180 * (v + w)) * Math.cos(Math.PI / 180 * i));
-            yeclip = r * (Math.sin(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) + Math.cos(Math.PI / 180 * N) * Math.sin(Math.PI / 180 * (v + w)) * Math.cos(Math.PI / 180 * i));
-            //System.out.println("xeclip = " + xeclip);
-            //System.out.println("yeclip = " + yeclip);
+
+        else
+        {
+            xeclip = r * (Math.cos(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) -
+                    Math.sin(Math.PI / 180 * N) * Math.sin(Math.PI / 180 *
+                            (v + w)) * Math.cos(Math.PI / 180 * i));
+
+            yeclip = r * (Math.sin(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) +
+                    Math.cos(Math.PI / 180 * N) * Math.sin(Math.PI / 180 *
+                            (v + w)) * Math.cos(Math.PI / 180 * i));
             return v + w;
         }
-
-        /*if (xy == 1){
-            return 2*(xeclip * 149600000)/25000000;
-        }
-        else if (xy == 2){
-            return -2*(yeclip * 149600000)/25000000;
-        }
-        else
-            return -1;
-
-         */
-        //return v + w;
     }
-
-
-  /*  public static void main(String[] args) {
-        PositionCalculator pos = new PositionCalculator();
-        pos.getValues(pos.setDay(1990, 4, 19),"Neptune", 1);
-    }
-
-   */
-
-
-
 }
 

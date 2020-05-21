@@ -4,11 +4,18 @@ import Model.Planet;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * @author Manna Manoljovic
+ * A panel with pictures of the moons
+ */
 public class LunarPanelSouth extends JPanel
 {
     private Planet planet;
 
+    /**
+     * Constructs the panel and adds pictures depending on the clicked planet
+     * @param planet the planet that is currently being displayed
+     */
     public LunarPanelSouth(Planet planet)
     {
         this.planet = planet;
