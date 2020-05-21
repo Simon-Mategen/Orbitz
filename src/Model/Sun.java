@@ -65,13 +65,19 @@ public class Sun
      @author Simon Måtegen
      @author Marcus Svensson
      * Sets the Y Cord
-     @param 
+     @param yCord the cordinte to be used for y
      */
     public void setYCord(int yCord)
     {
         this.yCord = yCord;
     }
 
+    /**
+     @author Simon Måtegen
+     @author Marcus Svensson
+     * Gets the mass from the sun
+     @return a double with the mass value
+     */
     public double getMass()
     {
         JSONObject sunMass = (JSONObject)sunInfo.get("mass");
@@ -82,6 +88,12 @@ public class Sun
         return massValue * (Math.pow(10, massExponent));
     }
 
+    /**
+     @author Simon Måtegen
+     @author Lanna Maslo
+     * Creates a sphere graphical object for the sun
+     @return returns a string of the path
+     */
     public Sphere getSphereFromSun()
     {
         sunSphere = new Sphere(radius);
@@ -92,6 +104,11 @@ public class Sun
         return sunSphere;
     }
 
+    /**
+     @author Simon Måtegen
+     @author Marcus Svensson
+     @return returns a string from the JSONObject
+     */
     @Override
     public String toString()
     {
