@@ -14,6 +14,13 @@ import Model.Planet;
 
 import View.MainFrame;
 
+/**
+ * @author
+ * @author
+ *
+ * Controller.java is the class that communicates with the GUI and model classes.
+ * It updates the GUI based on information in the model classes.
+ */
 
 public class Controller
 {
