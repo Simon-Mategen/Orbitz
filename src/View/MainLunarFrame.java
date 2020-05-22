@@ -3,7 +3,9 @@ package View;
 import Model.Planet;
 
 import javax.swing.*;
+
 import java.awt.*;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -48,11 +50,13 @@ public class MainLunarFrame extends JFrame
         add(panel);
 
         addListeners();
-
     }
 
     /**
-     * @author Lanna
+     * @author Lanna Maslo
+     *
+     * Listenes to the closing of the frame.
+     * When this occurs the sound stops playing.
      */
     public void addListeners()
     {
@@ -66,8 +70,11 @@ public class MainLunarFrame extends JFrame
     }
 
     /**
-     * @author Lanna
-     * @param filePath
+     * @author Lanna Maslo
+     *
+     * Plays a sound file when lunar info window opens.
+     *
+     * @param filePath takes a sound file as parameter
      */
     public void playSound(String filePath)
     {

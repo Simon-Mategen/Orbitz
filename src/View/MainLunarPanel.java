@@ -1,14 +1,18 @@
 package View;
 
 import Model.Planet;
+
 import javafx.application.Platform;
+
 import javafx.embed.swing.JFXPanel;
+
 import javafx.geometry.Point3D;
+
+import javafx.scene.control.Tooltip;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
@@ -18,32 +22,54 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.File;
 
+/**
+ * @author Manna Manojlovic
+ * @author Lanna Maslo
+ *
+ * Main panel for all other lunar panels. They are placed on this panel,
+ * which is used by MainLunarFrame.java
+ *
+ * This class also has a
+ */
 public class MainLunarPanel extends JPanel implements ActionListener
 {
     private JButton returnBtn = new JButton("Stop sound");
 
     private JPanel btnPanel;
+
     private JLabel headline;
 
     private JFXPanel lunarModel = new JFXPanel();
     private JFXPanel centerPanel = new JFXPanel();
+
     private MediaPlayer player;
+
     private Sphere moon;
+
     private ImageView phobos;
     private ImageView deimos;
+
     private Group moonRoot = new Group();
+
     private Rotate rotate;
 
     private MainInfoFrame mainInfoFrame;
+
     private LunarTextPanel lunarTextPanel;
+
     private LunarGalleryPanel lunarGalleryPanel;
+
     private MainLunarFrame lunarFrame;
+
     private LunarPanelSouth lunarPanelSouth;
+
     private Planet planet;
 
     private double startDragX;
