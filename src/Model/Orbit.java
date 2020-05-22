@@ -15,7 +15,6 @@ public class Orbit
     private double height;
     private double xCord;
     private double yCord;
-    private double circumference;
 
     private Ellipse ellipse;
 
@@ -52,23 +51,8 @@ public class Orbit
         return yCord/SCALE_VALUE;
     }
 
-    public double getCircumference()
-    {
-        return circumference/SCALE_VALUE;
-    }
-
-    public double getRealCircumference()
-    {
-        return circumference;
-    }
-
     public Ellipse getEllipseFromOrbit()
     {
         return ellipse;
-    }
-
-    public void setEllipseStrokeWidth(double value)
-    {
-        ellipse.setStrokeWidth(value);
     }
 }

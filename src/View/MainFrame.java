@@ -306,8 +306,9 @@ public class MainFrame extends JFrame
     }
 
     /**
-     *
+     * Adds the FX component MediaBar to an FX Scene
      * @return A FX Scene
+     * @author Albin Ahlbeck
      */
     public Scene createMedia()
     {
@@ -584,7 +585,9 @@ public class MainFrame extends JFrame
     }
 
     /**
+     * Creates a new Scene based on a new list of planets that all have their duration variables modified.
      * @param inDurationModifier The value that determine the amount of
+     * @author Simon Måtegen
      */
     private void speedChangeScene(double inDurationModifier)
     {
@@ -602,8 +605,6 @@ public class MainFrame extends JFrame
                     }
                 });
 
-
-                //Planets that move 10 times slower for every click on the button
                 newPlanets = controller.createPlanetArray(inDurationModifier);
                 orbitPanel.setScene(createScene(newPlanets));
 
@@ -755,6 +756,10 @@ public class MainFrame extends JFrame
 
     }
 
+    /**
+     * Initialize the themes available.
+     * @return Array of Themes
+     */
     public Theme[] initThemes()
     {
         //TODO: custom fonts for each theme
@@ -769,6 +774,10 @@ public class MainFrame extends JFrame
         return tempThemes;
     }
 
+    /**
+     * Changes the colors in the scene for the chosen theme.
+     * @param theme The theme chosen
+     */
     public void setColors(Theme theme)
     {
         currentTheme = theme;
@@ -804,7 +813,7 @@ public class MainFrame extends JFrame
             Thread.sleep(500);
         } catch (Exception e)
         {
-
+            System.out.println(e.getMessage());
         }
         Platform.runLater(new Runnable()
         {
@@ -833,13 +842,14 @@ public class MainFrame extends JFrame
                         mediaBar.changeSong(2);
                     }
                 }
-
-
             }
         });
 
     }
 
+    /**
+     * Listener class for the ComboBox
+     */
     private class ComboBoxThemeListener implements ItemListener
     {
         @Override
@@ -852,6 +862,9 @@ public class MainFrame extends JFrame
         }
     }
 
+    /**
+     * Work in progress
+     */
     private class HelpListener implements ActionListener
     {
         @Override
@@ -861,6 +874,9 @@ public class MainFrame extends JFrame
         }
     }
 
+    /**
+     * Yes
+     */
     private class CreateThemeListener implements ActionListener
     {
         @Override
