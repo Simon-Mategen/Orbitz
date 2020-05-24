@@ -180,20 +180,6 @@ public class Planet
     }
 
     /**
-     * A toString-method that returns information about a specific planet.
-     * @return a string with different values of a specific planet
-     */
-    public String toString() //Prints information about planets
-    {
-        return getName() + "\n" + "Height: " + planetOrbit.getHeight() + "\n"
-                + "Width: " + planetOrbit.getWidth() + "\n" + "x: " + planetOrbit.getXCord()
-                + "\n" + "y: " + planetOrbit.getYCord() + "\n" + "A: " + getAphelion() + "\n"
-                + "P: " + getPerihelion() + "\n" + "Circumference: "
-                + planetOrbit.getCircumference() + "\n" + planetOrbit.getRealCircumference()
-                + "\n" + "Mass (kg): " + getMass() + "\n" + "Radius (km): " + getMeanRadius();
-    }
-
-    /**
      * A method that creates a path transition for a specific planet
      */
     public void createPathTransition()

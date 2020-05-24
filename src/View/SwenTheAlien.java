@@ -1,24 +1,30 @@
 package View;
 
 import Model.Planet;
+
+import java.awt.*;
+
 import javafx.application.Platform;
+
 import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import javafx.scene.control.Tooltip;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Tooltip;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
-import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
-import java.io.*;
 import java.util.*;
+import javafx.util.Duration;
 
 /**
  * @Author: Manna Manojlovic
@@ -27,7 +33,6 @@ import java.util.*;
  * Funfact panel/area for Swen The Alien.
  * When user clicks on the alien a new fun fact about the planet/its moon/moons displays in a textarea.
  */
-
 public class SwenTheAlien extends JPanel
 {
     private JPanel panel;
@@ -46,7 +51,10 @@ public class SwenTheAlien extends JPanel
     private Planet planet;
 
     /**
+     * @author Manna Manojlovic
+     *
      * Constructor
+     * @param planet takes planet as parameter so the current planet can be determined
      */
     public SwenTheAlien (Planet planet)
     {
@@ -58,11 +66,11 @@ public class SwenTheAlien extends JPanel
      * @author: Manna Manojlovic
      * @author: Lanna Maslo
      *
-     * @version: 1.0
-     *
      * JavaFX-panel for Swen The Alien
-     * Sets text from file containing funfacts to funfact area on button click.
-     * Every button click generates a new fun fact.
+     * Sets the scene for Swen the Alien (which is a .png here).
+     * Every button click on Swen generates a new funfact for current planet.
+     *
+     * The user is given instructions to click on Swen using a tooltip.
      */
     private void initFX(JFXPanel swenFX)
     {
@@ -89,21 +97,19 @@ public class SwenTheAlien extends JPanel
         swenScene.setFill(new javafx.scene.paint.Color(0, 0, 0, 1));
         swen.setCursor(Cursor.HAND);
         swenFX.setScene(swenScene);
-        
+
+             //when user clicks on Swens image, calls the readFunFacts method
             swen.setOnMouseClicked(event ->
             {
                 readFunFacts();
-
             });
-
         }
 
     /**
      * @Author: Manna Manojlovic
-     * @version: 1.0
      *
      * Reads funfacts from file depending on which planet user has selected
-     * Go to setFunFacts() for the code for the function
+     * Go to setFunFacts() for the input code.
      */
     public void readFunFacts()
     {
@@ -143,7 +149,7 @@ public class SwenTheAlien extends JPanel
 
     /**
      * @author Manna Manojlovic
-     * @version 1.0
+     *
      * @param filePath takes a path to file as parameter
      * buffers a file and reads it
      * takes each line from file and places in ArrayList
@@ -153,8 +159,8 @@ public class SwenTheAlien extends JPanel
     {
         try (BufferedReader in = new BufferedReader(new FileReader(filePath)))
         {
-            ArrayList<String> lines = new ArrayList<String>();
-            String line;
+            ArrayList<String> lines = new ArrayList<>();
+            String line;    //a line in the textfile
 
             while ((line = in.readLine()) != null)
             {
@@ -164,12 +170,11 @@ public class SwenTheAlien extends JPanel
             if (currentIndex >= lines.size()-1)
             {
                 currentIndex = 0;
-
             }
+
             currentIndex++;
 
             funFactArea.setText(String.valueOf(lines.get(currentIndex))); 
-
 
         } catch (IOException e)
         {
@@ -182,24 +187,23 @@ public class SwenTheAlien extends JPanel
      * @Author: Manna Manojlovic
      * @author: Lanna Maslo
      *
-     * @version: 1.0
-     *
      * Panel for Swen The Alien and the fun fact textarea.
      * Creates a panel and initializes the components: image of Swen and the textArea
      * The Image is read through BufferedImage, set as an ImageIcon,
      * which in turn is set as a JLabel, a swing component.
      * In order to show an ImageIcon it has to be set as a Swing component.
-     *
      */
     public void createPanel ()
     {
         TitledBorder titledBorder = BorderFactory.createTitledBorder(null, " DID YOU KNOW...",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, titleFont, color);
 
+        JFXPanel swenFX = new JFXPanel();
+
+        JPanel pnl = new JPanel();
+
         panel = new JPanel(new BorderLayout());
         layout = new BorderLayout();
-
-        JFXPanel swenFX = new JFXPanel();
 
         setLayout(layout);
         setBackground(Color.black);
@@ -219,7 +223,7 @@ public class SwenTheAlien extends JPanel
         funFactArea.setBackground(Color.black);
         funFactArea.setForeground(color);
         funFactArea.setForeground(Color.YELLOW);
-        JPanel pnl = new JPanel();
+
         pnl.setPreferredSize(new Dimension(40, 100));
         pnl.setBackground(Color.black);
 
@@ -229,14 +233,8 @@ public class SwenTheAlien extends JPanel
 
         add(panel, BorderLayout.SOUTH);
 
-        Platform.runLater(new Runnable()
-        {
-            public void run(){
-                initFX(swenFX);
-            }
-        });
+        Platform.runLater(() -> initFX(swenFX));
     }
-
 }
 
 

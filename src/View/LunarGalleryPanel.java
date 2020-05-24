@@ -31,7 +31,6 @@ import java.util.ArrayList;
  * Some planets don't have any moons and won't therefore have anything here.
  * Those planets that have MANY moons will only have the 4-5 innermost moons displayed here.
  */
-
 public class LunarGalleryPanel extends JPanel
 {
     private Planet planet;
@@ -59,6 +58,15 @@ public class LunarGalleryPanel extends JPanel
         addImages();
     }
 
+    /**
+     * @author Manna Manojlovic
+     * @author lanna Maslo
+     * @author Albin Ahlbeck
+     * @param planet takes planet as parameter to determine current planet/current moon
+     *
+     * This method creates a panel which also has a JavaFX-panel for the gallery of images.
+     * It also creates a panel for the buttons - previous and next and their listeners.
+     */
     public void createPanel(Planet planet)
     {
         try
@@ -70,12 +78,12 @@ public class LunarGalleryPanel extends JPanel
             System.out.println(e);
         }
 
-        setLayout(new BorderLayout());
-        setBackground (Color.BLACK);
-
         JFXPanel jfx = new JFXPanel();
 
         this.planet = planet;
+
+        setLayout(new BorderLayout());
+        setBackground (Color.BLACK);
 
         panel = new JPanel (new BorderLayout());
         panelBtn = new JPanel(new BorderLayout());
@@ -88,16 +96,16 @@ public class LunarGalleryPanel extends JPanel
         btnNext = new BasicArrowButton(BasicArrowButton.EAST);
         btnNext.setPreferredSize(new Dimension(100, 50));
         btnNext.setMinimumSize(new Dimension(100, 50));
+        btnNext.addActionListener(nextListener);
+        btnNext.setFocusPainted(false);
+        btnNext.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btnNext.setBackground(Color.black);
 
         btnPrevious = new BasicArrowButton(BasicArrowButton.WEST);
         btnPrevious.setPreferredSize(new Dimension(100, 50));
-        btnNext.addActionListener(nextListener);
         btnPrevious.addActionListener(previousListener);
-        btnNext.setFocusPainted(false);
         btnPrevious.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btnPrevious.setBackground(Color.black);
-        btnNext.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        btnNext.setBackground(Color.black);
 
         lblImage.setSize(336, 280);
         lblImage.setBorder(BorderFactory.createLineBorder(Color.BLACK, 8, false));
@@ -106,30 +114,27 @@ public class LunarGalleryPanel extends JPanel
 
         panel.setPreferredSize (new Dimension (350,280));
         panel.setBackground (Color.black);
-
-        panelBtn.setPreferredSize(new Dimension(550, 200));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 30, 10));
 
         panel.add(btnNext, BorderLayout.EAST);
         panel.add(btnPrevious, BorderLayout.WEST);
         panel.add(lblImage, BorderLayout.CENTER);
 
-        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 30, 10));
-
-        panelBtn.add(jfx, BorderLayout.WEST);
         panelBtn.setBackground(Color.black);
+        panelBtn.setPreferredSize(new Dimension(550, 200));
+        panelBtn.add(jfx, BorderLayout.WEST);
 
         add(panel);
-        //add(panelBtn, BorderLayout.WEST);
 
-        Platform.runLater(new Runnable()
-        {
-            public void run()
-            {
-                initFX(jfx);
-            }
-        });
+        Platform.runLater(() -> initFX(jfx));
     }
 
+    /**
+     * @author Lanna Maslo
+     * @param jfxPanel javaFX panel as parameter
+     *
+     * Creates and sets up a JavaFX-panel to be places on Swing's JPanel
+     */
     private void initFX(JFXPanel jfxPanel)
     {
         javafx.scene.paint.Color fxColor = new javafx.scene.paint.Color(0,0,0,1);
@@ -144,14 +149,22 @@ public class LunarGalleryPanel extends JPanel
     }
 
     /**
-     * Adds images to each planet
      * @author Albin Ahlbeck
      * @author Manna Manojlovic
-     * @version 1.0
+     *
+     * Adds images to each planet
      */
     public void addImages()
     {
-        if (planet.getName().equals("Earth"))
+        if(planet.getName().equals("Mercury"))
+        {
+            readImages("src/Images/nothing.gif");
+        }
+        else if (planet.getName().equals("Venus"))
+        {
+            readImages("src/Images/nothing.gif");
+        }
+        else if (planet.getName().equals("Earth"))
         {
             readImages("src/Images/moon1.jpg");
             readImages("src/Images/moon2.jpg");
@@ -200,9 +213,15 @@ public class LunarGalleryPanel extends JPanel
             readImages("src/Images/triton2.jpg");
         }
 
-        //lblImage.setIcon(imageList.get(0));
+        lblImage.setIcon(imageList.get(0));
     }
 
+    /**
+     * @author Manna Manojlovic
+     * @author Albin Ahlbeck
+     * @param filePath takes an image file path as parameter
+     *                 filepath is set in the addImages() method.
+     */
     public void readImages(String filePath)
     {
         imageList.add(new ImageIcon(
@@ -210,10 +229,10 @@ public class LunarGalleryPanel extends JPanel
     }
 
     /**
+     * @author Albin Ahlbeck
+     *
      * Listens to the next button
      * Iterates the gallery
-     * @author Albin Ahlbeck
-     * @version 1.0
      */
     private class NextListener implements ActionListener
     {
@@ -233,10 +252,9 @@ public class LunarGalleryPanel extends JPanel
     }
 
     /**
+     * @author Albin Ahlbeck
      * Listens to the previous button
      * Iterates the gallery
-     * @author Albin Ahlbeck
-     * @version 1.0
      */
     private class PreviousListener implements ActionListener
     {

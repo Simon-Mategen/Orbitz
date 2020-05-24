@@ -3,15 +3,24 @@ package Controller;
 import Controller.Calculators.OrbitCalculator;
 import Controller.Calculators.PlanetCalculator;
 import Controller.Calculators.PositionCalculator;
-import Model.Sun;
+
+import Enum.*;
 
 import java.util.ArrayList;
-
-import Model.Planet;
-import Enum.*;
-import View.MainFrame;
-import View.Star;
 import javafx.util.Duration;
+
+import Model.Sun;
+import Model.Planet;
+
+import View.MainFrame;
+
+/**
+ * @author
+ * @author
+ *
+ * Controller.java is the class that communicates with the GUI and model classes.
+ * It updates the GUI based on information in the model classes.
+ */
 
 public class Controller
 {
@@ -37,7 +46,6 @@ public class Controller
         planetArrayList = createPlanetArray(1); //No duration modifier should be added here.
 
         mainframe = new MainFrame(this, this.sun);
-        
     }
 
     public ArrayList<Planet> getPlanetArrayList()
@@ -68,13 +76,13 @@ public class Controller
         //Sets planet duration [*1000 is to make it into seconds instead of milliseconds]
         for (Planet planet: newPlanets)
         {
-            Duration d = new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet)*1000)/durationModifier);
+            Duration d = new Duration((planetCalculator.calculatePlanetSunOrbitTime(sun, planet)
+                    *1000)/durationModifier);
 
             planet.setDuration(d); //* makes them go slower and / makes them go faster
 
             System.out.println(planet.getName() + "\t" + d);
         }
-
 
         //Set the PathTransition
         for (int i = 0; i < newPlanets.size() ; i++)

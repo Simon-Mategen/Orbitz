@@ -46,10 +46,9 @@ public class InfoBoxPanel extends JPanel implements ActionListener
      *
      * Setting up the table with columns for travel time, latest visit, next visit and possibility of life.
      */
-    public void setupTable()
-    {
+    public void setupTable() {
         lunarTest = new JButton("Moons");
-        lunarTest.setPreferredSize(new Dimension(75,25));
+        lunarTest.setPreferredSize(new Dimension(75, 25));
         lunarTest.addActionListener(this);
 
         setBackground(Color.black);     //background to panel
@@ -79,7 +78,7 @@ public class InfoBoxPanel extends JPanel implements ActionListener
         table.setIntercellSpacing(new Dimension(10, 0));
 
         //setting size for the table
-        table.setPreferredScrollableViewportSize(new Dimension(500,50));
+        table.setPreferredScrollableViewportSize(new Dimension(500, 50));
         table.setFillsViewportHeight(true);
 
         //setting colors and fonts to the columns
@@ -96,8 +95,11 @@ public class InfoBoxPanel extends JPanel implements ActionListener
 
         addRows();                         //adding the rows to the columns respectively
 
-        add(s,BorderLayout.CENTER);        //placing the table on the layout
-        add(lunarTest,BorderLayout.SOUTH);//placing the lunar button on the layout
+        add(s, BorderLayout.CENTER);        //placing the table on the layout
+
+        if (!planet.getName().equals("Mercury") && !planet.getName().equals("Venus")){ //Mercury and Venus do not have moons
+            add(lunarTest, BorderLayout.SOUTH);//placing the lunar button on the layout
+        }
     }
 
     /**

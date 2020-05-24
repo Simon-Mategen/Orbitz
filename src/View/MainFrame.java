@@ -1,9 +1,11 @@
 package View;
 
 import Controller.Controller;
+
 import Model.Planet;
 import Model.Sun;
 import Model.Theme;
+
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
@@ -18,6 +20,7 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -33,36 +36,43 @@ import java.util.*;
  */
 public class MainFrame extends JFrame
 {
-    private JLabel lblTitle;
-
-    private JButton btnHelp;
-
     private final int WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     private final int HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     private final int MAX_SLIDER_VALUE = 30;
 
+    private JLabel lblTitle;
+    private JLabel lblTheme;
+
+    private JButton btnHelp;
+
     private ArrayList<Planet> guiPlanetList;
+    private ArrayList<Planet> newPlanets;
 
     private Theme currentTheme;
 
     private JFXPanel orbitPanel;
     private JFXPanel mediaPanel;
+
     private JPanel overheadPanel;
+
     private MainInfoFrame mainInfoFrame;
+
     private LoadingScreen loadingScreen = new LoadingScreen();
-    private HelpPanel helpPanel;
+
     private ColorPicker colorPicker;
 
     private StackPane root;
+
     private JSlider timeSlider;
     private JSlider musicSlider;
-    private JComboBox<Theme> cbThemes;
-    private Theme[] themes;
-    private JLabel lblTheme;
-    private MediaBar mediaBar;
-    private JButton btnCreateTheme;
 
-    ArrayList<Planet> newPlanets;
+    private JComboBox<Theme> cbThemes;
+
+    private Theme[] themes;
+
+    private MediaBar mediaBar;
+
+    private JButton btnCreateTheme;
 
     private SliderListener sliderListener;
     private ComboBoxThemeListener comboBoxThemeListener;
