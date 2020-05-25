@@ -66,9 +66,9 @@ public class MainFrame extends JFrame
     private JSlider timeSlider;
     private JSlider musicSlider;
 
-    private JComboBox<Theme> cbThemes;
+    private JComboBox cbThemes;
 
-    private Theme[] themes;
+    private ArrayList<Theme> themes;
 
     private MediaBar mediaBar;
 
@@ -110,11 +110,15 @@ public class MainFrame extends JFrame
         orbitPanel = new JFXPanel();
         mediaPanel = new JFXPanel();
         overheadPanel = new JPanel();
-        themes = initThemes();
+
         sliderListener = new SliderListener();
         timeSlider = new JSlider();
         musicSlider = new JSlider();
-        cbThemes = new JComboBox<Theme>(themes);
+
+        themes = initThemes();
+        cbThemes = new JComboBox<Theme>();
+        addItemsToThemes();
+
         helpListener = new HelpListener();
         createThemeListener = new CreateThemeListener();
 
@@ -672,19 +676,43 @@ public class MainFrame extends JFrame
         }
 
     }
+    /**
+     @author Albin Ahlbeck
+      * Creates the themes
+     @return a list of themes
+     */
 
-    public Theme[] initThemes()
+    public ArrayList<Theme> initThemes()
     {
-        Theme[] tempThemes = new Theme[7];
-        tempThemes[0] = new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE);
-        tempThemes[1] = new Theme("Midnight", Color.BLACK, new Color(0, 0, 128),
-                javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.DARKBLUE);
-        tempThemes[2] = new Theme("Star Wars", Color.BLACK, Color.YELLOW, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.YELLOW);
-        tempThemes[3] = new Theme("Modern", Color.WHITE, Color.GRAY, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.GRAY);
-        tempThemes[4] = new Theme("Stranger Things", Color.BLACK, Color.RED, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.RED);
-        tempThemes[5] = new Theme("Night Vision", Color.BLACK, Color.GREEN, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.GREEN);
-        tempThemes[6] = new Theme("Nasa", Color.BLUE, Color.WHITE, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.RED);
+        ArrayList<Theme> tempThemes = new ArrayList<Theme>();
+        tempThemes.add(new Theme("Black and White", Color.BLACK, Color.WHITE, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.WHITE));
+        tempThemes.add(new Theme("Midnight", Color.BLACK, new Color(0, 0, 128),
+                javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.DARKBLUE));
+        tempThemes.add(new Theme("Star Wars", Color.BLACK, Color.YELLOW, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.YELLOW));
+        tempThemes.add(new Theme("Modern", Color.WHITE, Color.GRAY, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.GRAY));
+        tempThemes.add(new Theme("Stranger Things", Color.BLACK, Color.RED, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.RED));
+        tempThemes.add(new Theme("Night Vision", Color.BLACK, Color.GREEN, javafx.scene.paint.Color.BLACK, javafx.scene.paint.Color.GREEN));
+        tempThemes.add(new Theme("Nasa", Color.BLUE, Color.WHITE, javafx.scene.paint.Color.WHITE, javafx.scene.paint.Color.RED));
         return tempThemes;
+    }
+    /**
+     @author Albin Ahlbeck
+      * Set the colors on graphical componenets from the theme
+     @param theme the Theme to be added
+     */
+    public void addTheme(Theme theme)
+    {
+        themes.add(theme);
+        cbThemes.addItem(theme);
+        setColors(theme); // set the new theme as the active one
+    }
+
+    public void addItemsToThemes()
+    {
+        for (int i = 0; i < themes.size(); i++)
+        {
+            cbThemes.addItem(themes.get(i));
+        }
     }
 
     /**
@@ -812,8 +840,16 @@ public class MainFrame extends JFrame
         @Override
         public void actionPerformed(ActionEvent actionEvent)
         {
-            System.out.println("Click");
-            colorPicker = new ColorPicker();
+            addColorPicker();
         }
+    }
+
+    /**
+     @author Albin Ahlbeck
+      * Creates a new colorPicker
+     */
+    private void addColorPicker()
+    {
+        colorPicker = new ColorPicker(this);
     }
 }

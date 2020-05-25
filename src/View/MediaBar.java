@@ -180,6 +180,8 @@ public class MediaBar extends HBox
             btnPlay.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
                     CornerRadii.EMPTY, Insets.EMPTY)));
 
+            songComboBox.setBackground(new Background(new BackgroundFill(theme.getSecondaryPaint(),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
             lblVolume.setTextFill(theme.getSecondaryPaint());
         }
         /**
