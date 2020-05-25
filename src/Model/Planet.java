@@ -25,7 +25,6 @@ public class Planet
     private long semiMajorAxis;
     private double perihelion;
     private double aphelion;
-    private double meanRadius;
 
     private JSONObject planetInfo;
 
@@ -51,7 +50,7 @@ public class Planet
         this.perihelion = (long)planetInfo.get("perihelion");
         this.aphelion = (long)planetInfo.get("aphelion");
         this.sphere = new Sphere((double)planetInfo.get("meanRadius")*1000/SCALE_RADIUS_VALUE);
-        this.sphere.setId(getName());  // set ID so sphere's planet can be found
+        this.sphere.setId(getName());
     }
     /**
      * Default constructor
@@ -151,41 +150,12 @@ public class Planet
     }
 
     /**
-     * A get-method that gets information from API and calculates the mass of a specific planet
-     * and returns the mass value of that planet.
-     * @return the mass value in kg
-     */
-    public double getMass()
-    {
-        JSONObject planetMass = (JSONObject )planetInfo.get("mass");
-
-        double massValue = (double) planetMass.get("massValue");
-        long massExponent = (long) planetMass.get("massExponent");
-
-        double mass = massValue * (Math.pow(10, massExponent));
-
-        return mass;
-    }
-
-    /**
-     * A get-method that gets information from and returns the mean radius of a planet.
-     * The mean radius is the average value of the planets all radii.
-     * @return the mean radius value in km
-     */
-    public double getMeanRadius()
-    {
-        meanRadius = (double) planetInfo.get("meanRadius");
-
-        return meanRadius;
-    }
-
-    /**
      * A method that creates a path transition for a specific planet
      */
     public void createPathTransition()
     {
         pathTransition = new PathTransition();
-        double d = pos.setDay(2020, 5, 5);
+        double d = pos.setDay(2020, 6, 7);
 
         planetOrbit.getEllipseFromOrbit().setRotate(-pos.getValues(d, getName()));
         pathTransition.setPath(planetOrbit.getEllipseFromOrbit());
