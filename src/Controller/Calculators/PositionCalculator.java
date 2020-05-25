@@ -23,9 +23,6 @@ public class PositionCalculator
     private double r;
     private double v;
 
-    private double xeclip;
-    private double yeclip;
-
 
     /**
      * Sets the day
@@ -40,9 +37,10 @@ public class PositionCalculator
         return d;
     }
     /**
-     * Sets values for each planet
-     * @param d a scale factor
+     * Calculates and sets a value for a planets position
+     * @param d the variable that represents the specific date
      * @param planet Planet object to check which planet it is
+     * @return angle (true anomaly + argument of perihelion + 90 or 180)
      */
     public double getValues(double d, String planet)
     {
@@ -139,34 +137,22 @@ public class PositionCalculator
 
         if (planet.equals("Earth"))
         {
-            xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
-            yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
             return (v + w) + 180;
         }
 
         else if (planet.equals("Venus"))
         {
-            xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
-            yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
             return (v + w) + 180;
         }
 
         if (planet.equals("Mercury"))
         {
-            xeclip = -1 * r * Math.cos(Math.PI/180*(v + w));
-            yeclip = 1 * r * Math.sin(Math.PI/180*(v + w));
+
             return (v + w) + 90;
         }
 
         else
         {
-            xeclip = r * (Math.cos(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) -
-                    Math.sin(Math.PI / 180 * N) * Math.sin(Math.PI / 180 *
-                            (v + w)) * Math.cos(Math.PI / 180 * i));
-
-            yeclip = r * (Math.sin(Math.PI / 180 * N) * Math.cos(Math.PI / 180 * (v + w)) +
-                    Math.cos(Math.PI / 180 * N) * Math.sin(Math.PI / 180 *
-                            (v + w)) * Math.cos(Math.PI / 180 * i));
             return v + w;
         }
     }
