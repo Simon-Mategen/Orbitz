@@ -133,7 +133,7 @@ public class LunarGalleryPanel extends JPanel
      * @author Lanna Maslo
      * @param jfxPanel javaFX panel as parameter
      *
-     * Creates and sets up a JavaFX-panel to be places on Swing's JPanel
+     * Creates and sets up a JavaFX-panel to be placed on Swing's JPanel
      */
     private void initFX(JFXPanel jfxPanel)
     {
@@ -176,7 +176,7 @@ public class LunarGalleryPanel extends JPanel
         {
             readImages("src/Images/phobos1.jpg");
             readImages("src/Images/phobos2.jpg");
-            readImages("src/Images/phobos3.jpg");
+            readImages("src/Images/phobosdeimos.jpg");
             readImages("src/Images/deimos1.jpg");
             readImages("src/Images/deimos2.jpg");
 
@@ -185,11 +185,10 @@ public class LunarGalleryPanel extends JPanel
         {
             readImages("src/Images/io1.jpg");
             readImages("src/Images/europa1.jpg");
-            readImages("src/Images/europa2.jpg");
+            readImages("src/Images/jupiterMoons2.jpg");
             readImages("src/Images/ganymedes1.jpg");
-            readImages("src/Images/ganymedes2.jpg");
+            readImages("src/Images/jupiterMoons3.jpg");
             readImages("src/Images/callisto1.jpg");
-            readImages("src/Images/callisto2.jpg");
         }
         else if (planet.getName().equals("Saturn"))
         {
