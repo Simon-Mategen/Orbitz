@@ -182,7 +182,10 @@ public class MainInfoPanel extends JPanel
             double newTransY = orgTransY + offsetY;
 
             matrixRotateNode(planetSphere, 0,  -newTransY / 100, newTransX / 100);
-            matrixRotateNode(planetRings, 0, -newTransY / 100, newTransX / 100);
+
+            if(planet.getName().equals("Saturn")) {
+                matrixRotateNode(planetRings, 0, -newTransY / 100, newTransX / 100);
+            }
         });
     }
 

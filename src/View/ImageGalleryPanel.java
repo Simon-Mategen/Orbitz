@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 
 import javafx.scene.control.Slider;
 
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -276,6 +277,7 @@ public class ImageGalleryPanel extends JPanel
         soundOn.setFitWidth(20);
         soundOn.setLayoutY(8);
         soundOn.setCursor(Cursor.HAND);
+        Tooltip.install(soundOn, (new Tooltip("Mute the sound of " + planet.getName() + " :(")));
 
         Image soundOffImage = new Image("Images/soundOff.png");
         ImageView soundOff = new ImageView(soundOffImage);
@@ -283,6 +285,7 @@ public class ImageGalleryPanel extends JPanel
         soundOff.setFitWidth(20);
         soundOff.setLayoutY(8);
         soundOff.setCursor(Cursor.HAND);
+        Tooltip.install(soundOff, (new Tooltip("Listen to the sound of " + planet.getName() + "!")));
 
         soundOff.setOnMouseClicked(event ->
         {

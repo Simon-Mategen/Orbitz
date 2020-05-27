@@ -19,8 +19,6 @@ import javafx.scene.transform.Rotate;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
@@ -103,6 +101,7 @@ public class LunarPanelCenter extends JPanel
         moon.setMaterial(moonMaterial);
         moon.setOnMouseClicked(event -> playSound("sound/earthMoon.mp3"));
         moon.setCursor(Cursor.HAND);
+        Tooltip.install(moon, (new Tooltip("Spin me right round, baby, right round!")));
 
         phobosImg = new Image("Images/phobos.png");
         deimosImg = new Image("Images/deimos.png");
@@ -125,8 +124,8 @@ public class LunarPanelCenter extends JPanel
         phobos.setCursor(javafx.scene.Cursor.HAND);
         deimos.setCursor(Cursor.HAND);
 
-        Tooltip phobosT = new Tooltip("Phobos");
-        Tooltip deimosT = new Tooltip("Deimos");
+        Tooltip phobosT = new Tooltip("Phobos (click me)");
+        Tooltip deimosT = new Tooltip("Deimos (click me)");
         Tooltip.install(phobos, phobosT);
         Tooltip.install(deimos, deimosT);
 
