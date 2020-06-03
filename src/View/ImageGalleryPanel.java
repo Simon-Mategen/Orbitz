@@ -214,9 +214,9 @@ public class ImageGalleryPanel extends JPanel
             else if (planet.getName().equals("Saturn"))
             {
                 addImage("src/Images/saturn1.jpg");
-                addImage("src/Images/saturn2.jpg");
+                addImage("src/Images/saturn2.jpeg");
                 addImage("src/Images/saturn3.jpg");
-                addImage("src/Images/saturn4.jpg");
+                addImage("src/Images/saturn4.JPG");
             }
             else if (planet.getName().equals("Uranus"))
             {
