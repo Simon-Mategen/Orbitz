@@ -20,7 +20,6 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -43,6 +42,8 @@ public class MainFrame extends JFrame
 
     private JLabel lblTitle;
     private JLabel lblTheme;
+
+    private JButton btnHelp;
 
     private ArrayList<Planet> guiPlanetList;
     private ArrayList<Planet> newPlanets;
@@ -75,6 +76,7 @@ public class MainFrame extends JFrame
 
     private SliderListener sliderListener;
     private ComboBoxThemeListener comboBoxThemeListener;
+    private HelpListener helpListener;
     private CreateThemeListener createThemeListener;
 
     private Controller controller;
@@ -117,6 +119,7 @@ public class MainFrame extends JFrame
         cbThemes = new JComboBox<Theme>();
         addItemsToThemes();
 
+        helpListener = new HelpListener();
         createThemeListener = new CreateThemeListener();
 
         btnCreateTheme = new JButton("Create theme");
@@ -130,6 +133,9 @@ public class MainFrame extends JFrame
         lblTitle.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         lblTitle.setOpaque(true);
 
+        btnHelp = new JButton("Help!");
+        btnHelp.setPreferredSize(new Dimension(70, 35));
+        btnHelp.addActionListener(helpListener);
 
         // Sets up the JFrame
         setLayout(new BorderLayout());
@@ -140,7 +146,7 @@ public class MainFrame extends JFrame
         ImageIcon solarSystem = new ImageIcon("src/Images/orbitz.png");
         setIconImage(solarSystem.getImage());
 
-        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 160));
+        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 140));
 
         Font f = new Font("Arial", Font.BOLD, 8);
         JLabel labelMin = new JLabel("MIN");
@@ -169,17 +175,17 @@ public class MainFrame extends JFrame
         timeSlider.setMaximum(MAX_SLIDER_VALUE);
         timeSlider.setPaintLabels(true);
 
-        timeSlider.setPreferredSize(new Dimension(700, 90));
+        timeSlider.setPreferredSize(new Dimension(700, 70));
         timeSlider.setPaintTicks(true);
         timeSlider.setMajorTickSpacing(10);
         timeSlider.setSnapToTicks(true);
         timeSlider.addMouseListener(sliderListener);
 
-        cbThemes.setPreferredSize(new Dimension(300, 90));
+        cbThemes.setPreferredSize(new Dimension(300, 70));
         cbThemes.addItemListener(comboBoxThemeListener);
         cbThemes.setSelectedIndex(0);
-        lblTheme.setPreferredSize(new Dimension(100, 90));
-        mediaPanel.setPreferredSize(new Dimension(800, 90));
+        lblTheme.setPreferredSize(new Dimension(100, 70));
+        mediaPanel.setPreferredSize(new Dimension(800, 70));
         btnCreateTheme.setPreferredSize(new Dimension(140, 35));
         mediaPanel.setBackground(null);
         // Sets up overheadPanel
@@ -191,9 +197,10 @@ public class MainFrame extends JFrame
         lblTitle.setOpaque(false);
         mediaPanel.setOpaque(true);
 
-        overheadPanel.setPreferredSize(new Dimension(WIDTH, 160));
+        overheadPanel.setPreferredSize(new Dimension(1400, 140));
         overheadPanel.add(lblTitle);
         overheadPanel.add(timeSlider);
+        overheadPanel.add(btnHelp);
         overheadPanel.add(mediaPanel);
         overheadPanel.add(lblTheme);
         overheadPanel.add(cbThemes);
@@ -743,20 +750,6 @@ public class MainFrame extends JFrame
         labelTable.put(20, lbl3);
         labelTable.put(30, lbl4);
         timeSlider.setLabelTable(labelTable);
-        timeSlider.setBorder(BorderFactory.createTitledBorder(
-                    BorderFactory.createLineBorder(theme.getSecondaryColor()),
-                    "Change planet movement multiplier", 1, TitledBorder.CENTER,
-                new Font("Nasalization Rg", Font.PLAIN, 14), theme.getSecondaryColor()));
-
-       cbThemes.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(theme.getSecondaryColor()),
-                "Themes", 1, TitledBorder.CENTER,
-                new Font("Nasalization Rg", Font.PLAIN, 14), theme.getSecondaryColor()));
-
-        mediaPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(theme.getSecondaryColor()),
-                "Music", 1, TitledBorder.CENTER,
-                new Font("Nasalization Rg", Font.PLAIN, 14), theme.getSecondaryColor()));
 
         Platform.runLater(new Runnable()
         {
@@ -800,18 +793,37 @@ public class MainFrame extends JFrame
      @author Albin Ahlbeck
       * Listens to the combo box for selection of songs
      */
-    private class ComboBoxThemeListener implements ItemListener {
+    private class ComboBoxThemeListener implements ItemListener
+    {
         /**
-         * @author Albin Ahlbeck
-         * If an item is selected setColors is called
+         @author Albin Ahlbeck
+          * If an item is selected setColors is called
          */
         @Override
-        public void itemStateChanged(ItemEvent event) {
-            if (event.getStateChange() == ItemEvent.SELECTED) {
+        public void itemStateChanged(ItemEvent event)
+        {
+            if (event.getStateChange() == ItemEvent.SELECTED)
+            {
                 //loadingScreen.setVisible(true);
                 setColors((Theme) event.getItem());
                 //loadingScreen.setVisible(false);
             }
+        }
+    }
+    /**
+     @author Albin Ahlbeck
+      * Listens to the HelpButton for a mouse click
+     */
+    private class HelpListener implements ActionListener
+    {
+        /**
+         @author Albin Ahlbeck
+          * If the button is pressed then a help window is created
+         */
+        @Override
+        public void actionPerformed(ActionEvent actionEvent)
+        {
+            // create help panel
         }
     }
 
