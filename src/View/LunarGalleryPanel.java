@@ -193,23 +193,25 @@ public class LunarGalleryPanel extends JPanel
         else if (planet.getName().equals("Saturn"))
         {
             readImages("src/Images/titan1.jpg");
-            readImages("src/Images/titan2.jpg");
-            readImages("src/Images/titan3.jpeg");
             readImages("src/Images/dione1.jpg");
+            readImages("src/Images/iapetus1.jpg");
             readImages("src/Images/enceladus1.jpg");
-            readImages("src/Images/enceladus2.jpg");
+            readImages("src/Images/enceladus2.jpeg");
+            readImages("src/Images/tethys1.jpg");
+            readImages("src/Images/titandione.jpg");
+            readImages("src/Images/rhea1.jpg");
         }
         else if (planet.getName().equals("Uranus"))
         {
             readImages("src/Images/ariel1.jpg");
             readImages("src/Images/miranda1.jpg");
-            readImages("src/Images/titania1.jpeg");
+            readImages("src/Images/titania1.jpg");
 
         }
         else if (planet.getName().equals("Neptune"))
         {
             readImages("src/Images/triton1.jpg");
-            readImages("src/Images/triton2.jpg");
+            readImages("src/Images/proteus1.jpg");
         }
 
         lblImage.setIcon(imageList.get(0));
