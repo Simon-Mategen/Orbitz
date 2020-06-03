@@ -20,6 +20,7 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.image.Image;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -42,8 +43,6 @@ public class MainFrame extends JFrame
 
     private JLabel lblTitle;
     private JLabel lblTheme;
-
-    private JButton btnHelp;
 
     private ArrayList<Planet> guiPlanetList;
     private ArrayList<Planet> newPlanets;
@@ -76,7 +75,6 @@ public class MainFrame extends JFrame
 
     private SliderListener sliderListener;
     private ComboBoxThemeListener comboBoxThemeListener;
-    private HelpListener helpListener;
     private CreateThemeListener createThemeListener;
 
     private Controller controller;
@@ -119,7 +117,6 @@ public class MainFrame extends JFrame
         cbThemes = new JComboBox<Theme>();
         addItemsToThemes();
 
-        helpListener = new HelpListener();
         createThemeListener = new CreateThemeListener();
 
         btnCreateTheme = new JButton("Create theme");
@@ -132,10 +129,6 @@ public class MainFrame extends JFrame
         lblTitle.setText("Orbitz");
         lblTitle.setFont(new Font("Earth Orbiter", Font.PLAIN, 55));
         lblTitle.setOpaque(true);
-
-        btnHelp = new JButton("Help!");
-        btnHelp.setPreferredSize(new Dimension(70, 35));
-        btnHelp.addActionListener(helpListener);
 
         // Sets up the JFrame
         setLayout(new BorderLayout());
@@ -200,7 +193,6 @@ public class MainFrame extends JFrame
         overheadPanel.setPreferredSize(new Dimension(1400, 140));
         overheadPanel.add(lblTitle);
         overheadPanel.add(timeSlider);
-        overheadPanel.add(btnHelp);
         overheadPanel.add(mediaPanel);
         overheadPanel.add(lblTheme);
         overheadPanel.add(cbThemes);
@@ -744,6 +736,16 @@ public class MainFrame extends JFrame
         lbl3.setForeground(theme.getSecondaryColor());
         lbl4.setForeground(theme.getSecondaryColor());
 
+        mediaPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(theme.getSecondaryColor()),
+                "Music", 1, TitledBorder.CENTER,
+                new Font("Nasalization Rg", Font.PLAIN, 14), theme.getSecondaryColor()));
+
+        timeSlider.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(theme.getSecondaryColor()),
+                "Change planet movement multiplier", 1, TitledBorder.CENTER,
+                new Font("Nasalization Rg", Font.PLAIN, 14), theme.getSecondaryColor()));
+
         Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
         labelTable.put(0, lbl1);
         labelTable.put(10, lbl2);
@@ -808,22 +810,6 @@ public class MainFrame extends JFrame
                 setColors((Theme) event.getItem());
                 //loadingScreen.setVisible(false);
             }
-        }
-    }
-    /**
-     @author Albin Ahlbeck
-      * Listens to the HelpButton for a mouse click
-     */
-    private class HelpListener implements ActionListener
-    {
-        /**
-         @author Albin Ahlbeck
-          * If the button is pressed then a help window is created
-         */
-        @Override
-        public void actionPerformed(ActionEvent actionEvent)
-        {
-            // create help panel
         }
     }
 
