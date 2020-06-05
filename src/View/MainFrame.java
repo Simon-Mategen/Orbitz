@@ -139,7 +139,7 @@ public class MainFrame extends JFrame
         ImageIcon solarSystem = new ImageIcon("src/Images/orbitz.png");
         setIconImage(solarSystem.getImage());
 
-        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 140));
+        orbitPanel.setPreferredSize(new Dimension(getWidth(), getHeight() - 160));
 
         Font f = new Font("Arial", Font.BOLD, 8);
         JLabel labelMin = new JLabel("MIN");
@@ -190,7 +190,7 @@ public class MainFrame extends JFrame
         lblTitle.setOpaque(false);
         mediaPanel.setOpaque(true);
 
-        overheadPanel.setPreferredSize(new Dimension(1400, 140));
+        overheadPanel.setPreferredSize(new Dimension(1400, 160));
         overheadPanel.add(lblTitle);
         overheadPanel.add(timeSlider);
         overheadPanel.add(mediaPanel);

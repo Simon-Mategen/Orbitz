@@ -10,8 +10,10 @@ import java.awt.event.WindowEvent;
 
 
 /**
- * @author: Manna Manojlovic, Albin Ahlbeck
- * @version: 1.0
+ * @author Manna Manojlovic
+ * @author Albin Ahlbeck
+ * @author Lanna Maslo
+ * @version 1.0
  *
  * This is the main frame for the planetary information GUI.
  * It has the MainInfoPanel main panel placed on it and the FX panel for lunar orbit.
